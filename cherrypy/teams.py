@@ -12,11 +12,6 @@ class teamsController:
 	def GET_TEAMS(self):
 		return json.dumps(self.teamdb.get_teams())
 		
-	# delete all teams from db
-	def DELETE_TEAMS(self):
-		self.teamdb.delete_teams()
-		return json.dumps({"result": "success"})
-
 	# get an existing team's info
 	def GET_TEAM(self, team_id):
 		return json.dumps(self.teamdb.get_team(team_id))

@@ -12,11 +12,6 @@ class leaguesController:
 	def GET_LEAGUES(self):
 		return json.dumps(self.leaguedb.get_leagues())
 		
-	# delete all leagues from db
-	def DELETE_LEAGUES(self):
-		self.leaguedb.delete_leagues()
-		return json.dumps({"result": "success"})
-
 	# get an existing league's info
 	def GET_LEAGUE(self, league_id):
 		return json.dumps(self.leaguedb.get_league(league_id))

@@ -17,11 +17,6 @@ class _team_database:
 		# TODO: return list of all teams
 		x = 1 # placeholder
 
-	# delete all teams
-	def delete_teams(self):
-		# TODO: delete all teams from database
-		x = 1 # placeholder
-
 	# set a new team
 	def set_team(self, team_id, data):
 		# TODO: add team_id with data to database

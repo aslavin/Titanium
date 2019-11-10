@@ -16,11 +16,6 @@ class _league_database:
 		# TODO: return list of all leagues
 		x = 1 # placeholder
 
-	# delete all leagues
-	def delete_leagues(self):
-		# TODO: delete all leagues from database
-		x = 1 # placeholder
-
 	# set a new league
 	def set_league(self, league_id, data):
 		# TODO: add league_id with data to database
