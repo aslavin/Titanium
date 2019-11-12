@@ -4,30 +4,41 @@ import os
 import requests
 import json
 
+SPORT_FILE = 'sports.json'
+
 class _sport_database:
 	
 	# initialize databse
 	def __init__(self):
-		# TODO: initialize database
-		x = 1 # placeholder
-
+		try:
+			sport_file = open(SPORT_FILE, 'r')
+			self.sports = json.loads(sport_file.read())
+			sport_file.close()
+		except IOError:
+			self.sports = {}
 	
-	# get all sports
+	# return dictionary of sports
 	def get_sports(self):
-		# TODO: return list of all sports
-		x = 1 # placeholder
+		return self.sports
 
 	# set a new sport
 	def set_sport(self, sport_id, data):
-		# TODO: add sport_id with data to database
-		x = 1 # placeholder
+		self.sports[str(sport_id)] = data
+		self.flush()
 
 	# get a specific sport by id
+	# return None if sport not found
 	def get_sport(self, sport_id):
-		# TODO: get sport by id
-		x = 1 # placeholder
+		if sport_id not in self.sports:
+			return None
+		return self.sports[str(sport_id)]
 
 	# remove sport from database
 	def delete_sport(self, sport_id):
-		# TODO: delete sport according to id
-		x = 1 # placeholder
+		if sport_id in self.sports:
+			del self.sports[str(sport_id)]
+			self.flush()
+
+	def flush(self):
+		with open(SPORT_FILE, 'w') as sport_file:
+			sport_file.write(json.dumps(self.sports))

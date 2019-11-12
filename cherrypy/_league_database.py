@@ -4,29 +4,41 @@ import os
 import requests
 import json
 
+LEAGUE_FILE = 'leagues.json'
+
 class _league_database:
 	
 	# initialize databse
 	def __init__(self):
-		# TODO: initialize database
-		x = 1 # placeholder
+		try:
+			league_file = open(LEAGUE_FILE, 'r')
+			self.leagues = json.loads(league_file.read())
+			league_file.close()
+		except IOError:
+			self.leagues = {}
 
-	# get all leagues
+	# return dictionary of leagues
 	def get_leagues(self):
-		# TODO: return list of all leagues
-		x = 1 # placeholder
+		return self.leagues
 
 	# set a new league
 	def set_league(self, league_id, data):
-		# TODO: add league_id with data to database
-		x = 1 # placeholder
+		self.leagues[str(league_id)] = data
+		self.flush()
 
 	# get a specific league by id
+	# return None if league not found
 	def get_league(self, league_id):
-		# TODO: get league by id
-		x = 1 # placeholder
+		if str(league_id) not in self.leagues:
+			return None
+		return self.leagues[str(league_id)]
 
 	# remove league from database
 	def delete_league(self, league_id):
-		# TODO: delete league according to id
-		x = 1 # placeholder
+		if str(league_id) in self.leagues:
+			del self.leagues[str(league_id)]
+			self.flush()
+
+	def flush(self):
+		with open(LEAGUE_FILE, 'w') as league_file:
+			league_file.write(json.dumps(self.leagues))

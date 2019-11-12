@@ -4,30 +4,41 @@ import os
 import requests
 import json
 
+TEAM_FILE = 'teams.json'
+
 class _team_database:
 	
 	# initialize databse
 	def __init__(self):
-		# TODO: initialize database
-		x = 1 # placeholder
-
+		try:
+			team_file = open(TEAM_FILE, 'r')
+			self.teams = json.loads(team_file.read())
+			team_file.close()
+		except IOError:
+			self.teams = {}
 	
-	# get all teams
+	# return dictionary of teams
 	def get_teams(self):
-		# TODO: return list of all teams
-		x = 1 # placeholder
+		return self.teams
 
 	# set a new team
 	def set_team(self, team_id, data):
-		# TODO: add team_id with data to database
-		x = 1 # placeholder
+		self.teams[str(team_id)] = data
+		self.flush()
 
 	# get a specific team by id
+	# return None if team not found
 	def get_team(self, team_id):
-		# TODO: get team by id
-		x = 1 # placeholder
+		if team_id not in self.teams:
+			return None
+		return self.teams[str(team_id)]
 
 	# remove team from database
 	def delete_team(self, team_id):
-		# TODO: delete team according to id
-		x = 1 # placeholder
+		if team_id in self.teams:
+			del self.teams[str(team_did)]
+			self.flush()
+
+	def flush(self):
+		with open(TEAM_FILE, 'w') as team_file:
+			team_file.write(json.dumps(self.teams))
