@@ -11,10 +11,12 @@ from _user_database import _user_database
 from _league_database import _league_database
 from _team_database import _team_database
 from _sport_database import _sport_database
+from _pool_database import _pool_database
 from users import usersController
 from leagues import leaguesController
 from teams import teamsController
 from sports import sportsController
+from pools import poolsController
 
 # set up cors
 class optionsController:
