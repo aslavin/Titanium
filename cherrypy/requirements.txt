@@ -1,4 +1,4 @@
 cherrypy==18.4.0
 requests==2.22.0
 routes==2.4.1
-mysql==0.0.2
+mysqlclient==1.4.5
