@@ -20,7 +20,7 @@ class _user_database:
 
 	# set a new user
 	def set_user(self, user_id, data):
-		keys = ['netid', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
+		keys = ['pass_hash', 'netid', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
 
 		# set unspecified keys to null
 		for key in keys:
@@ -29,6 +29,7 @@ class _user_database:
 
 		if user_id is None:
 			self.db.query('''insert into users(
+				pass_hash,
 				netid,
 				first_name,
 				last_name,
@@ -39,7 +40,8 @@ class _user_database:
 				wins,
 				losses,
 				ties) values (
-				{},{},{},{},{},{},{},{},{},{})'''.format(
+				{},{},{},{},{},{},{},{},{},{},{})'''.format(
+				data['pass_hash'],
 				data['netid'],
 				data['first_name'],
 				data['last_name'],
@@ -52,6 +54,7 @@ class _user_database:
 				data['ties']))
 		else:
 			self.db.query('''update users set
+				pass_hash = {},
 				netid = {},
 				first_name = {},
 				last_name = {},
@@ -63,6 +66,7 @@ class _user_database:
 				losses = {},
 				ties = {}
 				where user_id = {}'''.format(
+				data['pass_hash'],
 				data['netid'],
 				data['first_name'],
 				data['last_name'],
