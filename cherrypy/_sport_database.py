@@ -1,44 +1,42 @@
 # backend will send calls to database
 
-import os
-import requests
-import json
-
-SPORT_FILE = 'sports.json'
+from MySQLdb import _mysql
 
 class _sport_database:
 	
 	# initialize databse
-	def __init__(self):
-		try:
-			sport_file = open(SPORT_FILE, 'r')
-			self.sports = json.loads(sport_file.read())
-			sport_file.close()
-		except IOError:
-			self.sports = {}
+	def __init__(self, db):
+		self.db = db
 	
 	# return dictionary of sports
 	def get_sports(self):
-		return self.sports
+		self.db.query('select * from sports')
+		r = self.db.store_result()
+		return r.fetch_row(maxrows=0, how=1)
 
 	# set a new sport
 	def set_sport(self, sport_id, data):
-		self.sports[str(sport_id)] = data
-		self.flush()
+		if sport_id is None:
+			self.db.query('''insert into sports(
+				name) values (
+				{})'''.format(
+				data['name']))
+		else:
+			self.db.query('''update sports set
+				name = {}
+				where sport_id = {}'''.format(
+				data['name'],
+				sport_id))
 
 	# get a specific sport by id
 	# return None if sport not found
 	def get_sport(self, sport_id):
-		if sport_id not in self.sports:
-			return None
-		return self.sports[str(sport_id)]
+		self.db.query('''select * from sports
+			where sport_id = {}'''.format(sport_id))
+		r = self.db.store_result()
+		return r.fetch_row(how=1)
 
 	# remove sport from database
 	def delete_sport(self, sport_id):
-		if sport_id in self.sports:
-			del self.sports[str(sport_id)]
-			self.flush()
-
-	def flush(self):
-		with open(SPORT_FILE, 'w') as sport_file:
-			sport_file.write(json.dumps(self.sports))
+		self.db.query('''delete from sports
+			where sport_id = {}'''.format(sport_id))

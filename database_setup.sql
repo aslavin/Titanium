@@ -31,20 +31,20 @@ create table Leagues(
 	foreign key (sport_id) references Sports(sport_id)
 );
 
-create table Poos(
-	poo_id int,
+create table Pools(
+	pool_id int,
 	league_id int,
 	name varchar(255),
-	poo_time time(0),
+	pool_time time(0),
 	max_size int,
-	primary key (poo_id),
+	primary key (pool_id),
 	foreign key (league_id) references Leagues(league_id)
 );
 
 create table Teams(
 	team_id int,
 	league_id int,
-	poo_id int,
+	pool_id int,
 	name varchar(255),
 	wins int,
 	losses int,
@@ -52,7 +52,7 @@ create table Teams(
 	max_members int,
 	primary key (team_id),
 	foreign key (league_id) references Leagues(league_id),
-	foreign key (poo_id) references Poos(poo_id)
+	foreign key (pool_id) references Pools(pool_id)
 );
 
 create table Games(

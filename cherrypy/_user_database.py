@@ -1,49 +1,81 @@
 # backend will send calls to database
 
-import os
-import requests
-import json
-
-USER_FILE = 'users.json'
+from MySQLdb import _mysql
 
 class _user_database:
 	
 	# initialize databse
-	def __init__(self):
-		try:
-			user_file = open(USER_FILE, 'r')
-			self.users = json.loads(user_file.read())
-			user_file.close()
-		except IOError:
-			self.users = {}
+	def __init__(self, db):
+		self.db = db
 
 	# return dictionary of users
 	def get_users(self):
-		return self.users
+		self.db.query('select * from users')
+		r = self.db.store_result()
+		return r.fetch_row(maxrows=0, how=1)
 
 	# delete all users
 	def delete_users(self):
-		self.users = {}
-		self.flush()
+		self.db.query('delete from users')
 
 	# set a new user
 	def set_user(self, user_id, data):
-		self.users[str(user_id)] = data
-		self.flush()
+		if user_id is None:
+			self.db.query('''insert into users(
+				netid,
+				first_name,
+				last_name,
+				is_undergrad,
+				is_admin,
+				gender,
+				residence_hall,
+				wins,
+				losses,
+				ties) values (
+				{},{},{},{},{},{},{},{},{},{})'''.format(
+				data['netid'],
+				data['first_name'],
+				data['last_name'],
+				data['is_undergrad'],
+				data['is_admin'],
+				data['gender'],
+				data['residence_hall'],
+				data['wins'],
+				data['losses'],
+				data['ties']))
+		else:
+			self.db.query('''update users set
+				netid = {},
+				first_name = {},
+				last_name = {},
+				is_undergrad = {},
+				is_admin = {},
+				gender = {},
+				residence_hall = {},
+				wins = {},
+				losses = {},
+				ties = {}
+				where user_id = {}'''.format(
+				data['netid'],
+				data['first_name'],
+				data['last_name'],
+				data['is_undergrad'],
+				data['is_admin'],
+				data['gender'],
+				data['residence_hall']
+				data['wins'],
+				data['losses'],
+				data['ties'],
+				user_id))
 
 	# get a specific user by id
-	# return None if user not found
 	def get_user(self, user_id):
-		if user_id not in self.users:
-			return None
-		return self.users[str(user_id)]
+		self.db.query('''select * users
+			where user_id = {}'''.format(user_id))
+		r = self.db.store_result()
+		return r.fetch_row(how=1)
 
 	# remove user from database
 	def delete_user(self, user_id):
-		if user_id in self.users:
-			del self.users[str(user_id)]
-			self.flush()
-
-	def flush(self):
-		with open(USER_FILE, 'w') as user_file:
-			user_file.write(json.dumps(self.users))
+		self.db.query('''delete from users
+			where user_id = {}'''.format(user_id))
