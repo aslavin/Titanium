@@ -16,6 +16,13 @@ class _sport_database:
 
 	# set a new sport
 	def set_sport(self, sport_id, data):
+		keys = ['name']
+
+		# set unspecified keys to null
+		for key in keys:
+			if key not in data:
+				data[key] = 'null'
+
 		if sport_id is None:
 			self.db.query('''insert into sports(
 				name) values (

@@ -20,6 +20,13 @@ class _user_database:
 
 	# set a new user
 	def set_user(self, user_id, data):
+		keys = ['netid', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
+
+		# set unspecified keys to null
+		for key in keys:
+			if key not in data:
+				data[key] = 'null'
+
 		if user_id is None:
 			self.db.query('''insert into users(
 				netid,

@@ -10,6 +10,13 @@ class _pool_database:
 
 	# set a new pool
 	def set_pool(self, pool_id, data):
+		keys = ['league_id', 'name', 'pool_time', 'max_size']
+
+		# set unspecified keys to null
+		for key in keys:
+			if key not in data:
+				data[key] = 'null'
+
 		if pool_id is None:
 			self.db.query('''insert into pools(
 				league_id,

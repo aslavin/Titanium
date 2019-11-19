@@ -16,6 +16,12 @@ class _league_database:
 
 	# set a new league
 	def set_league(self, league_id, data):
+		keys = ['sport_id', 'name', 'start_time', 'end_time', 'gender', 'team_size']
+		# set unspecified keys to null
+		for key in keys:
+			if key not in data:
+				data[key] = 'null'
+
 		if league_id is None:
 			self.db.query('''insert into leagues(
 				sport_id,
