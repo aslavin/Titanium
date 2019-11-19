@@ -59,6 +59,13 @@ class _team_database:
 				data['max_members'],
 				team_id))
 
+	def update_team(self, team_id, data):
+		for key in data:
+			self.db.query('''update teams set
+				{} = {}
+				where team_id = {}'''.format(
+				key, data[key], team_id))
+
 	# get a specific team by id
 	# return None if team not found
 	def get_team(self, team_id):

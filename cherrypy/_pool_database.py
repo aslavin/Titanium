@@ -42,6 +42,13 @@ class _pool_database:
 				data['max_size'],
 				pool_id))
 
+	def update_pool(self, pool_id, data):
+		for key in data:
+			self.db.query('''update pools set
+				{} = {}
+				where pool_id = {}'''.format(
+				key, data[key], pool_id))
+
 	# get a specific pool by id
 	# return {} if pool not found
 	def get_pool(self, pool_id):

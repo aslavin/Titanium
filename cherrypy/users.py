@@ -22,15 +22,19 @@ class usersController:
 		return json.dumps(self.userdb.get_user(user_id))
 
 	# create a new user
+	# any keys not included in request body will be set to
+	#  null in the database
 	def POST_USER(self, user_id):
 		msg = json.loads(cherrypy.request.body.read())
 		self.userdb.set_user(user_id, msg)
 		return json.dumps({"result": "success"})
 
 	# update an existing user
+	# any keys not included in request body will not have
+	#  their values changed in the database
 	def PUT_USER(self, user_id):
 		msg = json.loads(cherrypy.request.body.read())
-		self.userdb.set_user(user_id, msg)
+		self.userdb.update_user(user_id, msg)
 		return json.dumps({"result": "success"})
 
 	# delete an existing user

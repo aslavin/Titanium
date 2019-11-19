@@ -35,6 +35,13 @@ class _sport_database:
 				data['name'],
 				sport_id))
 
+	def update_sport(self, sport_id, data):
+		for key in data:
+			self.db.query('''update sports set
+				{} = {}
+				where sport_id = {}'''.format(
+				key, data[key], sport_id))
+
 	# get a specific sport by id
 	# return None if sport not found
 	def get_sport(self, sport_id):

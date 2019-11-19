@@ -75,6 +75,13 @@ class _user_database:
 				data['ties'],
 				user_id))
 
+	def update_user(self, user_id, data):
+		for key in data:
+			self.db.query('''update users set
+				{} = {}
+				where user_id = {}'''.format(
+				key, data[key], user_id))
+
 	# get a specific user by id
 	def get_user(self, user_id):
 		self.db.query('''select * users

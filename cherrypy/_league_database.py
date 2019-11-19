@@ -55,6 +55,13 @@ class _league_database:
 				data['team_size'],
 				league_id))
 
+	def update_league(self, league_id, data):
+		for key in data:
+			self.db.query('''update leagues set
+				{} = {}
+				where league_id = {}'''.format(
+				key, data[key], league_id))
+
 	# get a specific league by id
 	def get_league(self, league_id):
 		self.db.query('''select * from leagues
