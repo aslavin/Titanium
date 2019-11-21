@@ -32,7 +32,7 @@ def CORS():
 cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
 
 # create new backend
-db = _mysql.connect("localhost", "sminer", "tdrq", "Titanium")
+db = _mysql.connect("localhost", "root", "Andy_slavin_1234", "mydb")
 userdb = _user_database(db) # shared across all controllers
 leaguedb = _league_database(db)
 teamdb = _team_database(db)

@@ -24,7 +24,7 @@ class _pool_database:
 				pool_time,
 				max_size)
 				values (
-				{},{},{},{}'''.format(
+				{},\'{}\',{},{}'''.format(
 				data['league_id'],
 				data['name'],
 				data['pool_time'],
@@ -32,7 +32,7 @@ class _pool_database:
 		else:
 			self.db.query('''update pools set
 				league_id = {},
-				name = {},
+				name = \'{}\',
 				pool_time = {},
 				max_size = {}
 				where pool_id = {}'''.format(
@@ -44,6 +44,8 @@ class _pool_database:
 
 	def update_pool(self, pool_id, data):
 		for key in data:
+			if key == 'name':
+				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update pools set
 				{} = {}
 				where pool_id = {}'''.format(

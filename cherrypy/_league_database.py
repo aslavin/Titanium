@@ -31,7 +31,7 @@ class _league_database:
 				gender,
 				team_size) 
 				values (
-				{},{},{},{},{},{})'''.format(
+				{},\'{}\',{},{},\'{}\',{})'''.format(
 				data['sport_id'],
 				data['name'],
 				data['start_time'],
@@ -41,10 +41,10 @@ class _league_database:
 		else:
 			self.db.query('''update leagues set 
 				sport_id = {},
-				name = {},
+				name = \'{}\',
 				start_time = {},
 				end_time = {},
-				gender = {},
+				gender = \'{}\',
 				team_size = {}
 				where league_id = {}'''.format(
 				data['sport_id'],
@@ -57,6 +57,8 @@ class _league_database:
 
 	def update_league(self, league_id, data):
 		for key in data:
+			if key == 'name' or key == 'gender':
+				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update leagues set
 				{} = {}
 				where league_id = {}'''.format(

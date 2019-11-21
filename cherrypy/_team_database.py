@@ -32,7 +32,7 @@ class _team_database:
 				losses,
 				ties,
 				max_members) values (
-				{},{},{},{},{},{},{})'''.format(
+				{},{},\'{}\',{},{},{},{})'''.format(
 				data['league_id'],
 				data['pool_id'],
 				data['name'],
@@ -44,7 +44,7 @@ class _team_database:
 			self.db.query('''update teams set
 				league_id = {},
 				pool_id = {},
-				name = {},
+				name = \'{}\',
 				wins = {},
 				losses = {},
 				ties = {},
@@ -61,6 +61,8 @@ class _team_database:
 
 	def update_team(self, team_id, data):
 		for key in data:
+			if key = 'name'
+				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update teams set
 				{} = {}
 				where team_id = {}'''.format(

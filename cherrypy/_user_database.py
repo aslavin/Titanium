@@ -40,7 +40,7 @@ class _user_database:
 				wins,
 				losses,
 				ties) values (
-				{},{},{},{},{},{},{},{},{},{},{})'''.format(
+				\'{}\',\'{}\',\'{}\',\'{}\',{},{},\'{}\',\'{}\',{},{},{})'''.format(
 				data['pass_hash'],
 				data['netid'],
 				data['first_name'],
@@ -54,14 +54,14 @@ class _user_database:
 				data['ties']))
 		else:
 			self.db.query('''update users set
-				pass_hash = {},
-				netid = {},
-				first_name = {},
-				last_name = {},
+				pass_hash = \'{}\',
+				netid = \'{}\',
+				first_name = \'{}\',
+				last_name = \'{}\',
 				is_undergrad = {},
 				is_admin = {},
-				gender = {},
-				residence_hall = {},
+				gender = \'{}\',
+				residence_hall = \'{}\',
 				wins = {},
 				losses = {},
 				ties = {}
@@ -73,7 +73,7 @@ class _user_database:
 				data['is_undergrad'],
 				data['is_admin'],
 				data['gender'],
-				data['residence_hall']
+				data['residence_hall'],
 				data['wins'],
 				data['losses'],
 				data['ties'],
@@ -81,6 +81,8 @@ class _user_database:
 
 	def update_user(self, user_id, data):
 		for key in data:
+			if key in ['pass_hash', 'netid', 'first_name', 'last_name', 'gender', 'residence_hall']
+				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update users set
 				{} = {}
 				where user_id = {}'''.format(
