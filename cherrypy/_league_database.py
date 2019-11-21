@@ -11,8 +11,7 @@ class _league_database:
 	# return dictionary of leagues
 	def get_leagues(self):
 		self.db.query('select * from leagues')
-		r = self.db.store_result()
-		return r.fetch_row(maxrows=0, how=1) # return all rows as a dictionary
+		return self.db.store_result().fetch_row(maxrows=0, how=1) # return all rows as a dictionary
 
 	# set a new league
 	def set_league(self, league_id, data):
@@ -68,8 +67,7 @@ class _league_database:
 	def get_league(self, league_id):
 		self.db.query('''select * from leagues
 			where league_id = {}'''.format(league_id))
-		r = self.db.store_result()
-		return r.fetch_row(how=1)
+		return self.db.store_result().fetch_row(how=1)
 		
 	# remove league from database
 	def delete_league(self, league_id):

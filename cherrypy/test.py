@@ -1,37 +1,27 @@
+from MySQLdb import _mysql
 from _league_database import _league_database
 from _pool_database import _pool_database
 from _sport_database import _sport_database
 from _team_database import _team_database
 from _user_database import _user_database
+from users import usersController
 
-league_db = _league_database()
-pool_db = _pool_database()
-sport_db = _sport_database()
-team_db = _team_database()
-user_db = _user_database()
+db = _mysql.connect("localhost", "root", "Andy_slavin_1234", "mydb")
 
-league_db.set_league(1, "data here")
-league_db.get_leagues()
-league_db.get_league(1)
-league_db.delete_league(1)
+uc = usersController(db)
 
-pool_db.set_pool(1, "data here")
-pool_db.get_pool(1)
-pool_db.delete_pool(1)
+user_db = _user_database(db)
 
-sport_db.set_sport(1, "data here")
-sport_db.get_sports()
-sport_db.get_sport(1)
-sport_db.delete_sport(1)
+data = {
+		'pass_hash': 'test_hash',
+		'netid': 'sminer',
+		'first_name': 'Sebastian',
+		'last_name': 'Miner',
+		'is_undergrad' : '1',
+		'is_admin': '0',
+		'gender': 'male',
+		'residence_hall': 'Stanford'}
 
-team_db.set_team(1, "data here")
-team_db.get_teams()
-team_db.get_team(1)
-team_db.delete_team(1)
+user_db.set_user(None, data)
 
-user_db.set_user(1, "data here")
-user_db.get_users()
-user_db.get_user(1)
-user_db.delete_users()
-user_db.set_user(2, "data Here")
-user_db.delete_user(2)
+print(user_db.get_user(1))

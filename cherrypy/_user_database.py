@@ -28,7 +28,7 @@ class _user_database:
 				data[key] = 'null'
 
 		if user_id is None:
-			self.db.query('''insert into users(
+			self.db.query('''insert into Users(
 				pass_hash,
 				netid,
 				first_name,
