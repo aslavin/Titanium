@@ -5,17 +5,18 @@ def get_dict_from_query(output_dict):
 		return {}
 	if len(output_dict) == 1:
 		r = copy.deepcopy(output_dict[0])
-		for key in r:
-			if isinstance(r[key], bytes):
-				r[key] = r[key].decode("ascii")
+        decode_list(r)
 	else:
 		r = []
 		for row in output_dict:
-			for key in row:
-				if isinstance(row[key], bytes):
-					row[key] = row[key].decode("ascii")
-			r.append(row)
+			decode_list(row)
+            r.append(row)
 	return r
+
+def decode_list(l):
+    for key in l:
+        if isinstance(l[key], bytes):
+            l[key] = l[key].decode("ascii")
 
 def clean_query_input(input_dict, db_name, set_nulls=True):
 	data = copy.deepcopy(input_dict)
