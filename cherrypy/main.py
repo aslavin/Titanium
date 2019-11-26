@@ -7,6 +7,7 @@
 
 import cherrypy
 import json
+from MySQLdb import _mysql
 from _user_database import _user_database
 from _league_database import _league_database
 from _team_database import _team_database
@@ -31,10 +32,11 @@ def CORS():
 cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
 
 # create new backend
-userdb = _user_database() # shared across all controllers
-leaguedb = _league_database()
-teamdb = _team_database()
-sportdb = _sport_database()
+db = _mysql.connect("localhost", "root", "Andy_slavin_1234", "mydb")
+userdb = _user_database(db) # shared across all controllers
+leaguedb = _league_database(db)
+teamdb = _team_database(db)
+sportdb = _sport_database(db)
 
 # load all data
 dispatcher = cherrypy.dispatch.RoutesDispatcher()

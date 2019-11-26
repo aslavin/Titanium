@@ -1,49 +1,117 @@
 # backend will send calls to database
 
-import os
-import requests
-import json
-
-USER_FILE = 'users.json'
+from MySQLdb import _exceptions
+from MySQLdb import _mysql
+import copy
+import util
 
 class _user_database:
 	
 	# initialize databse
-	def __init__(self):
-		try:
-			user_file = open(USER_FILE, 'r')
-			self.users = json.loads(user_file.read())
-			user_file.close()
-		except IOError:
-			self.users = {}
+	def __init__(self, db):
+		self.db = db
 
 	# return dictionary of users
 	def get_users(self):
-		return self.users
+		self.db.query('select * from users')
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 
 	# delete all users
 	def delete_users(self):
-		self.users = {}
-		self.flush()
+		self.db.query('delete from users')
 
 	# set a new user
-	def set_user(self, user_id, data):
-		self.users[str(user_id)] = data
-		self.flush()
+	def set_user(self, data):
+		user_id = None # keeping this variable in case we need it later
+		data = util.clean_query_input(data, "Users")
+		if user_id is None:
+			self.db.query('''insert into Users(
+				pass_hash,
+				netid,
+				first_name,
+				last_name,
+				is_undergrad,
+				is_admin,
+				gender,
+				residence_hall,
+				wins,
+				losses,
+				ties) values (
+				{},{},{},{},{},{},{},{},{},{},{})'''.format(
+				data['pass_hash'],
+				data['netid'],
+				data['first_name'],
+				data['last_name'],
+				data['is_undergrad'],
+				data['is_admin'],
+				data['gender'],
+				data['residence_hall'],
+				data['wins'],
+				data['losses'],
+				data['ties']))
+		else:
+			self.db.query('''update users set
+				pass_hash = {},
+				netid = {},
+				first_name = {},
+				last_name = {},
+				is_undergrad = {},
+				is_admin = {},
+				gender = {},
+				residence_hall = {},
+				wins = {},
+				losses = {},
+				ties = {}
+				where user_id = {}'''.format(
+				data['pass_hash'],
+				data['netid'],
+				data['first_name'],
+				data['last_name'],
+				data['is_undergrad'],
+				data['is_admin'],
+				data['gender'],
+				data['residence_hall'],
+				data['wins'],
+				data['losses'],
+				data['ties'],
+				user_id))
+
+		self.db.query('select last_insert_id()')
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(how=1))['last_insert_id()']
+
+	def update_user(self, user_id, data):
+		data = util.clean_query_input(data, "Users", set_nulls=False)
+		for key in data:
+			query = '''update Users set
+				{} = {}
+				where user_id = {}'''.format(
+				key, data[key], user_id)
+			self.db.query(query)
 
 	# get a specific user by id
-	# return None if user not found
 	def get_user(self, user_id):
-		if user_id not in self.users:
-			return None
-		return self.users[str(user_id)]
+		self.db.query('''select * from Users
+			where user_id = {}'''.format(user_id))
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(how=1))
 
 	# remove user from database
 	def delete_user(self, user_id):
-		if user_id in self.users:
-			del self.users[str(user_id)]
-			self.flush()
+		self.db.query('''delete from Users
+			where user_id = {}'''.format(user_id))
 
-	def flush(self):
-		with open(USER_FILE, 'w') as user_file:
-			user_file.write(json.dumps(self.users))
+	def add_user_to_team(self, user_id, team_id):
+		try:
+			self.db.query('''insert into Users_Teams(
+				user_id, team_id) values (
+				{}, {})'''.format(user_id, team_id))
+		except _exceptions.IntegrityError:
+			return
+
+	def get_teams_by_user(self, user_id):
+		self.db.query('''select team_id from Users_Teams
+			where user_id = {}'''.format(user_id))
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
