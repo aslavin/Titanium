@@ -1,48 +1,3 @@
-#lifetimeStatistics { 
-    background-color: #006db0;
-    z-index: 1;
-    height: 100vh;
-    color: white;
-    text-align: center;
-}
-
-.statisticNumber { 
-    font-size: 30px;
-}
-
-.statisticTitle { 
-    font-size: 15px; 
-}
-
-#userContent { 
-    background-color: white;
-}
-
-#lifetimeStatisticsTitle { 
-    font-size: 25px;
-    margin-top: 10px;
-}
-
-#statisticsFlexbox { 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    padding-top: 86px;
-}
-
-#loggedInAs { 
-    margin-bottom: 10px;
-}
-
-#blankDiv { 
-    margin-bottom: 10px;
-}
-
-.alert { 
-    text-align: center;
-}
-
 #startContainer { 
     margin: 0;
     padding: 0;
@@ -68,33 +23,6 @@
 
 .btn-secondary:hover { 
     background-color: rgb(100,100,100) !important;
-}
-
-.userLink { 
-    color: black;
-    text-decoration: underline;
-}
-
-.userLink:hover { 
-    color: silver;
-}
-
-.btn-warning { 
-    color: white;
-}
-
-#statsRow { 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1; 
-    height: 100vh;
-    width: 16.666%;
-}
-
-#statsCol {
-    background-color: #006db0;
 }
 
 #infoRow { 
