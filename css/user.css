@@ -1,0 +1,237 @@
+#lifetimeStatistics { 
+    background-color: #006db0;
+    z-index: 1;
+    height: 100vh;
+    color: white;
+    text-align: center;
+}
+
+.statisticNumber { 
+    font-size: 30px;
+}
+
+.statisticTitle { 
+    font-size: 15px; 
+}
+
+#userContent { 
+    background-color: white;
+}
+
+#lifetimeStatisticsTitle { 
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+#statisticsFlexbox { 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding-top: 86px;
+}
+
+#loggedInAs { 
+    margin-bottom: 10px;
+}
+
+#blankDiv { 
+    margin-bottom: 10px;
+}
+
+.alert { 
+    text-align: center;
+}
+
+#startContainer { 
+    margin: 0;
+    padding: 0;
+}
+
+.upcomingGame, .upcomingGamesHeaders { 
+    text-align: center;
+}
+
+#upcomingGames { 
+    margin: 100px 0;
+}
+
+#notificationBtns { 
+    width: 100%;
+}
+
+.noNotificationsMessage { 
+    text-align: center;
+    padding: 25px 0px;
+    font-size: 20px;
+}
+
+.btn-secondary:hover { 
+    background-color: rgb(100,100,100) !important;
+}
+
+.userLink { 
+    color: black;
+    text-decoration: underline;
+}
+
+.userLink:hover { 
+    color: silver;
+}
+
+.btn-warning { 
+    color: white;
+}
+
+#statsRow { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; 
+    height: 100vh;
+    width: 16.666%;
+}
+
+#statsCol {
+    background-color: #006db0;
+}
+
+#infoRow { 
+    z-index: 2;
+}
+
+.notificationUnpressed { 
+    background-color: rgb(200,200,200);
+    border: 1px solid rgb(200,200,200);
+}
+
+.notificationPressed { 
+    background-color: rgb(100,100,100);
+    border: 1px solid rgb(100,100,100);
+}
+
+#playersNotificationMessages, #captainNotificationMessages { 
+    display: none;
+}
+
+.upcomingGame { 
+    font-size: 20px;
+    border-radius: 15px;
+    padding: 10px 0px;
+}
+
+.btn-outline-danger { 
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+a.gameInstance { 
+    width: 100%;
+}
+
+.card-body { 
+    border-bottom: 1px solid rgb(220,220,220);
+}
+
+.notificationResponse { 
+    margin-left: 5px;
+}
+
+.buttonFlexbox { 
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center; 
+    height: 100%;
+}
+
+.upcomingGameEvenStyle {
+    color: white;
+}
+
+button.expand { 
+    color: black;
+}
+
+button.expand:hover { 
+    color: black;
+}
+
+.gameDiv { 
+    font-size: 20px;
+}
+
+.gameDateText { 
+    text-align: left;
+}
+
+.gameLeagueText { 
+    text-align: center;
+}
+
+.gameExpandText { 
+    text-align: right;
+}
+
+#landingFooter { 
+    width: 100%;
+}
+
+.leftGameBodyLarge { 
+    text-align: left;
+}
+
+@media only screen and (min-width: 768px) {
+    .leftGameBody { 
+        text-align: left;
+    }
+    .rightGameBody { 
+        text-align: right;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .leftGameBody { 
+       text-align: center; 
+    }
+    .rightGameBody {
+        text-align: center;
+    }
+
+}
+
+.notificationMessage {
+    margin-top: 10px;
+    border: 2px solid rgb(225,225,225);
+    background-color: rgb(225,225,225);
+    border-radius: .25rem;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.notificationTextDiv { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.notificationText { 
+    font-size: 18px;
+}
+
+.centerGameBody { 
+    text-align: center;
+}
+
+.versus { 
+    font-size: 30px !important;
+}
+
+h2 { 
+    margin: 20px 0;
+}
+
+
