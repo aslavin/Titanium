@@ -19,10 +19,10 @@ class sportsController:
 	# create a new sport
 	# any keys not included in request body will be set to
 	#  null in the database
-	def POST_SPORT(self, sport_id):
+	def POST_SPORT(self):
 		msg = json.loads(cherrypy.request.body.read())
-		self.sportdb.set_sport(sport_id, msg)
-		return json.dumps({"result": "success"})
+		sport_id = self.sportdb.set_sport(msg)
+		return json.dumps({"result": "success", "sport_id": sport_id})
 
 	# update an existing sport
 	# any keys not included in request body will not have

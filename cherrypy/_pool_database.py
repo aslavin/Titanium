@@ -1,6 +1,7 @@
 # backend will send calls to database
 
 from MySQLdb import _mysql
+import util
 
 class _pool_database:
 	
@@ -9,30 +10,27 @@ class _pool_database:
 		self.db = db
 
 	# set a new pool
-	def set_pool(self, pool_id, data):
-		keys = ['league_id', 'name', 'pool_time', 'max_size']
-
-		# set unspecified keys to null
-		for key in keys:
-			if key not in data:
-				data[key] = 'null'
+	def set_pool(self, data):
+		pool_id = None # keeping this variable in case we need it later
+		data = util.clean_query_input(data, "Pools")
 
 		if pool_id is None:
-			self.db.query('''insert into pools(
+			query = '''insert into Pools(
 				league_id,
 				name,
 				pool_time,
 				max_size)
 				values (
-				{},\'{}\',{},{}'''.format(
+				{}, {}, {}, {})'''.format(
 				data['league_id'],
 				data['name'],
 				data['pool_time'],
-				data['max_size']))
+				data['max_size'])
+			self.db.query(query)
 		else:
-			self.db.query('''update pools set
+			self.db.query('''update Pools set
 				league_id = {},
-				name = \'{}\',
+				name = {},
 				pool_time = {},
 				max_size = {}
 				where pool_id = {}'''.format(
@@ -42,11 +40,14 @@ class _pool_database:
 				data['max_size'],
 				pool_id))
 
+		self.db.query('select last_insert_id()')
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(how=1))['last_insert_id()']
+
 	def update_pool(self, pool_id, data):
+		data = util.clean_query_input(data, "Pools", set_nulls=False)
 		for key in data:
-			if key == 'name':
-				data[key] = '\'' + data[key] + '\''
-			self.db.query('''update pools set
+			self.db.query('''update Pools set
 				{} = {}
 				where pool_id = {}'''.format(
 				key, data[key], pool_id))
@@ -54,12 +55,12 @@ class _pool_database:
 	# get a specific pool by id
 	# return {} if pool not found
 	def get_pool(self, pool_id):
-		self.db.query('''select * from pools
+		self.db.query('''select * from Pools
 			where pool_id = {}'''.format(pool_id))
 		r = self.db.store_result()
-		return r.fetch_row(how=1)
+		return util.get_dict_from_query(r.fetch_row(how=1))
 
 	# remove pool from database
 	def delete_pool(self, pool_id):
-		self.db.query('''delete from pools
+		self.db.query('''delete from Pools
 			where pool_id = {}'''.format(pool_id))

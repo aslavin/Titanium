@@ -19,10 +19,10 @@ class leaguesController:
 	# create a new league
 	# any keys not included in request body will be set to
 	#  null in the database
-	def POST_LEAGUE(self, league_id):
+	def POST_LEAGUE(self):
 		msg = json.loads(cherrypy.request.body.read())
-		self.leaguedb.set_league(league_id, msg)
-		return json.dumps({"result": "success"})
+		league_id = self.leaguedb.set_league(msg)
+		return json.dumps({"result": "success", "league_id": league_id})
 
 	# update an existing league
 	# any keys not included in request body will not have

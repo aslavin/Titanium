@@ -1,6 +1,7 @@
 # backend will send calls to database
 
 from MySQLdb import _mysql
+import util
 
 class _team_database:
 	
@@ -10,21 +11,17 @@ class _team_database:
 	
 	# return dictionary of teams
 	def get_teams(self):
-		self.db.query('select * from teams')
+		self.db.query('select * from Teams')
 		r = self.db.store_result()
-		return r.fetch_row(maxrows=0, how=1)
+		return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 
 	# set a new team
-	def set_team(self, team_id, data):
-		keys = ['league_id', 'pool_id', 'name', 'wins', 'losses', 'ties', 'max_members']
-
-		# set unspecified keys to null
-		for key in keys:
-			if key not in data:
-				data[key] = 'null'
+	def set_team(self, data):
+		team_id = None # keeping this variable in case we need it later
+		data = util.clean_query_input(data, "Teams")
 
 		if team_id is None:
-			self.db.query('''insert into teams(
+			self.db.query('''insert into Teams(
 				league_id,
 				pool_id,
 				name,
@@ -32,7 +29,7 @@ class _team_database:
 				losses,
 				ties,
 				max_members) values (
-				{},{},\'{}\',{},{},{},{})'''.format(
+				{},{},{},{},{},{},{})'''.format(
 				data['league_id'],
 				data['pool_id'],
 				data['name'],
@@ -41,10 +38,10 @@ class _team_database:
 				data['ties'],
 				data['max_members']))
 		else:
-			self.db.query('''update teams set
+			self.db.query('''update Teams set
 				league_id = {},
 				pool_id = {},
-				name = \'{}\',
+				name = {},
 				wins = {},
 				losses = {},
 				ties = {},
@@ -59,11 +56,14 @@ class _team_database:
 				data['max_members'],
 				team_id))
 
+		self.db.query('select last_insert_id()')
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(how=1))['last_insert_id()']
+
 	def update_team(self, team_id, data):
+		data = util.clean_query_input(data, "Teams", set_nulls=False)
 		for key in data:
-			if key = 'name'
-				data[key] = '\'' + data[key] + '\''
-			self.db.query('''update teams set
+			self.db.query('''update Teams set
 				{} = {}
 				where team_id = {}'''.format(
 				key, data[key], team_id))
@@ -71,12 +71,18 @@ class _team_database:
 	# get a specific team by id
 	# return None if team not found
 	def get_team(self, team_id):
-		self.db.query('''select * from teams
+		self.db.query('''select * from Teams
 			where team_id = {}'''.format(team_id))
 		r = self.db.store_result()
-		return r.fetch_row(how=1)
+		return util.get_dict_from_query(r.fetch_row(how=1))
 
 	# remove team from database
 	def delete_team(self, team_id):
-		self.db.query('''delete from teams
+		self.db.query('''delete from Teams
 			where team_id = {}'''.format(team_id))
+
+	def get_users_by_team(self, team_id):
+		self.db.query('''select user_id from Users_Teams
+			where team_id = {}'''.format(team_id))
+		r = self.db.store_result()
+		return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))

@@ -15,10 +15,10 @@ class poolsController:
 	# create a new pool
 	# any keys not included in request body will be set to
 	#  null in the database
-	def POST_POOL(self, pool_id):
+	def POST_POOL(self):
 		msg = json.loads(cherrypy.request.body.read())
-		self.pooldb.set_pool(pool_id, msg)
-		return json.dumps({"result": "success"})
+		pool_id = self.pooldb.set_pool(msg)
+		return json.dumps({"result": "success", "pool_id": pool_id})
 
 	# update an existing pool
 	# any keys not included in request body will not have

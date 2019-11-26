@@ -19,10 +19,10 @@ class teamsController:
 	# create a new team
 	# any keys not included in request body will be set to
 	#  null in the database
-	def POST_TEAM(self, team_id):
+	def POST_TEAM(self):
 		msg = json.loads(cherrypy.request.body.read())
-		self.teamdb.set_team(team_id, msg)
-		return json.dumps({"result": "success"})
+		team_id = self.teamdb.set_team(msg)
+		return json.dumps({"result": "success", "team_id": team_id})
 
 	# update an existing team
 	# any keys not included in request body will not have
