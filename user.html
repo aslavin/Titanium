@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Titanium</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+        <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/user.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link href="https://fonts.googleapis.com/css?family=Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+        <script src="js/user.js"></script>
+    </head>
+    <body onload="loadData()">
+        <!-- NAVBAR -->
+        <div id="navbarOnTheVideo">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="./user.html">TITANIUM</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>  
+        </div>
+
+        <!-- SPACE FILLER DIV --> 
+
+        <!-- BEGIN CONTENT --> 
+        <div class="row d-none d-lg-block" id="statsRow">
+            <div class="col-lg-12" id="statsCol">
+                <div id="lifetimeStatistics">
+                    <div id="statisticsFlexbox">
+                        <div id="lifetimeStatisticsTitle">
+                            Lifetime<br>Statistics
+                        </div>
+                        <div id="statisticsCollection">
+                            <div class="statistic">
+                                <div class="statisticNumber">
+                                    <span id="gamesPlayed">11</span>  <!-- placeholder -->
+                                </div>
+                                <div class="statisticTitle">
+                                    Games Played
+                                </div>
+                            </div>
+                            <div class="statistic">
+                                <div class="statisticNumber">
+                                    <span id="nWins">4</span> - <span id="nLosses">7</span>  <!-- placeholder -->
+                                </div>
+                                <div class="statisticTitle">
+                                    Overall Record
+                                </div>
+                            </div>
+                            <div class="statistic">
+                                <div class="statisticNumber">
+                                    <span id="winPercentage">36.4</span>% <!-- placeholder -->
+                                </div>
+                                <div class="statisticTitle">
+                                    Win Percentage
+                                </div>
+                            </div>
+                            <div class="statistic">
+                                <div class="statisticNumber">
+                                    <span id="overallRank">98</span>  <!-- placeholder -->
+                                </div>
+                                <div class="statisticTitle">
+                                    Overall Rank
+                                </div>
+                            </div>
+                        </div>
+                        <div id="loggedInAs">
+                            Logged In As:<br>tclare@nd.edu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-10 offset-lg-2">
+                <div class="container-fluid">
+                    <div id="userContent">
+                        <div id="blankDiv"></div>
+
+                        <div id="whatsNew" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Welcome back!</strong> Here are details you will be updated on. Maybe things like a congratulations on a win streak, or a reminder to check games that are coming up soon? 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+
+
+                        <div id="notifications">
+                            <h2>Notifications</h2>
+                            <div class="notificationsDiv">
+                                <div id="notificationBtns" class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" id="playersNotificationButton" class="btn btn-secondary notificationUnpressed" onclick="changeBtnGroup(this.id)">Player <span class="badge badge-light" id="nPlayerNotifications"></span></button>
+                                    <button type="button" id="pendingNotificationButton" class="btn btn-secondary notificationPressed" onclick="changeBtnGroup(this.id)">Pending <span class="badge badge-light" id="nPendingNotifications"></span></button>
+                                    <button type="button" id="captainNotificationButton" class="btn btn-secondary notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
+                                </div>
+                                <div class="underneathDiv">
+                                    <div id="playersNotificationMessages" class="notificationMessages"></div>
+                                    <div id="pendingNotificationMessages" class="notificationMessages"></div>
+                                    <div id="captainNotificationMessages" class="notificationMessages"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="upcomingGames">
+                            <h2>Upcoming Games</h2>
+
+                            <div class="accordion" id="gameAccordion">
+                                
+                                
+
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <div class="row">
+                                            <div class="col-sm-2 col-3">
+                                                <div class="gameDiv"><div class="gameDateText">10/23</div></div>
+                                            </div>
+                                            <div class="col-sm-8 col-6">
+                                                <div class="gameDiv"><div class="gameLeagueText"><a class="userLink" href="#">Ultimate Frisbee B Team</a></div></div>
+                                            </div>
+                                            <div class="col-sm-2 col-3">
+                                                <div class="gameDiv"><div class="gameExpandText"><button onclick="changeExpandIcon(this.id)" id="gameExpandBtn3" class="btn btn-link expand gameExpandBtn" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"><i class="fa fa-caret-down"></i></button></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#gameAccordion">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-5 col-12">
+                                                    <div class="leftGameBody">
+                                                        <div class="leftGameBodyLarge d-none d-lg-block">
+                                                            <div class="myTeamName"><a class="userLink" href="#">Papal Rage (<span class="myTeamWins">2</span> - <span class="myTeamLosses">2</span>)</a></div>
+                                                            <div class="gameTime">10:30pm</div>
+                                                        </div>
+                                                        <div class="leftGameBodySmall d-block d-lg-none">
+                                                            <div class="gameTime">10:30pm</div>
+                                                            <div class="myTeamName"><a class="userLink" href="#">Papal Rage (<span class="myTeamWins">2</span> - <span class="myTeamLosses">2</span>)</a></div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-md-2 col-12">
+                                                    <div class="centerGameBody"><span class="versus">VS.</span></div>
+                                                </div>
+                                                <div class="col-md-5 col-12">
+                                                    <div class="rightGameBody">
+                                                        <div class="oppTeamName"><a class="userLink" href="#">Somebody Better (<span class="oppTeamWins">3</span> - <span class="oppTeamLosses">1</span>)</a></div>
+                                                        <div class="gameLocation">Debart Quad</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    </div> 
+                </div>
+            </div> 
+        </div>
+        <div class="row"><div class="col-lg-10 offset-lg-2 col-12">
+        <div id="landingFooterUser">
+            <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
+            <div class="footerEntry">The Dragons</div>
+            <div class="footerEntry">136 Debartolo Hall</div>
+            <div class="footerEntry">Notre Dame, IN 46556</div>
+            <div class="Email: pfische@nd.edu"></div>
+        </div>
+        </div></div>
+    </body>
+</html>

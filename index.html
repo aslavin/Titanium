@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Titanium</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css?family=Russo+One|Sirin+Stencil|Arsenal&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
-    <script src="js/landing.js"></script>
-</head>
-<body onload="initialize()">
-<div id="navbarOnTheVideo">
-           <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <head>
+        <title>Titanium</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+        <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link href="https://fonts.googleapis.com/css?family=Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet"> 
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+        <script src="js/landing.js"></script>
+    </head>
+    <body onload="initialize()">
+        <div id="navbarOnTheVideo">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">TITANIUM</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,48 +25,130 @@
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Log In',false)">Login</a>
                         </li>
                         <li class="nav-item">
-                               <a class="nav-link" href="#">Sign Up<span class="sr-only">(current)</span></a>
-                         </li>
-                     </ul>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Create Account',false)">Sign Up<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
                 </div>
             </nav>  
         </div>
-    <div id="blankDiv"></div>
-    <div id="videoDiv">
-        <video id="recSportsVideo" muted="muted" onended="playVideoAgain()">
-            <source src="data/Titanium.mp4"></source>
-        </video> 
-        <div id="textOnTheVideo" class="d-none">
-            <p id="websiteSummary">Student athletics.<br>Made simple.</p>
-        </div> 
-    </div>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <div class="landingSubsection">
-                    <h3 class="landingSubtitle">For Students</h3>
-                    <p>With Titanium, you're just a few clicks away from organizing or joining a new team with your friends or club members. Titanium makes it easy for captains and team members alike to join leagues, view schedules, and track results and statistics.</p>
-                    <div class="buttonBox d-block d-md-none">
-                        <button type="button" class="loginBtn btn btn-outline-info">Student Login</button>
-                        <button type="button" class="loginBtn btn btn-info">New Student</button>
-                    </div>
-                </div> 
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="landingSubsection">
-                    <h3 class="landingSubtitle">For Administrators</h3>
-                    <p>If you're a school administrator or referee looking for a simple system to organize college intramural and club sports into leagues, look no further than Titanium. Titanium allows for quick and easy league management and score input.</p>
-                    <div class="buttonBox d-block d-md-none">
-                        <button type="button" class="loginBtn btn btn-outline-info">Admin Login</button>
-                        <button type="button" class="loginBtn btn btn-info">New Admin</button>
+        <div id="blankDiv"></div>
+        <div id="videoDiv">
+            <video id="recSportsVideo" muted="muted" onended="playVideoAgain()">
+                <source src="data/Titanium.mp4"></source>
+            </video> 
+            <div id="textOnTheVideo" class="d-none">
+                <p id="websiteSummary">Student athletics.<br>Made simple.</p>
+            </div> 
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="landingSubsection">
+                        <h3 class="landingSubtitle">For Students</h3>
+                        <div class="buttonBox">
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In', false)">Student Login</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account', false)">New Student</button>
+                        </div>
+                        <p>With Titanium, you're just a few clicks away from organizing or joining a new team with your friends or club members. Titanium makes it easy for captains and team members alike to join leagues, view schedules, and track results and statistics.</p>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="landingSubsection">
+                        <h3 class="landingSubtitle">For Administrators</h3>
+                        <div class="buttonBox">
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In', true)">Admin Login</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account', true)">New Admin</button>
+                        </div>
+                        <p>If you're a school administrator or referee looking for a simple system to organize college intramural and club sports into leagues, look no further than Titanium. Titanium allows for quick and easy league management and score input.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+
+        <!-- MODAL code -->
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title modalAction" id="exampleModalCenterTitle">$$$</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form>
+
+                                        <!-- HERE ARE THE ALERTS in the modal. -->
+
+                                        <!-- ACCOUNT CREATION -->
+
+                                        <div id="invalidEmailFormat" class="alert alert-danger fade show" role="alert">
+                                            <strong>Invalid email format.</strong> Please re-enter email address.
+                                        </div>
+
+                                        <div id="emailAlreadyExists" class="alert alert-danger fade show" role="alert">
+                                            <strong>Email already exists.</strong> Please log in with existing credentials. 
+                                        </div>
+
+                                         <div id="weakPassword" class="alert alert-warning fade show" role="alert">
+                                            <strong>Weak password.</strong> Passwords must be 8+ characters long, containing both numbers and letters. 
+                                        </div>
+
+                                         <div id="successfulCreation" class="alert alert-success fade show" role="alert">
+                                            <strong>Account created!</strong> Close window and log into Titanium with valid credentials. 
+                                        </div>
+
+                                        <!-- ACCOUNT LOGIN -->
+
+                                        <div id="invalidEmail" class="alert alert-danger fade show" role="alert">
+                                            <strong>Invalid email.</strong>No account exists with the given email. Try logging in again.
+                                        </div>
+
+                                        <div id="invalidPassword" class="alert alert-danger fade show" role="alert">
+                                            <strong>Invalid password.</strong> Incorrect password. Try logging in again.
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <label for="userEmail">School Email</label>
+                                            <input type="text" class="form-control" id="userEmail" placeholder="jsmith@example.edu">
+                                        </div>
+                                        <div id="checkboxDiv">
+                                            <input type="checkbox" class="form-check-input" id="adminCheckbox">
+                                            <span>I'm an Admin</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="userPassword">Password</label>
+                                            <input type="password" class="form-control" id="userPassword" placeholder="********">
+                                        </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="createOrLoginBtn" type="button" class="btn btn-info modalAction" onclick="loginOrAccountCreate(document.getElementById('adminCheckbox').checked)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="landingFooter">
+            <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
+            <div class="footerEntry">The Dragons</div>
+            <div class="footerEntry">136 Debartolo Hall</div>
+            <div class="footerEntry">Notre Dame, IN 46556</div>
+            <div class="Email: pfische@nd.edu"></div>
+        </div>
+    </body>
 </html>

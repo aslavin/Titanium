@@ -1,0 +1,102 @@
+#websiteTitle {
+    font-size: 60px;
+    color: white;
+    letter-spacing: 5px;
+}
+
+.navbar-brand { 
+    font-size: 40px;
+}
+
+.nav-link { 
+    font-size: 20px;
+    margin-right: 10px;
+    border-radius: 15px;
+}
+
+body {
+    font-family: 'Alegreya Sans'; 
+}
+
+.btn-warning:hover { 
+    color: white;
+}
+
+#landingFooter {
+   margin-top: 30px;
+   padding: 25px 0px; 
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   color: white;
+   background-color: #006db0 !important; 
+}
+
+.badge-light { 
+    margin-left: 5px;
+}
+
+#navbarOnTheVideo {
+    width: 100%; 
+    position: fixed !important;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    height: 10vh;
+}
+
+h2 { 
+    text-align: center;
+}
+
+#blankDiv {
+    width: 100%;
+    height: 86px;
+}
+
+#landingFooterUser { 
+    padding: 25px 0px;
+    text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .nav-link:hover { 
+        background-color: rgb(200,200,200);
+    }
+    .nav-link { 
+        transition: background-color 1s;
+    }
+}
+
+@media only screen and (max-width: 767px) { 
+    .nav-link:hover { 
+        background-color: none;
+    }
+    .nav-link { 
+       transition: none; 
+    }
+}
+
+.btn-outline-info, .btn-info { 
+    border: 1px solid #006db0;
+}
+
+.btn-outline-info:hover, .btn-outline-info:active, .btn-info:hover, .btn-info:active { 
+    background-color: #005d90 !important;
+    border: ;
+}
+
+button:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+.btn-info { 
+    background-color: #006db0;
+}
+
+.btn-outline-info { 
+    color: #006db0;
+}
+
