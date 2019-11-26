@@ -38,7 +38,7 @@ class _sport_database:
 
 	def update_sport(self, sport_id, data):
 		for key in data:
-			if key = 'name':
+			if key == 'name':
 				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update Sports set
 				{} = {}

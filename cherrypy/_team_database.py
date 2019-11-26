@@ -61,7 +61,7 @@ class _team_database:
 
 	def update_team(self, team_id, data):
 		for key in data:
-			if key = 'name'
+			if key == 'name':
 				data[key] = '\'' + data[key] + '\''
 			self.db.query('''update teams set
 				{} = {}
