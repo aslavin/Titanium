@@ -1,0 +1,71 @@
+th, td { 
+    text-align: center;
+    border: 1px solid white !important;
+    color: white;
+}
+
+.tableUserLink { 
+    color: white;
+}
+
+.tableUserLink:hover { 
+    color: #eeeeee;
+    text-decoration: none;
+}
+
+th { 
+    font-size: 25px;
+}
+
+td { 
+    font-size: 22px;
+}
+
+#leagueSubtitle { 
+    text-align: center;
+}
+
+#gameLocationParagraph { 
+    font-size: 25px;
+}
+
+table { 
+    background-image: linear-gradient(to bottom, #006db0,#c0c0c0);
+    width: 100%;
+}
+
+.rank { 
+    width: 10%;
+}
+
+.team { 
+    width: 80%;
+}
+
+.record { 
+    width: 10%;
+}
+
+#noSpaceInPoolAlert { 
+    display: none;
+}
+
+#poolSignUp { 
+    width: 100%;
+    height: 60px;
+    display: none;
+}
+
+#poolSignUpButton { 
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+}
+
+.fa { 
+    margin-right: 5px; 
+}
+
+#poolTable { 
+    margin: 25px 0;
+}

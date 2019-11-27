@@ -75,7 +75,7 @@
                                     <span id="totalPools">7</span>  <!-- placeholder -->
                                 </div>
                                 <div class="statisticTitle">
-                                   Total Pools
+                                    Total Pools
                                 </div>
                             </div>
                             <div class="statistic">
@@ -83,7 +83,7 @@
                                     <span id="poolsAvailable">2</span>  <!-- placeholder -->
                                 </div>
                                 <div class="statisticTitle">
-                                   Pools Available
+                                    Pools Available
                                 </div>
                             </div>
                         </div>
@@ -94,26 +94,37 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="mainContent">
             <div class="col-12 col-lg-10 offset-lg-2">
                 <div class="container-fluid">
                     <div id="userContent">
                         <div id="blankDiv"></div>
-                        <h2>Broomball (CoRec)</h2> 
-                        <div id="poolLeagues">
-                        </div>
+
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" id="noMoreSpaceAlert">
+                            <strong>Heads up!</strong> There is no more space to register for this league.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>  
+
+                        <h2>Broomball (CoRec)</h2>
+
+                        <div class="row"><div class="col-12"><div id="leagueSubtitle">
+                        <p id="gameLocationParagraph">Location: <span id="gameLocation">Compton Family Ice Arena</span></p>
+                        </div></div></div>
+                        <div class="row" id="leaguePools"></div>
                     </div> 
                 </div>
             </div> 
         </div>
         <div class="row"><div class="col-lg-10 offset-lg-2 col-12">
-        <div id="landingFooterUser">
-            <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
-            <div class="footerEntry">The Dragons</div>
-            <div class="footerEntry">136 Debartolo Hall</div>
-            <div class="footerEntry">Notre Dame, IN 46556</div>
-            <div class="Email: pfische@nd.edu"></div>
-        </div>
-        </div></div>
+                <div id="landingFooterUser">
+                    <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
+                    <div class="footerEntry">The Dragons</div>
+                    <div class="footerEntry">136 Debartolo Hall</div>
+                    <div class="footerEntry">Notre Dame, IN 46556</div>
+                    <div class="Email: pfische@nd.edu"></div>
+                </div>
+            </div></div>
     </body>
 </html>
