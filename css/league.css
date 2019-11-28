@@ -9,10 +9,15 @@
     height: 200px;
     color: white;
     align-items: center;
+    position: relative;
 }
 
 .leaguePool:hover { 
     opacity: 0.6;
+}
+
+.parent { 
+    position: relative
 }
 
 .imageLink:hover { 
@@ -33,6 +38,17 @@
 
 .leaguePoolCol { 
     margin: 25px 0;
+}
+
+.leagueFullBanner { 
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    background-color: silver;
+    opacity: 0.85;
+    position: absolute;
+    width: 100%;
+    top: 0;
 }
 
 #noMoreSpaceAlert { 
