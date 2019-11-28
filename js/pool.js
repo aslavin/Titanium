@@ -77,7 +77,7 @@ function addTeamMemberField()  {
 }
 
 function activateSingleAlert(alertId) {
-    
+    document.getElementById("createTeamModal").scrollTop = 0; // since we are displaying a warning, scroll to the top of the modal */ 
     var alerts = document.getElementsByClassName("alert");
     var alertToDelete = 0;
     for (var i = 0; i < alerts.length; i++) {
