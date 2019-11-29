@@ -42,8 +42,8 @@ sportdb = _sport_database(db)
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
 
 # create configuration, which is a dict
-conf = { 'global': {'server.socket_host': '127.0.0.1',
-		     'server.socket_port': 51017},
+conf = { 'global': {'server.socket_host': 'project01.cse.nd.edu',
+		     'server.socket_port': 5000},
 			 '/': {'request.dispatch':dispatcher,
 					'tools.CORS.on': True} # tells it to use the dispatcher on any path
 		}

@@ -55,10 +55,21 @@ class _pool_database:
 	# get a specific pool by id
 	# return {} if pool not found
 	def get_pool(self, pool_id):
+		
 		self.db.query('''select * from Pools
 			where pool_id = {}'''.format(pool_id))
 		r = self.db.store_result()
-		return util.get_dict_from_query(r.fetch_row(how=1))
+		return_dict = util.get_dict_from_query(r.fetch_row(how=1))
+
+		self.db.query('''select team_id from Teams
+			where pool_id = {}'''.format(pool_id))
+		teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+		if type(teams_in_pool) is dict: # only returned one item
+			return_dict.update({"teams": [teams_in_pool["team_id"]]})
+		else: # returned multiple items
+			return_dict.update({"teams": [sql_return["team_id"] for sql_return in teams_in_pool]})
+		
+		return return_dict
 
 	# remove pool from database
 	def delete_pool(self, pool_id):

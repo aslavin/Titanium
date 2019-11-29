@@ -74,7 +74,18 @@ class _team_database:
 		self.db.query('''select * from Teams
 			where team_id = {}'''.format(team_id))
 		r = self.db.store_result()
-		return util.get_dict_from_query(r.fetch_row(how=1))
+		return_dict = util.get_dict_from_query(r.fetch_row(how=1))
+
+		self.db.query('''select user_id from Users_Teams
+			where team_id = {}'''.format(team_id))
+		teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+		print(teams_in_pool)
+		if type(teams_in_pool) is dict: # only returned one item
+			return_dict.update({"users": [teams_in_pool["user_id"]]})
+		else: # returned multiple items
+			return_dict.update({"useres": [sql_return["user_id"] for sql_return in teams_in_pool]})
+		
+		return return_dict
 
 	# remove team from database
 	def delete_team(self, team_id):
