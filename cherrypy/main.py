@@ -37,13 +37,14 @@ userdb = _user_database(db) # shared across all controllers
 leaguedb = _league_database(db)
 teamdb = _team_database(db)
 sportdb = _sport_database(db)
+pooldb = _pool_database(db)
 
 # load all data
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
 
 # create configuration, which is a dict
 conf = { 'global': {'server.socket_host': 'project01.cse.nd.edu',
-		     'server.socket_port': 5000},
+		     'server.socket_port': 51069},
 			 '/': {'request.dispatch':dispatcher,
 					'tools.CORS.on': True} # tells it to use the dispatcher on any path
 		}
@@ -53,6 +54,7 @@ usersController = usersController(userdb)
 leaguesController = leaguesController(leaguedb)
 teamsController = teamsController(teamdb)
 sportsController = sportsController(sportdb)
+poolsController = poolsController(pooldb)
 
 # generic handlers for setting/deleting all users
 dispatcher.connect('getUsers', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
