@@ -62,7 +62,7 @@ dispatcher.connect('deleteUsers', '/users/', controller=usersController, action=
 
 # specific users handlers
 dispatcher.connect('getUser', '/users/:user_id', controller=usersController, action='GET_USER', conditions=dict(method=['GET']))
-dispatcher.connect('postUser', '/users/', controller=usersController, action='POST_USER', conditions=dict(method=['POST']))
+dispatcher.connect('postUser', '/users/:user_id', controller=usersController, action='POST_USER', conditions=dict(method=['POST']))
 dispatcher.connect('putUser', '/users/:user_id', controller=usersController, action='PUT_USER', conditions=dict(method=['PUT']))
 dispatcher.connect('deleteUser', '/users/:user_id', controller=usersController, action='DELETE_USER', conditions=dict(method=['DELETE']))
 
