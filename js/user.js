@@ -1,13 +1,19 @@
-/* NOTE: this data format is sample, used for testing purposes. Modify as necessary to achieve desired result. */
+/* TODO: gather player notification data and store it in playerNotifications as below. */
+/* TODO: gather pending notification data and store it in pendingNotifications as below. */
+/* TODO: gather captain notification data and store it in captainNotifications as below. *//
+
+// EXAMPLES for how to store (FOLLOW EXACTLY):
+
 var playerNotifications = [["","Brian Hall", "","Newfs", "", "Indoor Volleyball - CoRec"],["","Rosie Crisman", "", "Blue Bar", "","Bookstore Basketball - CoRec"],["","Will Huffman","", "Boolin Boys", "", "Springtime Curling - Intramural"]]; // indexed by CAPTAIN LINK - CAPTAIN  - TEAM LINK - TEAM  - LEAGUE LINK - LEAGUE
 var pendingNotifications = [["","Andy Slavin", "", "Jump Rope Nation"]]; // indexed by CAPTAIN LINK - CAPTAIN - TEAM LINK - TEAM
 var captainNotifications = [["","Noah Davis", "", "Andy's Army"]]; // indexed by PLAYER LINK - PLAYER - YOUR TEAM LINK - YOUR TEAM
+ 
 
-// indexed by DATE - LEAGUE LINK - LEAGUE - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TIME - TIME - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 2 LINK - TEAM 2 WINS - TEAM 2 LOSSES - LOCATION 
-var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "","Stix Or It Didn't Happen", "2", "2", "Compton Family Ice Arena"]]
+var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "","Stix Or It Didn't Happen", "2", "2", "Compton Family Ice Arena"]];
+// indexed by DATE - LEAGUE LINK - LEAGUE - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TIME - TIME - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 2 LINK - TEAM 2 WINS - TEAM 2 LOSSES - LOCATION
 
 
-/* Frontend template: no need to edit, except for the 'href' attribute of the links */
+/* DONE: MAKE HTML COMPONENTS for everythiNG */
 
 var playerMessageComponents = ['<div class="notificationMessage" id="playerNotificationMessage',
 '"><div class="row"><div class="col-lg-10 col-md-9 col-sm-8 col-6"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="',
@@ -60,7 +66,8 @@ var gameComponents = ['<div class="card"><div class="card-header" id="heading',
 '(<span class="oppTeamWins">',
 '</span> - <span class="oppTeamLosses">',
 '</span>)</a></div><div class="gameLocation">',
-'</div></div></div></div></div></div></div>']
+'</div></div></div></div></div></div></div>'
+]
 
 
 var playerNoNotification = '<div class="noNotificationsMessage">No player notifications! If you get invited to or request to join a team, your status will appear here.</div>';
@@ -68,9 +75,11 @@ var pendingNoNotification = '<div class="noNotificationsMessage">No pending noti
 var captainNoNotification = '<div class="noNotificationsMessage">No captain notifications! If you are the captain of any team(s), requests to join your team(s), as well as the status of any prior invitations you\'ve sent out will appear here.</div';
 var gameNoNotification = '<div class="noNotificationsMessage">No upcoming games! To request membership of a new team, search for it by name with the \'Search\' feature above.</div></div>';
 
-/* END DO NOT EDIT */
-
 function loadData() { 
+
+
+    /* EXECUTE TODO items here. Connect to backend, manipulate playerNotifications, pendingNotifications, captainNotifications, gameNotifications
+    variables as described above, EXACTLY. */
 
 
     var playersNotificationMessages = document.getElementById("playersNotificationMessages");
@@ -78,7 +87,7 @@ function loadData() {
     var captainNotificationMessages = document.getElementById("captainNotificationMessages");
     var games = document.getElementById("gameAccordion");
 
-    /* LOAD PLAYER NOTIFICATION DATA */
+    /* DONE: LOAD PLAYER NOTIFICATION DATA */
 
     document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
     if (playerNotifications.length == 0) playersNotificationMessages.innerHTML = playerNoNotification;
@@ -87,7 +96,7 @@ function loadData() {
     }
 
 
-    /* LOAD PENDING NOTIFICATION DATA */
+    /* DONE: LOAD PENDING NOTIFICATION DATA */
 
     document.getElementById("nPendingNotifications").innerHTML = pendingNotifications.length ? pendingNotifications.length : "";
     if (pendingNotifications.length == 0) pendingNotificationMessages.innerHTML = pendingNoNotification;
@@ -96,7 +105,7 @@ function loadData() {
     }
 
 
-    /* LOAD CAPTAIN NOTIFICATION DATA */
+    /* DONE: LOAD CAPTAIN NOTIFICATION DATA */
     document.getElementById("nCaptainNotifications").innerHTML = captainNotifications.length ? captainNotifications.length : "";
     if (captainNotifications.length == 0) captainNotificationMessages.innerHTML = captainNoNotification;
     for (var k = 0; k < captainNotifications.length; k++) { 
@@ -105,7 +114,7 @@ function loadData() {
 
 
 
-    /* LOAD GAME DATA */
+    /* DONE: LOAD GAME DATA */
     if (gameNotifications.length == 0) games.innerHTML = gameNoNotification;
     for (var l = 0; l < gameNotifications.length; l++) { 
         games.innerHTML += gameComponents[0] + l + gameComponents[1] + gameNotifications[l][0] + gameComponents[2] + gameNotifications[l][1] + gameComponents[3] + gameNotifications[l][2] + gameComponents[4] + l + gameComponents[5] + l + gameComponents[6] + l + gameComponents[7] + l + gameComponents[8] + l + gameComponents[9] + gameNotifications[l][3] +   gameComponents[10] + gameNotifications[l][4] + gameComponents[11] + gameNotifications[l][5] + gameComponents[12] + gameNotifications[l][6] + gameComponents[13] + gameNotifications[l][7] + gameComponents[14] + gameNotifications[l][8] + gameComponents[15] + gameNotifications[l][9] + gameComponents[16] + gameNotifications[l][10] + gameComponents[17] + gameNotifications[l][11] +  gameComponents[18] + gameNotifications[l][12] + gameComponents[19] + gameNotifications[l][13] + gameComponents[20] + gameNotifications[l][14] + gameComponents[21] + gameNotifications[l][15] + gameComponents[22] + gameNotifications[l][16] + gameComponents[23] + gameNotifications[l][17] + gameComponents[24];
@@ -154,6 +163,9 @@ function changeBtnGroup(id) {
     document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
 }
 
+
+/* MOSTLY DONE: HELPER FUNCTIONS FOR ACCEPTING, DENYING, DISMISSING NOTIFICATIONS */
+
 function playerAcceptInvitation(id) { 
     var playerNotifications = document.getElementById("nPlayerNotifications");
     playerNotifications.innerHTML -= 1;
@@ -163,7 +175,7 @@ function playerAcceptInvitation(id) {
 
     }
 
-    /* TODO: database manipulation; add player to this team */
+    /* TODO: connect to backend to add current user to team. Hold off on this for a little while. */
 
     else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none"; 
 }
@@ -182,15 +194,14 @@ function playerDenyInvitation(id) {
 }
 
 function captainAcceptInvitation(id) {
-    var captainNotifications = document.getElementById("nCaptainNotifications");
-
-    // TODO: database manipulation: add the player to this team */ 
-
+    var captainNotifications = document.getElementById("nCaptainNotifications"); 
     captainNotifications.innerHTML -= 1;
     if (captainNotifications.innerHTML <= 0) { 
         captainNotifications.style.display = "none";
         document.getElementById("captainNotificationMessages").innerHTML = captainNoNotification;
     
+    /* TODO: connect to backend to add the requested player to the captain's team. Hold off on this for a little while. */ 
+
     } else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none";
 }
 

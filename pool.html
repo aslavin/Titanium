@@ -5,13 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/user.css">
+        <link rel="stylesheet" href="css/pool.css">
         <link rel="stylesheet" href="css/common.css">
         <link href="https://fonts.googleapis.com/css?family=Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
-        <script src="js/user.js"></script>
+        <script src="js/pool.js"></script>
     </head>
     <body onload="loadData()">
         <!-- NAVBAR -->
@@ -27,16 +27,16 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -56,34 +56,26 @@
                         <div id="statisticsCollection">
                             <div class="statistic">
                                 <div class="statisticNumber">
-                                    <span id="gamesPlayed">11</span>  <!-- placeholder -->
+                                    <span id="poolCapacity">5</span>  <!-- placeholder -->
                                 </div>
                                 <div class="statisticTitle">
-                                    Games Played
+                                    Pool Capacity
                                 </div>
                             </div>
                             <div class="statistic">
                                 <div class="statisticNumber">
-                                    <span id="nWins">4</span> - <span id="nLosses">7</span>  <!-- placeholder -->
+                                    <span id="teamsRegistered"></span> 
                                 </div>
                                 <div class="statisticTitle">
-                                    Overall Record
+                                    Teams Registered
                                 </div>
                             </div>
                             <div class="statistic">
                                 <div class="statisticNumber">
-                                    <span id="winPercentage">36.4</span>% <!-- placeholder -->
+                                    <span id="playoffEligible">2</span> 
                                 </div>
                                 <div class="statisticTitle">
-                                    Win Percentage
-                                </div>
-                            </div>
-                            <div class="statistic">
-                                <div class="statisticNumber">
-                                    <span id="overallRank">98</span>  <!-- placeholder -->
-                                </div>
-                                <div class="statisticTitle">
-                                    Overall Rank
+                                    Playoff Eligible Teams
                                 </div>
                             </div>
                         </div>
@@ -94,34 +86,122 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="mainContent">
             <div class="col-12 col-lg-10 offset-lg-2">
                 <div class="container-fluid">
                     <div id="userContent">
                         <div id="blankDiv"></div>
 
-                        <div id="notifications">
-                            <h2>Notifications</h2>
-                            
-                        </div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert" id="noSpaceInPoolAlert">
+  <strong>Heads up!</strong> There is no space to register in this pool. To find other available pools, go back.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
-
-                        <div id="upcomingGames">
-                            <h2>Upcoming Games</h2>
- 
+                        <h2><span id="leagueName">Broomball (CoRec)</span> - <span id="leagueDay">Mon</span> <span id="leagueTime">9:30p</span></h2>      
+                                                <div class="row"><div class="col-12"><div id="leagueSubtitle">
+                        <p id="gameLocationParagraph">Location: <span id="gameLocation">Compton Family Ice Arena</span></p>
+                        </div></div></div>
+   
+                        <div id="poolTable">
+                            <div id="noTeamsInPool" class="noNotificationsMessage">
+                                Looks like there are no teams yet in this pool! Make the first team by clicking the button below.   
+                            </div>
+                            <table id="actualPoolTable" class="table">
+                                <tr>
+                                    <th scope="col" class="rank">Rank</th>
+                                    <th scope="col" class="team">Team</th>
+                                    <th scope="col" class="record">Record</th>
+                                </tr>
+                            </table>
+                            <div id="poolSignUp">
+                                <button class="btn btn-outline-success" id="poolSignUpButton" data-toggle="modal" data-target="#createTeamModal" onclick="readyModal()">
+                                    <i class="fa fa-plus"></i> JOIN POOL
+                                </button>
+                            </div>
                         </div>
                     </div> 
                 </div>
             </div> 
         </div>
         <div class="row"><div class="col-lg-10 offset-lg-2 col-12">
-        <div id="landingFooterUser">
-            <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
-            <div class="footerEntry">The Dragons</div>
-            <div class="footerEntry">136 Debartolo Hall</div>
-            <div class="footerEntry">Notre Dame, IN 46556</div>
-            <div class="Email: pfische@nd.edu"></div>
+                <div id="landingFooterUser">
+                    <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
+                    <div class="footerEntry">The Dragons</div>
+                    <div class="footerEntry">136 Debartolo Hall</div>
+                    <div class="footerEntry">Notre Dame, IN 46556</div>
+                    <div class="Email: pfische@nd.edu"></div>
+                </div>
+            </div></div>
+           
+            <!-- BEGIN MODAL CONTENT -->
+            
+            <div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title modalAction" id="createTeamModalTitle">Create New Team</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form>
+
+                                        <!-- HERE ARE THE ALERTS in the modal. -->
+
+                                        <!-- TEAM NAME ALERTS -->
+
+                                        <div id="teamNameAlreadyExists" class="alert alert-danger fade show" role="alert">
+                                            <strong>Team name already exists in pool.</strong> Please choose another one. 
+                                        </div>
+    
+                                        <div id="absentTeamName" class="alert alert-danger fade show" role="alert">
+                                            <strong>No team name provided.</strong> Please choose a team name.
+                                        </div>
+
+                                        <!-- OTHER ALERTS -->
+
+                                        <div id="blankUserEmail" class="alert alert-danger fade show" role="alert">
+                                            <strong>Blank team member email.</strong><br>One or more email fields were left blank.
+                                        </div>
+
+                                        <div id="invalidTeamMemberEmail" class="alert alert-danger fade show" role="alert">
+                                            <strong>Invalid team member email.</strong><br>The following team member is not registered with Titanium: <span id="invalidTeamMemberEmailText" class="errorText"></span>. 
+                                        </div>
+                                        
+                                        <div id="teamMemberAlreadyExists" class="alert alert-danger fade show" role="alert">
+                                            <strong>Team member already exists in league.</strong><br>The following user is already on your team or on another team in your league: <span id="teamMemberAlreadyExistsText" class="errorText"></span>.
+                                        </div>
+
+                                        <!-- FORM FIELDS  --> 
+   
+                                        <div class="form-group">
+                                            <label for="teamName">Team Name</label>
+                                            <input type="text" class="form-control" id="teamName">
+                                            <!-- USERS TO INVITE -->
+                                            <div id="usersToInvite"></div>
+                                        </div>
+                                        
+                                    </form>
+                                 <button id="addAnotherUser" class="btn btn-outline-success" onclick="addTeamMemberField()"><i class="fa fa-plus"></i> INVITE TEAM MEMBER</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="createOrLoginBtn" type="button" class="btn btn-info modalAction" onclick="processTeam()">Create Team</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div></div>
+
+        <!-- END MODAL CONTENT -->
+
     </body>
 </html>

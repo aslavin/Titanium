@@ -1,0 +1,56 @@
+.leaguePool { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url("../data/sports.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 200px;
+    color: white;
+    align-items: center;
+    position: relative;
+}
+
+.leaguePool:hover { 
+    opacity: 0.6;
+}
+
+.parent { 
+    position: relative
+}
+
+.imageLink:hover { 
+    text-decoration: none;
+}
+
+.leagueDescription { 
+    font-size: 35px;
+}
+
+#leagueSubtitle { 
+    text-align: center;
+}
+
+#gameLocationParagraph { 
+    font-size: 25px;
+}
+
+.leaguePoolCol { 
+    margin: 25px 0;
+}
+
+.leagueFullBanner { 
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    background-color: silver;
+    opacity: 0.85;
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+#noMoreSpaceAlert { 
+    display: none;
+}

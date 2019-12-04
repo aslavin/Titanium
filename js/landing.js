@@ -37,6 +37,9 @@ CREATE:
 LOGIN: 
 "invalidEmail" -- TODO #3 implementation -- email does not exist in selected database (student or admin)
 "invalidPassword" -- TODO #4 implementation -- email does exist in db, but invalid password pw
+
+Scroll down to see where to implement these.    
+    
 */
 
 function activateSingleAlert(alertId) {
@@ -91,8 +94,10 @@ function accountCreateValidation(isAdmin) {
     if (atIndex < 0 || dotIndex < 0 || dotIndex - atIndex <= 1) activateSingleAlert("invalidEmailFormat");
     else if (ineffectivePassword(password, hasLetters, hasNumbers)) activateSingleAlert("weakPassword");
 
-    /* TODO #1: throw "emailAlreadyExists" alert if email already exists in db */
-    /* TODO #2: throw "successfulCreation" alert if email did not exist in db */
+    /* TODO: CONNECT TO BACKEND HERE */
+
+    /* TODO #1: throw "emailAlreadyExists" alert if email already exists in db. activateSingleAlert("emailAlreadyExists") */
+    /* TODO #2: throw "successfulCreation" alert if email did not exist in db. Follow same pattern*/
 }
 
 function ineffectivePassword(password, hasLetters, hasNumbers) { 
@@ -102,6 +107,10 @@ function ineffectivePassword(password, hasLetters, hasNumbers) {
 function loginValidation(isAdmin)  {
 
     clearAllAlerts();
+    var email = document.getElementById("userEmail").value;
+    var password = document.getElementById("userPassword").value;
+
+    /* TODO: connect to backend here */
 
     /* TODO #3: throw "invalidEmail" alert if email does not exist in db */
     /* TODO #4  throw "invalidPassword" alert if email exists in db but password is incorrect.*/
