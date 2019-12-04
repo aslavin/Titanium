@@ -21,8 +21,8 @@ def decode_list(l):
 def clean_query_input(input_dict, db_name, set_nulls=True):
     data = copy.deepcopy(input_dict)
     if db_name == 'Users':
-        keys = ['pass_hash', 'netid', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
-        str_keys = ['pass_hash', 'netid', 'first_name', 'last_name', 'gender', 'residence_hall']
+        keys = ['pass_hash', 'netid', 'email', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
+        str_keys = ['pass_hash', 'netid', 'email', 'first_name', 'last_name', 'gender', 'residence_hall']
     elif db_name == 'Leagues':      
         keys = ['name', 'start_time', 'end_time', 'gender', 'team_size']
         str_keys = ['name', 'gender']

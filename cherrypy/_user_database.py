@@ -25,6 +25,7 @@ class _user_database:
     def set_user(self, data):
         user_id = None # keeping this variable in case we need it later
         data = util.clean_query_input(data, "Users")
+        
         if user_id is None:
             self.db.query('''insert into Users(
                 pass_hash,
@@ -52,34 +53,34 @@ class _user_database:
                 data['wins'],
                 data['losses'],
                 data['ties']))
-        else:
-            self.db.query('''update users set
-                pass_hash = {},
-                netid = {},
-                email = {},
-                first_name = {},
-                last_name = {},
-                is_undergrad = {},
-                is_admin = {},
-                gender = {},
-                residence_hall = {},
-                wins = {},
-                losses = {},
-                ties = {}
-                where user_id = {}'''.format(
-                data['pass_hash'],
-                data['netid'],
-                data['email'],
-                data['first_name'],
-                data['last_name'],
-                data['is_undergrad'],
-                data['is_admin'],
-                data['gender'],
-                data['residence_hall'],
-                data['wins'],
-                data['losses'],
-                data['ties'],
-                user_id))
+        #else:
+        #    self.db.query('''update users set
+        #        pass_hash = {},
+        #        netid = {},
+        #        email = {},
+        #        first_name = {},
+        #        last_name = {},
+        #        is_undergrad = {},
+        #        is_admin = {},
+        #        gender = {},
+        #        residence_hall = {},
+        #        wins = {},
+        #        losses = {},
+        #        ties = {}
+        #        where user_id = {}'''.format(
+        #        data['pass_hash'],
+        #        data['netid'],
+        #        data['email'],
+        #        data['first_name'],
+        #        data['last_name'],
+        #        data['is_undergrad'],
+        #        data['is_admin'],
+        #        data['gender'],
+        #        data['residence_hall'],
+        #        data['wins'],
+        #        data['losses'],
+        #        data['ties'],
+        #        user_id))
 
         self.db.query('select last_insert_id()')
         r = self.db.store_result()
