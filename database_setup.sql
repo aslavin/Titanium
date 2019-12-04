@@ -2,6 +2,7 @@ create table Users(
 	user_id int auto_increment,
 	pass_hash varchar(255),
 	netid varchar(255),
+    email varchar(255),
 	first_name varchar(255),
 	last_name varchar(255),
 	is_undergrad boolean,

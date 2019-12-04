@@ -97,8 +97,9 @@ dispatcher.connect('deleteSport', '/sports/:sport_id', controller=sportsControll
 dispatcher.connect('postSport', '/sports/:sport_id', controller=sportsController, action='POST_SPORT', conditions=dict(method=['POST']))
 
 # specific pool handlers
+dispatcher.connect('getPools', '/pools/', controller=poolsController, action='GET_POOLS', conditions=dict(method=['GET']))
 dispatcher.connect('getPool', '/pools/:pool_id', controller=poolsController, action='GET_POOL', conditions=dict(method=['GET']))
-dispatcher.connect('postPool', '/pools/:pool_id', controller=poolsController, action='POST_POOL', conditions=dict(method=['POST']))
+dispatcher.connect('postPool', '/pools/', controller=poolsController, action='POST_POOL', conditions=dict(method=['POST']))
 dispatcher.connect('putPool', '/pools/:pool_id', controller=poolsController, action='PUT_POOL', conditions=dict(method=['PUT']))
 dispatcher.connect('deletePool', '/pools/:pool_id', controller=poolsController, action='DELETE_POOL', conditions=dict(method=['DELETE']))
 
