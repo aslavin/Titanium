@@ -1,6 +1,6 @@
 /* TODO: gather player notification data and store it in playerNotifications as below. */
 /* TODO: gather pending notification data and store it in pendingNotifications as below. */
-/* TODO: gather captain notification data and store it in captainNotifications as below. *//
+/* TODO: gather captain notification data and store it in captainNotifications as below. */
 
 // EXAMPLES for how to store (FOLLOW EXACTLY):
 
@@ -9,7 +9,7 @@ var pendingNotifications = [["","Andy Slavin", "", "Jump Rope Nation"]]; // inde
 var captainNotifications = [["","Noah Davis", "", "Andy's Army"]]; // indexed by PLAYER LINK - PLAYER - YOUR TEAM LINK - YOUR TEAM
  
 
-var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "","Stix Or It Didn't Happen", "2", "2", "Compton Family Ice Arena"]];
+var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1","0", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "0","","Stix Or It Didn't Happen", "2", "2", "1","Compton Family Ice Arena"]];
 // indexed by DATE - LEAGUE LINK - LEAGUE - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TIME - TIME - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 2 LINK - TEAM 2 WINS - TEAM 2 LOSSES - LOCATION
 
 
@@ -55,19 +55,22 @@ var gameComponents = ['<div class="card"><div class="card-header" id="heading',
 '">',
 ' (<span class="myTeamWins">',
 '</span> - <span class="myTeamLosses">',
+'</span> - <span class="myTeamTies">',
 '</span>)</a></div><div class="gameTime">',
 '</div></div><div class="leftGameBodySmall d-block d-lg-none"><div class="gameTime">',
 '</div><div class="myTeamName"><a class="userLink" href="',
 '">',
 ' (<span class="myTeamWins">',
 '</span> - <span class="myTeamLosses">',
+'</span> - <span class="myTeamTies">',
 '</span>)</a></div></div></div></div><div class="col-md-2 col-12"><div class="centerGameBody"><span class="versus">VS.</span></div></div><div class="col-md-5 col-12"><div class="rightGameBody"><div class="oppTeamName"><a class="userLink" href="',
 '">',
 '(<span class="oppTeamWins">',
 '</span> - <span class="oppTeamLosses">',
+'</span> - <span class="oppTeamTies">',
 '</span>)</a></div><div class="gameLocation">',
 '</div></div></div></div></div></div></div>'
-]
+];
 
 
 var playerNoNotification = '<div class="noNotificationsMessage">No player notifications! If you get invited to or request to join a team, your status will appear here.</div>';
@@ -116,11 +119,16 @@ function loadData() {
 
     /* DONE: LOAD GAME DATA */
     if (gameNotifications.length == 0) games.innerHTML = gameNoNotification;
+    var gamesInnerHTML = "";
     for (var l = 0; l < gameNotifications.length; l++) { 
-        games.innerHTML += gameComponents[0] + l + gameComponents[1] + gameNotifications[l][0] + gameComponents[2] + gameNotifications[l][1] + gameComponents[3] + gameNotifications[l][2] + gameComponents[4] + l + gameComponents[5] + l + gameComponents[6] + l + gameComponents[7] + l + gameComponents[8] + l + gameComponents[9] + gameNotifications[l][3] +   gameComponents[10] + gameNotifications[l][4] + gameComponents[11] + gameNotifications[l][5] + gameComponents[12] + gameNotifications[l][6] + gameComponents[13] + gameNotifications[l][7] + gameComponents[14] + gameNotifications[l][8] + gameComponents[15] + gameNotifications[l][9] + gameComponents[16] + gameNotifications[l][10] + gameComponents[17] + gameNotifications[l][11] +  gameComponents[18] + gameNotifications[l][12] + gameComponents[19] + gameNotifications[l][13] + gameComponents[20] + gameNotifications[l][14] + gameComponents[21] + gameNotifications[l][15] + gameComponents[22] + gameNotifications[l][16] + gameComponents[23] + gameNotifications[l][17] + gameComponents[24];
+        gamesInnerHTML += gameComponents[0] + l + gameComponents[1] + gameNotifications[l][0] + gameComponents[2] + gameNotifications[l][1] + gameComponents[3] + gameNotifications[l][2] + gameComponents[4] + l + gameComponents[5] + l + gameComponents[6] + l + gameComponents[7] + l + gameComponents[8] + l + gameComponents[9];
+        for (var m = 10; m < gameComponents.length; m++) { 
+            gamesInnerHTML += gameNotifications[l][m-7] + gameComponents[m];     
+        }
     }
-
-
+    games.innerHTML = gamesInnerHTML;
+    console.log(gamesInnerHTML);
+    computeFooterMargin();
 }
 
 function changeExpandIcon(id) { 

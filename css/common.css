@@ -20,6 +20,25 @@
     font-size: 20px;
 }
 
+th, td { 
+    text-align: center;
+    border: 5px solid #006db0 !important;
+    color: black;
+    font-size: 20px;
+}
+
+
+.tableUserLink { 
+    color: black;
+    font-weight: bold;
+}
+
+.tableUserLink:hover { 
+    color: #eeeeee;
+    text-decoration: none;
+}
+
+
 .btn-warning { 
     color: white;
 }
@@ -49,15 +68,22 @@ body {
 
 .userLink { 
     color: black;
-    text-decoration: underline;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .userLink:hover { 
-    color: silver;
+    color: rgb(80,80,80);
+    text-decoration: none;
 }
 
 .alert { 
     text-align: center;
+}
+
+.btn-danger, .alert-danger { 
+    background-color: rgb(212,31,0,0.75); 
+    color: white;
 }
 
 #landingFooter {
@@ -69,6 +95,11 @@ body {
    align-items: center;
    color: white;
    background-color: #006db0 !important; 
+}
+
+.btn-outline-success { 
+    border: 1px solid rgb(0,212,120);
+    background-color: rgba(0,212,120,0.75); 
 }
 
 .badge-light { 
@@ -181,3 +212,6 @@ button:focus {
     color: #006db0;
 }
 
+.subsequentHeader { 
+    margin-top: 45px;
+}

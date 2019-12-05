@@ -7,7 +7,7 @@ function playVideoAgain() {
     document.getElementById("recSportsVideo").play();
 }
 
-function populateModal(loginText, isAdmin) { 
+function populateModal(loginText) { 
     
     clearAllAlerts();
 
@@ -15,8 +15,10 @@ function populateModal(loginText, isAdmin) {
     for (var i = 0; i < modalAction.length; i++) { 
         modalAction[i].innerHTML = loginText;
     }
-    if (isAdmin) document.getElementById("adminCheckbox").checked = true;
-    else document.getElementById("adminCheckbox").checked = false;
+
+    if (loginText == 'Log In') document.getElementById("createAccountExtraInfo").style.display = "none";
+    else document.getElementById("createAccountExtraInfo").style.display = "block";
+
 
     var formClasses = document.getElementsByClassName("form-control");
     for (var j = 0; j < formClasses.length; j++) { 
@@ -46,7 +48,6 @@ function activateSingleAlert(alertId) {
     var alerts = document.getElementsByClassName("alert");
     var alertToDelete = 0;
     for (var i = 0; i < alerts.length; i++) {
-        console.log(alerts[i].id, alertId);
         if (alerts[i].id == alertId) {
             alerts[i].style.display = "block";
             alertToDelete = i;
@@ -62,14 +63,14 @@ function clearAllAlerts() {
     }
 }
 
-function loginOrAccountCreate(isAdmin) {
-    if (document.getElementById("createOrLoginBtn").innerHTML == "Log In") loginValidation(isAdmin);
-    else accountCreateValidation(isAdmin);
+function loginOrAccountCreate() {
+    if (document.getElementById("createOrLoginBtn").innerHTML == "Log In") loginValidation();
+    else accountCreateValidation();
 }
 
 /* in the functions below, isAdmin is boolean + can be used to figure out how to filter users db 
 (either for normal users or those w admin status) */
-function accountCreateValidation(isAdmin) { 
+function accountCreateValidation() { 
     
     clearAllAlerts();
 
@@ -81,30 +82,33 @@ function accountCreateValidation(isAdmin) {
     var hasLetters = false;
     var hasNumbers = false;
 
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+
+    var isMale = document.getElementById("male").checked;
+
     for (var i = 0; i < password.length; i++) { 
         var c = password.charCodeAt(i);
         if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) hasLetters = true;
         else if (c >= 48 && c <= 57) hasNumbers = true;
     } 
 
-
-    /* db queries, etc. could go here. */
-    
-
     if (atIndex < 0 || dotIndex < 0 || dotIndex - atIndex <= 1) activateSingleAlert("invalidEmailFormat");
+    else if (firstName.length == 0) activateSingleAlert("noFirstName");
+    else if (lastName.length == 0) activateSingleAlert("noLastName");
     else if (ineffectivePassword(password, hasLetters, hasNumbers)) activateSingleAlert("weakPassword");
 
     /* TODO: CONNECT TO BACKEND HERE */
 
     /* TODO #1: throw "emailAlreadyExists" alert if email already exists in db. activateSingleAlert("emailAlreadyExists") */
-    /* TODO #2: throw "successfulCreation" alert if email did not exist in db. Follow same pattern*/
+    /* TODO #2: throw "successfulCreation" alert if email did not exist in db. Create a new account; all variables needed are stored in email, password, firstName, lastName, isMale above. Once successful, use activateSingleAlert("successfulCreation")*/
 }
 
 function ineffectivePassword(password, hasLetters, hasNumbers) { 
     return (password.length < 8 || !hasLetters || !hasNumbers);
 }
 
-function loginValidation(isAdmin)  {
+function loginValidation()  {
 
     clearAllAlerts();
     var email = document.getElementById("userEmail").value;

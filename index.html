@@ -25,10 +25,10 @@
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Log In',false)">Login</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Log In')">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Create Account',false)">Sign Up<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#" onclick="populateModal('Create Account')">Sign Up<span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
                 </div>
@@ -50,8 +50,8 @@
                     <div class="landingSubsection">
                         <h3 class="landingSubtitle">For Students</h3>
                         <div class="buttonBox">
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In', false)">Student Login</button>
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account', false)">New Student</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In')">Student Login</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account')">New Student</button>
                         </div>
                         <p>With Titanium, you're just a few clicks away from organizing or joining a new team with your friends or club members. Titanium makes it easy for captains and team members alike to join leagues, view schedules, and track results and statistics.</p>
                     </div> 
@@ -60,8 +60,8 @@
                     <div class="landingSubsection">
                         <h3 class="landingSubtitle">For Administrators</h3>
                         <div class="buttonBox">
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In', true)">Admin Login</button>
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account', true)">New Admin</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-outline-info" onclick="populateModal('Log In')">Admin Login</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="loginBtn btn btn-info" onclick="populateModal('Create Account')">New Admin</button>
                         </div>
                         <p>If you're a school administrator or referee looking for a simple system to organize college intramural and club sports into leagues, look no further than Titanium. Titanium allows for quick and easy league management and score input.</p>
                     </div>
@@ -98,11 +98,20 @@
                                             <strong>Email already exists.</strong> Please log in with existing credentials. 
                                         </div>
 
-                                         <div id="weakPassword" class="alert alert-warning fade show" role="alert">
+                                        <div id="noFirstName" class="alert alert-danger fade show" role="alert">
+                                            <strong>No first name provided.</strong> Please enter a first name. 
+                                        </div>
+
+                                        <div id="noLastName" class="alert alert-danger fade show" role="alert">
+                                            <strong>No last name provided.</strong> Please enter a last name. 
+                                        </div>
+
+
+                                        <div id="weakPassword" class="alert alert-warning fade show" role="alert">
                                             <strong>Weak password.</strong> Passwords must be 8+ characters long, containing both numbers and letters. 
                                         </div>
 
-                                         <div id="successfulCreation" class="alert alert-success fade show" role="alert">
+                                        <div id="successfulCreation" class="alert alert-success fade show" role="alert">
                                             <strong>Account created!</strong> Close window and log into Titanium with valid credentials. 
                                         </div>
 
@@ -116,15 +125,30 @@
                                             <strong>Invalid password.</strong> Incorrect password. Try logging in again.
                                         </div>
 
-
-
                                         <div class="form-group">
                                             <label for="userEmail">School Email</label>
                                             <input type="text" class="form-control" id="userEmail" placeholder="jsmith@example.edu">
                                         </div>
-                                        <div id="checkboxDiv">
-                                            <input type="checkbox" class="form-check-input" id="adminCheckbox">
-                                            <span>I'm an Admin</span>
+
+                                        <div class="form-group" id="createAccountExtraInfo">
+                                            <label for="firstName">First Name</label>
+                                            <input type="text" class="form-control" id="firstName">
+                                            <label for="LastName">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName">
+                                            <div id="radioBtnFlexbox">
+                                                <div id="genderRadioBtn1">
+                                                    <input class="form-check-input" type="radio" name="genderRadios" id="male" value="male" checked>
+                                                    <label class="form-check-label" for="male">
+                                                        Male
+                                                    </label>
+                                                </div>
+                                                <div id="genderRadioBtn2">
+                                                    <input class="form-check-input" type="radio" name="genderRadios" id="female" value="female">
+                                                    <label class="form-check-label" for="female">
+                                                        Female 
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="userPassword">Password</label>
@@ -137,7 +161,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="createOrLoginBtn" type="button" class="btn btn-info modalAction" onclick="loginOrAccountCreate(document.getElementById('adminCheckbox').checked)"></button>
+                        <button id="createOrLoginBtn" type="button" class="btn btn-info modalAction" onclick="loginOrAccountCreate()"></button>
                     </div>
                 </div>
             </div>
