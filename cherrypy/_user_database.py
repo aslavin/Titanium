@@ -54,7 +54,7 @@ class _user_database:
                 data['losses'],
                 data['ties']))
         #else:
-        #    self.db.query('''update users set
+        #    self.db.query('''update Users set
         #        pass_hash = {},
         #        netid = {},
         #        email = {},
