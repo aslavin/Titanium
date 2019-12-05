@@ -32,7 +32,7 @@ class _pool_database:
                 data['pool_time'],
                 data['max_size'])
             self.db.query(query)
-        else:
+        else: 
             self.db.query('''update Pools set
                 league_id = {},
                 name = {},
