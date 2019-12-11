@@ -127,7 +127,6 @@ function loadData() {
         }
     }
     games.innerHTML = gamesInnerHTML;
-    console.log(gamesInnerHTML);
     computeFooterMargin();
 }
 
