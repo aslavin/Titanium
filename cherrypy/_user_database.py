@@ -106,6 +106,47 @@ class _user_database:
         self.db.query("select * from Users where email = '{}'".format(email))
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(how=1))
+    
+    def get_user_notifications(self, user_id):
+
+        self.db.query('''select distinct Teams.name as team_name, Leagues.name as league_name, Users.first_name, Users.last_name 
+            from Team_Requests, Teams, Leagues, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.captain_id
+            and Leagues.league_id = Team_Requests.league_id
+            and Team_Requests.invited = 1
+			and Team_Requests.accepted = 0
+            and Team_Requests.new_member_id = {};
+            '''.format(user_id))
+        playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(playerNotifications) is dict:
+            playerNotifications = [playerNotifications]
+            
+        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
+            from Team_Requests, Teams, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.captain_id
+            and Team_Requests.invited = 0
+			and Team_Requests.accepted = 0
+            and Team_Requests.new_member_id = {};
+            '''.format(user_id))
+        pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(pendingNotifications) is dict:
+            pendingNotifications = [pendingNotifications]
+
+        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name 
+            from Team_Requests, Teams, Leagues, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.new_member_id
+            and Team_Requests.invited = 0
+			and Team_Requests.accepted = 0
+            and Team_Requests.captain_id = {};
+            '''.format(user_id))
+        captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(captainNotifications) is dict:
+            captainNotifications = [captainNotifications]
+        
+        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications}
 
     # remove user from database
     def delete_user(self, user_id):

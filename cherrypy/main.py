@@ -68,6 +68,7 @@ dispatcher.connect('deleteUser', '/users/:user_id', controller=usersController, 
 
 dispatcher.connect('getUser', '/users/email/:email', controller=usersController, action='GET_USER_EMAIL', conditions=dict(method=['GET']))
 
+dispatcher.connect('getNotifications', '/users/notification/:user_id', controller=usersController, action='GET_USER_NOTIFICATIONS', conditions=dict(method=['GET']))
 
 # generic league handlers
 dispatcher.connect('getLeagues', '/leagues/', controller=leaguesController, action='GET_LEAGUES', conditions=dict(method=['GET']))

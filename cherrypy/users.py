@@ -24,6 +24,9 @@ class usersController:
     def GET_USER_EMAIL(self, email):
         return json.dumps(self.userdb.get_user_email(email))
 
+    def GET_USER_NOTIFICATIONS(self, user_id):
+        return json.dumps(self.userdb.get_user_notifications(user_id))
+
     # create a new user
     # any keys not included in request body will be set to
     #  null in the database
