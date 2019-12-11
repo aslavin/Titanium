@@ -43,6 +43,9 @@ class usersController:
         self.userdb.update_user(user_id, msg)
         return json.dumps({"result": "success"})
 
+    def ADD_USER_TEAM(self, user_id, team_id):
+        return self.userdb.add_user_to_team(user_id, team_id)
+
     # delete an existing user
     def DELETE_USER(self, user_id):
         self.userdb.delete_user(user_id)

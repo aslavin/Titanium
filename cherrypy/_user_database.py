@@ -4,6 +4,7 @@ from MySQLdb import _exceptions
 from MySQLdb import _mysql
 import copy
 import util
+import json
 
 class _user_database:
     
@@ -115,7 +116,7 @@ class _user_database:
             and Users.user_id = Team_Requests.captain_id
             and Leagues.league_id = Team_Requests.league_id
             and Team_Requests.invited = 1
-			and Team_Requests.accepted = 0
+            and Team_Requests.accepted = 0
             and Team_Requests.new_member_id = {};
             '''.format(user_id))
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
@@ -127,7 +128,7 @@ class _user_database:
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Team_Requests.captain_id
             and Team_Requests.invited = 0
-			and Team_Requests.accepted = 0
+            and Team_Requests.accepted = 0
             and Team_Requests.new_member_id = {};
             '''.format(user_id))
         pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
@@ -139,7 +140,7 @@ class _user_database:
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Team_Requests.new_member_id
             and Team_Requests.invited = 0
-			and Team_Requests.accepted = 0
+            and Team_Requests.accepted = 0
             and Team_Requests.captain_id = {};
             '''.format(user_id))
         captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
@@ -154,12 +155,15 @@ class _user_database:
             where user_id = {}'''.format(user_id))
 
     def add_user_to_team(self, user_id, team_id):
+        r = ''
         try:
             self.db.query('''insert into Users_Teams(
                 user_id, team_id) values (
                 {}, {})'''.format(user_id, team_id))
+            r = self.db.store_result()
+            return json.dumps({'result':'success'})
         except _exceptions.IntegrityError:
-            return
+            return json.dumps({'result':'failure', 'message':'Integrity Error!'})
 
     def get_teams_by_user(self, user_id):
         self.db.query('''select team_id from Users_Teams

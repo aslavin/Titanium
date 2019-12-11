@@ -21,13 +21,13 @@ from pools import poolsController
 
 # set up cors
 class optionsController:
-	def OPTIONS(self, *args, **kwargs):
-		return "" # return empty string
+    def OPTIONS(self, *args, **kwargs):
+        return "" # return empty string
 
 def CORS():
-	cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
-	cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS"
-	cherrypy.response.headers["Access-Control-Allow-Credentials"] = "*"
+    cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
+    cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS"
+    cherrypy.response.headers["Access-Control-Allow-Credentials"] = "*"
 
 cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
 
@@ -44,10 +44,10 @@ dispatcher = cherrypy.dispatch.RoutesDispatcher()
 
 # create configuration, which is a dict
 conf = { 'global': {'server.socket_host': 'project01.cse.nd.edu',
-		     'server.socket_port': 51069},
-			 '/': {'request.dispatch':dispatcher,
-					'tools.CORS.on': True} # tells it to use the dispatcher on any path
-		}
+             'server.socket_port': 51069},
+             '/': {'request.dispatch':dispatcher,
+                    'tools.CORS.on': True} # tells it to use the dispatcher on any path
+        }
 
 # initialize controllers
 usersController = usersController(userdb)
@@ -68,6 +68,8 @@ dispatcher.connect('deleteUser', '/users/:user_id', controller=usersController, 
 
 dispatcher.connect('getUser', '/users/email/:email', controller=usersController, action='GET_USER_EMAIL', conditions=dict(method=['GET']))
 
+dispatcher.connect('putUserTeam', '/users/:user_id/team/:team_id', controller=usersController, action='ADD_USER_TEAM', conditions=dict(method=['PUT']))
+
 dispatcher.connect('getNotifications', '/users/notification/:user_id', controller=usersController, action='GET_USER_NOTIFICATIONS', conditions=dict(method=['GET']))
 
 # generic league handlers
@@ -79,12 +81,14 @@ dispatcher.connect('postLeague', '/leagues/:league_id', controller=leaguesContro
 dispatcher.connect('putLeague', '/leagues/:league_id', controller=leaguesController, action='PUT_LEAGUE', conditions=dict(method=['PUT']))
 dispatcher.connect('deleteLeague', '/leagues/:league_id', controller=leaguesController, action='DELETE_LEAGUE', conditions=dict(method=['DELETE']))
 
+dispatcher.connect('getLeague', '/leagues/:league_id/teams', controller=teamsController, action='GET_TEAMS_LEAGUE', conditions=dict(method=['GET']))
+
 # generic team handlers
 dispatcher.connect('getTeams', '/teams/', controller=teamsController, action='GET_TEAMS', conditions=dict(method=['GET']))
 
 # specific team handlers
 dispatcher.connect('getTeam', '/teams/:team_id', controller=teamsController, action='GET_TEAM', conditions=dict(method=['GET']))
-dispatcher.connect('postTeam', '/teams/:team_id', controller=teamsController, action='POST_TEAM', conditions=dict(method=['POST']))
+dispatcher.connect('postTeam', '/teams/', controller=teamsController, action='POST_TEAM', conditions=dict(method=['POST']))
 dispatcher.connect('putTeam', '/teams/:team_id', controller=teamsController, action='PUT_TEAM', conditions=dict(method=['PUT']))
 dispatcher.connect('deleteTeam', '/teams/:team_id', controller=teamsController, action='DELETE_TEAM', conditions=dict(method=['DELETE']))
 
