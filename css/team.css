@@ -1,0 +1,48 @@
+#poolRank { 
+    font-size: 40px;
+}
+
+.alert-dark { 
+    font-size: 20px;
+}
+
+th, td { 
+    
+}
+
+.card { 
+    text-align: center;
+}
+
+.card-body { 
+    font-size: 20px;
+}
+
+.gameOutcome { 
+    padding-right: 5px;
+}
+
+.outcomeWin, .outcomeTBDOrTie, .outcomeLoss { 
+    margin-bottom: 10px;
+}
+
+.outcomeTBDOrTie { 
+    background-color: rgba(0,0,0,0.125);
+    border: 1px solid rgba(0,0,0,0.125);
+}
+
+.outcomeWin { 
+    background-color: rgba(0,212,120,0.5);
+    border: 1px solid rgb(0,212,120); 
+}
+
+.outcomeLoss { 
+    background-color: rgba(212,31,0,0.5);
+    border: 1px solid rgb(212,31,0);
+
+}
+
+.captain, .gender { 
+    width: 15%;
+}
+.

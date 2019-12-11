@@ -21,8 +21,30 @@ video {
     text-align: center;
 }
 
+#genderRadioBtn1 { 
+    margin-left: 22px;
+}
+
+#genderRadioBtn2 { 
+    margin-left: 35px;
+}
+
 .alert { 
     display: none;
+}
+
+.form-check-label { 
+    padding-top: 3px;
+}
+
+#radioBtnFlexbox { 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; 
+}
+
+.form-control { 
+    margin-bottom: 12px;
 }
 
 #textOnTheVideo {

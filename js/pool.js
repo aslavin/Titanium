@@ -70,10 +70,7 @@ function loadData() {
 
     /* DONE: COMPUTE FOOTER POSITION */
 
-    var ch = document.getElementById("landingFooterUser").clientHeight;
-    var ih = window.innerHeight;
-    var sh = document.getElementById("mainContent").scrollHeight;
-    if (ih - ch - sh > 0) document.getElementById("landingFooterUser").style.marginTop = (ih - ch - sh) + "px";
+    computeFooterMargin();
 
 }
 
@@ -91,6 +88,7 @@ var nMembers = 0;
 var nMembersToCheck = 0;
 
 function readyModal() { 
+    clearAllAlerts();
     nMembers = 0;
     document.getElementById("usersToInvite").innerHTML = "";
     document.getElementById("teamName").value = "";
@@ -124,7 +122,6 @@ function activateSingleAlert(alertId) {
 function processTeam() { 
 
     clearAllAlerts();
-
     var finalTeamName = document.getElementById("teamName").value;
     if (finalTeamName.length == 0) { 
         activateSingleAlert("absentTeamName");

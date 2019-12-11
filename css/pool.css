@@ -1,27 +1,3 @@
-th, td { 
-    text-align: center;
-    border: 1px solid white !important;
-    color: white;
-}
-
-.tableUserLink { 
-    color: white;
-    font-weight: bold;
-}
-
-.tableUserLink:hover { 
-    color: #eeeeee;
-    text-decoration: none;
-}
-
-th { 
-    font-size: 25px;
-}
-
-td { 
-    font-size: 22px;
-}
-
 #leagueSubtitle { 
     text-align: center;
 }
@@ -31,7 +7,6 @@ td {
 }
 
 table { 
-    background-image: linear-gradient(to bottom, #006db0,#c0c0c0);
     width: 100%;
 }
 
@@ -61,6 +36,7 @@ table {
     width: 100%;
     height: 100%;
     font-size: 30px;
+    color: white;
 }
 
 .fa { 
@@ -77,11 +53,14 @@ table {
 
 #addAnotherUser { 
     width: 100%; 
+    color: white;
 }
 
 .teamMemberWrapper { 
     padding: 20px 0px;
 }
+
+
 
 .fa-close { 
     font-size: 16px;

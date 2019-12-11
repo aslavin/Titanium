@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Titanium</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+        <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link href="https://fonts.googleapis.com/css?family=Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+        <script src="js/common.js"></script>
+        <script src="js/admin.js"></script>
+    </head>
+    <body onload="computeFooterMargin()">
+        <!-- NAVBAR -->
+        <div id="navbarOnTheVideo">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="./user.html">TITANIUM</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>  
+        </div>
+
+        <!-- SPACE FILLER DIV --> 
+
+        <!-- BEGIN CONTENT --> 
+        <div class="d-none d-lg-block" id="statsRow">
+                <div id="lifetimeStatistics">
+                    <div id="statisticsFlexbox">
+                        <div id="lifetimeStatisticsTitle">
+                            Admin <br> Access Page 
+                        </div>
+                        <div id="statisticsCollection">
+                            <div id="adminDisclaimer">
+                            Welcome to your Admin Access Page.
+                            This is where you can create new
+                            leagues and input the results of 
+                            existing games.
+                            </div>
+                        </div>
+                        <div id="loggedInAs">
+                            Logged In As:<br>tclare@nd.edu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mainContent">
+            <div class="col-12 col-lg-10 offset-lg-2">
+                <div class="container-fluid">
+                        <div id="blankDiv"></div>
+                        <h2>Admin Access Page</h2>
+                        <!-- ADD LEAGUE and INPUT SCORE BUTTONS -->
+                        <div id="adminButtonsWrapper"> 
+                            <div id="adminButtons" class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" id="btnAddLeague" class="btn btn-secondary adminPressed" onclick="changeBtnGroup(this.id)">Add League</button>
+                                    <button type="button" id="btnInputScore" class="btn btn-secondary adminUnpressed" onclick="changeBtnGroup(this.id)">Input Scores</button>
+                            </div>
+                        </div>
+
+                        <!-- ADD LEAGUE AND INPUT SCORE CONTENT -->
+                        
+                        <div id="contentAddLeagueWrapper">
+                            <div class="row" id="contentAddLeague">
+                                    <div class="col-12" style="margin-bottom: 20px; padding: 0px;">
+                                        <input type="text" class="form-control" id="leagueName" placeholder="League Name">
+                                    </div>
+
+                                        <div class="col-12 d-block d-md-none centerContent">
+                                            <div class="nonInputContent">Start Date</div>
+                                        </div>
+
+                                        <div class="col-md-6 d-md-block d-none centerContent" style="padding:0px">
+                                            <div class="nonInputContent">Start Date</div>
+                                        </div>
+
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"  placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"  placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"   placeholder="YYYY"></div>
+                                        
+                                        <div class="col-md-6 d-none d-md-block centerContent" style="padding:0px">
+                                            <div class="nonInputContent">End Date</div>
+                                        </div>
+
+                                        <div class="col-12 d-block d-md-none centerContent">
+                                            <div class="nonInputContent">End Date</div>
+                                        </div>
+
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="YYYY"></div>
+
+                                            <div class="col-md-6 d-none d-md-block centerContent pool1" style="padding:0px">
+                                                <div class="nonInputContent">Pool Time</div>
+                                            </div>
+                                            <div class="col-12 d-block d-md-none centerContent pool1">
+                                                <div class="nonInputContent">Pool Time</div>
+                                            </div>
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="HH"></div>
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="MM"></div>
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="AM/PM"></div> 
+                                </div>  
+                                <div id="addAnotherPoolDiv"><button class="btn btn-info leagueBtn" id="addAnotherPoolButton" onclick="addNewPool()"><i class="fa fa-plus"></i> ADD POOL</button></div>
+                                <div id="submitNewLeagueDiv"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton">SUBMIT THIS LEAGUE</button></div>
+                            </div>                        
+                        </div>
+
+                       </div>
+                        <div id="contentInputScoreWrapper">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="contentInputScore">
+                                        <input type="text" class="form-control" id="leagueName" placeholder="League Name">
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                </div>
+            </div> 
+        </div>
+        <div class="row"><div class="col-lg-10 offset-lg-2 col-12">
+                <div id="landingFooterUser">
+                    <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
+                    <div class="footerEntry">The Dragons</div>
+                    <div class="footerEntry">136 Debartolo Hall</div>
+                    <div class="footerEntry">Notre Dame, IN 46556</div>
+                    <div class="Email: pfische@nd.edu"></div>
+                </div>
+            </div></div>
+    </body>
+</html>

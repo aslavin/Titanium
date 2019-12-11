@@ -47,10 +47,21 @@ class _sport_database:
 	# get a specific sport by id
 	# return None if sport not found
 	def get_sport(self, sport_id):
+		
 		self.db.query('''select * from Sports
 			where sport_id = {}'''.format(sport_id))
 		r = self.db.store_result()
-		return util.get_dict_from_query(r.fetch_row(how=1))
+		return_dict = util.get_dict_from_query(r.fetch_row(how=1))
+
+		self.db.query('''select league_id from Leagues
+			where sport_id = {}'''.format(sport_id))
+		leagues_in_sport = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+		if type(leagues_in_sport) is dict: # only returned one item
+			return_dict.update({"leagues": [leagues_in_sport["league_id"]]})
+		else: # returned multiple items
+			return_dict.update({"leagues": [sql_return["league_id"] for sql_return in leagues_in_sport]})
+
+		return return_dict
 
 	# remove sport from database
 	def delete_sport(self, sport_id):

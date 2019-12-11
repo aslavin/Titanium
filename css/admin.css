@@ -1,0 +1,87 @@
+#adminDisclaimer { 
+    width: 80%;
+    margin-left: 10%;
+}
+
+#adminButtons { 
+    text-align: center;
+}
+
+#contentInputScore { 
+    margin-right: 0px !important;
+    width: 100%;
+}
+
+input { 
+    text-align: center;
+}
+
+.nonInputContent { 
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#contentInputScoreWrapper { 
+    display: none;
+}
+
+.centerContent { 
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+#poolCreation { 
+    width: 100%;
+}
+
+@media screen and (max-width: 767px) { 
+    #adminButtons { 
+        width: 100%;
+    }   
+    #contentAddLeague, #inputRow, #addAnotherPoolDiv, #submitNewLeagueDiv { 
+        width: 100%;
+        margin-left: 0%;
+    }
+} 
+
+@media screen and (min-width: 768px) { 
+    #adminButtons { 
+        width: 80%;
+    } 
+    #contentAddLeague, #inputRow, #addAnotherPoolDiv, #submitNewLeagueDiv { 
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+#addAnotherPoolDiv, #submitNewLeagueDiv { 
+    margin-top: 25px;
+}
+
+.leagueBtn {
+    font-size: 20px; 
+    width: 100%;
+}
+
+#adminButtonsWrapper { 
+    width: 100%;
+    text-align: center;
+    margin: 15px 0px;
+}
+
+.adminUnpressed {
+    background-color: rgb(200,200,200);
+    border: 1px solid rgb(200,200,200);
+}
+
+.adminPressed {
+    background-color: rgb(100,100,100);
+    border: 1px solid rgb(100,100,100);
+}
+
+
+.contentCol { 
+    text-align: center;
+}
