@@ -98,6 +98,53 @@ function accountCreateValidation(isAdmin) {
 
     /* TODO #1: throw "emailAlreadyExists" alert if email already exists in db. activateSingleAlert("emailAlreadyExists") */
     /* TODO #2: throw "successfulCreation" alert if email did not exist in db. Follow same pattern*/
+    
+    // both of those should be done now
+    
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/users/email/' + email;
+    xhr.open('GET', url, true);
+
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        response = JSON.parse(xhr.response);
+        var count = Object.keys(response).length;
+        if (count != 0){
+            activateSingleAlert("emailAlreadyExists");
+        }
+        else {
+            var xhr2 = new XMLHttpRequest();
+            var url2 = 'http://project01.cse.nd.edu:51069/users/';
+            var data = {};
+            data.pass_hash = password;
+            data.email = email;
+            var json = JSON.stringify(data);
+
+            xhr2.open("POST", url2, true);
+            //xhr2.setRequestHeader('Content-type', 'application/json');
+            xhr2.onload = function() {
+                var user = JSON.parse(xhr2.responseText);
+                console.log("user");
+                console.log(user);
+                if(xhr2.readyState != 4){
+                    console.error(xhr2.statusText);
+                }
+                else if(user['result'] == 'success'){
+                    activateSingleAlert("successfulCreation");
+                }
+                else{
+                    console.error(user)
+                }
+            }
+            xhr2.send(json);
+        }
+    }
+    xhr.send();       
+
+
+           
 }
 
 function ineffectivePassword(password, hasLetters, hasNumbers) { 
@@ -114,5 +161,25 @@ function loginValidation(isAdmin)  {
 
     /* TODO #3: throw "invalidEmail" alert if email does not exist in db */
     /* TODO #4  throw "invalidPassword" alert if email exists in db but password is incorrect.*/
+    
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/users/email/' + email;
+    xhr.open('GET', url, true);
 
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+
+        response = JSON.parse(xhr.response);
+        var count = Object.keys(response).length;
+        if (count == 0){
+            activateSingleAlert("invalidEmail");
+        }
+        else {
+            if (response['pass_hash'] != password){
+                activateSingleAlert("invalidPassword");
+            }
+        }
+    }
 }
