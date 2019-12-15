@@ -5,6 +5,7 @@ from MySQLdb import _mysql
 import copy
 import util
 import json
+import hashlib
 
 class _user_database:
     
@@ -25,6 +26,10 @@ class _user_database:
     # set a new user
     def set_user(self, data):
         user_id = None # keeping this variable in case we need it later
+        pass_hash = hashlib.sha256()
+        pass_hash.update(data['pass_hash'].encode(encoding='ascii'))
+        pass_hash = pass_hash.digest().hex()
+        data['pass_hash'] = pass_hash
         data = util.clean_query_input(data, "Users")
         
         if user_id is None:
@@ -171,8 +176,10 @@ class _user_database:
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 
-    # TODO: hash passwords
     def validate_user(self, email, password):
+        pass_hash = hashlib.sha256()
+        pass_hash.update(password.encode(encoding='ascii'))
+        pass_hash = pass_hash.digest().hex()
         self.db.query('''select user_id, pass_hash
             from Users where email = \'{}\''''.format(email))
         r = self.db.store_result()
@@ -180,7 +187,7 @@ class _user_database:
 
         if not result:
             return {"status": "failure", "reason": "email not in system"}
-        if result['pass_hash'] == password:
+        if result['pass_hash'] == pass_hash:
             return {"status" :"success", "user_id": result['user_id']}
         else:
             return {"status":"failure", "reason": "unknown"}
