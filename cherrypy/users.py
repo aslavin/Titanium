@@ -50,3 +50,11 @@ class usersController:
     def DELETE_USER(self, user_id):
         self.userdb.delete_user(user_id)
         return json.dumps({"result": "success"})
+
+    # validate a user and password to allow them to log in
+    def VALIDATE_USER(self):
+        msg = json.loads(cherrypy.request.body.read())
+        email = msg["email"]
+        password = msg["password"]
+        result = self.userdb.validate_user(email, password)
+        return json.dumps(result)

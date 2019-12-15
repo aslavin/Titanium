@@ -68,6 +68,8 @@ dispatcher.connect('deleteUser', '/users/:user_id', controller=usersController, 
 
 dispatcher.connect('getUser', '/users/email/:email', controller=usersController, action='GET_USER_EMAIL', conditions=dict(method=['GET']))
 
+dispatcher.connect('validateUser', '/users/validate/', controller=usersController, action='VALIDATE_USER', conditions=dict(method=['POST']))
+
 dispatcher.connect('postUserTeam', '/users/:user_id/team/:team_id', controller=usersController, action='ADD_USER_TEAM', conditions=dict(method=['POST']))
 
 dispatcher.connect('getNotifications', '/users/notification/:user_id', controller=usersController, action='GET_USER_NOTIFICATIONS', conditions=dict(method=['GET']))
@@ -111,15 +113,16 @@ dispatcher.connect('putPool', '/pools/:pool_id', controller=poolsController, act
 dispatcher.connect('deletePool', '/pools/:pool_id', controller=poolsController, action='DELETE_POOL', conditions=dict(method=['DELETE']))
 
 # options handlers - need one for each possible path definied above
-dispatcher.connect('users_all__op', '/users/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('users_all_op', '/users/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('users_key_op', '/users/:user_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
-dispatcher.connect('leagues_all__op', '/leagues/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('leagues_all_op', '/leagues/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('leagues_key_op', '/leagues/:league_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
-dispatcher.connect('teams_all__op', '/teams/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('teams_all_op', '/teams/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('teams_key_op', '/teams/:team_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
-dispatcher.connect('sports_all__op', '/sports/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('sports_all_op', '/sports/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('sports_key_op', '/sports/:sport_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('pools_key_op', '/pools/:pool_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('user_validate_all_op', '/users/validate/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 
 cherrypy.config.update(conf) #tells library what the configuration is
 

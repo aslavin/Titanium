@@ -170,3 +170,17 @@ class _user_database:
             where user_id = {}'''.format(user_id))
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+
+    # TODO: hash passwords
+    def validate_user(self, email, password):
+        self.db.query('''select user_id, pass_hash
+            from Users where email = \'{}\''''.format(email))
+        r = self.db.store_result()
+        result = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+
+        if not result:
+            return {"status": "failure", "reason": "email not in system"}
+        if result['pass_hash'] == password:
+            return {"status" :"success", "user_id": result['user_id']}
+        else:
+            return {"status":"failure", "reason": "unknown"}
