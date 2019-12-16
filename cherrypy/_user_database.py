@@ -4,6 +4,8 @@ from MySQLdb import _exceptions
 from MySQLdb import _mysql
 import copy
 import util
+import json
+import hashlib
 
 class _user_database:
     
@@ -24,6 +26,10 @@ class _user_database:
     # set a new user
     def set_user(self, data):
         user_id = None # keeping this variable in case we need it later
+        pass_hash = hashlib.sha256()
+        pass_hash.update(data['pass_hash'].encode(encoding='ascii'))
+        pass_hash = pass_hash.digest().hex()
+        data['pass_hash'] = pass_hash
         data = util.clean_query_input(data, "Users")
         
         if user_id is None:
@@ -106,6 +112,47 @@ class _user_database:
         self.db.query("select * from Users where email = '{}'".format(email))
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(how=1))
+    
+    def get_user_notifications(self, user_id):
+
+        self.db.query('''select distinct Teams.name as team_name, Leagues.name as league_name, Users.first_name, Users.last_name 
+            from Team_Requests, Teams, Leagues, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.captain_id
+            and Leagues.league_id = Team_Requests.league_id
+            and Team_Requests.invited = 1
+            and Team_Requests.accepted = 0
+            and Team_Requests.new_member_id = {};
+            '''.format(user_id))
+        playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(playerNotifications) is dict:
+            playerNotifications = [playerNotifications]
+            
+        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
+            from Team_Requests, Teams, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.captain_id
+            and Team_Requests.invited = 0
+            and Team_Requests.accepted = 0
+            and Team_Requests.new_member_id = {};
+            '''.format(user_id))
+        pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(pendingNotifications) is dict:
+            pendingNotifications = [pendingNotifications]
+
+        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name 
+            from Team_Requests, Teams, Leagues, Users 
+            where Teams.team_id = Team_Requests.team_id
+            and Users.user_id = Team_Requests.new_member_id
+            and Team_Requests.invited = 0
+            and Team_Requests.accepted = 0
+            and Team_Requests.captain_id = {};
+            '''.format(user_id))
+        captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(captainNotifications) is dict:
+            captainNotifications = [captainNotifications]
+        
+        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications}
 
     # remove user from database
     def delete_user(self, user_id):
@@ -113,15 +160,34 @@ class _user_database:
             where user_id = {}'''.format(user_id))
 
     def add_user_to_team(self, user_id, team_id):
+        r = ''
         try:
             self.db.query('''insert into Users_Teams(
                 user_id, team_id) values (
                 {}, {})'''.format(user_id, team_id))
+            r = self.db.store_result()
+            return json.dumps({'result':'success'})
         except _exceptions.IntegrityError:
-            return
+            return json.dumps({'result':'failure', 'message':'Integrity Error!'})
 
     def get_teams_by_user(self, user_id):
         self.db.query('''select team_id from Users_Teams
             where user_id = {}'''.format(user_id))
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+
+    def validate_user(self, email, password):
+        pass_hash = hashlib.sha256()
+        pass_hash.update(password.encode(encoding='ascii'))
+        pass_hash = pass_hash.digest().hex()
+        self.db.query('''select user_id, pass_hash
+            from Users where email = \'{}\''''.format(email))
+        r = self.db.store_result()
+        result = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+
+        if not result:
+            return {"status": "failure", "reason": "email not in system"}
+        if result['pass_hash'] == pass_hash:
+            return {"status" :"success", "user_id": result['user_id']}
+        else:
+            return {"status":"failure", "reason": "unknown"}

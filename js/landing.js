@@ -1,5 +1,13 @@
 function initialize() {
+	console.log("here");
+	
+	// play recsports video
     document.getElementById("recSportsVideo").play();
+
+	// clear session variables
+	window.localStorage.setItem("email",null);
+	window.localStorage.setItem("user_id",null);
+
 }
 
 function playVideoAgain() {
@@ -97,11 +105,50 @@ function accountCreateValidation() {
     else if (firstName.length == 0) activateSingleAlert("noFirstName");
     else if (lastName.length == 0) activateSingleAlert("noLastName");
     else if (ineffectivePassword(password, hasLetters, hasNumbers)) activateSingleAlert("weakPassword");
+    
+    // both of those should be done now
+    
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/users/email/' + email;
+    xhr.open('GET', url, true);
 
-    /* TODO: CONNECT TO BACKEND HERE */
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        response = JSON.parse(xhr.response);
+        var count = Object.keys(response).length;
+        if (count != 0){
+            activateSingleAlert("emailAlreadyExists");
+        }
+        else {
+            var xhr2 = new XMLHttpRequest();
+            var url2 = 'http://project01.cse.nd.edu:51069/users/';
+            var data = {};
+            data.pass_hash = password;
+            data.email = email;
+            var json = JSON.stringify(data);
 
-    /* TODO #1: throw "emailAlreadyExists" alert if email already exists in db. activateSingleAlert("emailAlreadyExists") */
-    /* TODO #2: throw "successfulCreation" alert if email did not exist in db. Create a new account; all variables needed are stored in email, password, firstName, lastName, isMale above. Once successful, use activateSingleAlert("successfulCreation")*/
+            xhr2.open("POST", url2, true);
+            //xhr2.setRequestHeader('Content-type', 'application/json');
+            xhr2.onload = function() {
+                var user = JSON.parse(xhr2.responseText);
+                console.log("user");
+                console.log(user);
+                if(xhr2.readyState != 4){
+                    console.error(xhr2.statusText);
+                }
+                else if(user['result'] == 'success'){
+                    activateSingleAlert("successfulCreation");
+                }
+                else{
+                    console.error(user)
+                }
+            }
+            xhr2.send(json);
+        }
+    }
+    xhr.send();       
 }
 
 function ineffectivePassword(password, hasLetters, hasNumbers) { 
@@ -114,9 +161,29 @@ function loginValidation()  {
     var email = document.getElementById("userEmail").value;
     var password = document.getElementById("userPassword").value;
 
-    /* TODO: connect to backend here */
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/users/validate/';
+    xhr.open('POST', url, true);
 
-    /* TODO #3: throw "invalidEmail" alert if email does not exist in db */
-    /* TODO #4  throw "invalidPassword" alert if email exists in db but password is incorrect.*/
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
 
+        response = JSON.parse(xhr.response);
+		if (response['status'] == 'failure') {
+			if (response['reason'] == 'email not in system') {
+            	activateSingleAlert("invalidEmail");
+			}
+			else {
+                activateSingleAlert("invalidPassword");
+			}
+		}
+		else { // success
+			window.localStorage.setItem('email', email);
+			window.localStorage.setItem('user_id', response['user_id']);
+			window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/user.html";
+		}
+    }
+	xhr.send(JSON.stringify({"email": email, "password": password}));
 }

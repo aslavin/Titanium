@@ -97,6 +97,14 @@ class _team_database:
         
         return return_dict
 
+
+    # get all teams in a league
+    def get_teams_league(self, league_id):
+        self.db.query('''SELECT team_id, name FROM Teams WHERE league_id = {}'''.format(league_id))
+        r = self.db.store_result()
+        return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+
+
     # remove team from database
     def delete_team(self, team_id):
         self.db.query('''delete from Teams

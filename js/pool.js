@@ -1,12 +1,43 @@
 // TODO: fetch pool data from database and store it in var called poolData with this format: TEAM LINK - TEAM NAME - TEAM WINS - TEAM LOSSES. 
 // NOTE that it is assumed that the array poolData has been sorted in RANK ORDER.
 // Example is here:
-var poolData = [["","Andy's Army","4","0"],["","Broom Roasted","3","1"],["","Stix Or It Didn't Happen","2","2"],["","Another Team 1","1","3"]]; 
+//var poolData = [["","Andy's Army","4","0"],["","Broom Roasted","3","1"],["","Stix Or It Didn't Happen","2","2"],["","Another Team 1","1","3"]]; 
 function loadData() { 
 
     /* EXECUTE TODO items here; connect to backend, manipulate poolData variable as above.
         
     ALSO TODO:  set innerHTML of #poolCapacity, set innerHTML of #playoffEligible */
+
+    var poolData = []
+
+    var site = window.location.href.split('/');
+    var poolNum = site.pop() || site.pop();
+
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/pools/' + poolNum;
+    xhr.open('GET', url, true);
+    xhr.onload = function(e){
+        if(xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        response = JSON.parse(xhr.response);
+        var teams = response.teams;
+        teams.forEach(function(item){
+            var xhr_team = new XMLHttpRequest();
+            var url_team = 'http://project01.cse.nd.edu:51069/teams/' + item;
+            xhr_team.open('GET', url_team, true);
+            xhr_team.onload = function(e){
+                if(xhr_team.ready_state != 4){
+                    console.error(xhr_team.statusText);
+                }
+                team_resp = JSON.parse(xhr_team.response);
+                var team_info = ["", team_resp.name, team_resp.wins, team_resp.losses];
+                poolData.push(team_info);
+            });
+            xhr_team.send();
+        }
+    }
+    xhr.send();
 
     document.getElementById("teamsRegistered").innerHTML = poolData.length;  
 
@@ -42,7 +73,6 @@ function loadData() {
     computeFooterMargin();
 
 }
-
 
 function clearAllAlerts() {
     var alerts = document.getElementsByClassName("alert");
@@ -134,6 +164,9 @@ function createTeamAndSendInvitations() {
     // all the users that were invited.
 
     /* TODO: create a new team */
+
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/pools/';
 
     var finalTeamMembers = document.getElementsByClassName("teamMemberText");
     for (var i = 0; i < finalTeamMembers.length; i++) {
