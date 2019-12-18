@@ -14,7 +14,7 @@
         <script src="js/common.js"></script>
         <script src="js/admin.js"></script>
     </head>
-    <body onload="computeFooterMargin()">
+    <body onload="confirmLogin(); confirmAdmin(); computeFooterMargin(); computeLogin()">
         <!-- NAVBAR -->
         <div id="navbarOnTheVideo">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,16 +28,16 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
+                            <a class="nav-link" ><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                            <a class="nav-link" ><i class="fa fa-search" aria-hidden="true"></i> Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                            <a class="nav-link" ><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                            <a class="nav-link" href="./index.html" ><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -55,14 +55,13 @@
                         </div>
                         <div id="statisticsCollection">
                             <div id="adminDisclaimer">
-                            Welcome to your Admin Access Page.
+                            Welcome to your Admin Accesss Page.
                             This is where you can create new
                             leagues and input the results of 
                             existing games.
                             </div>
                         </div>
                         <div id="loggedInAs">
-                            Logged In As:<br>tclare@nd.edu
                         </div>
                     </div>
                 </div>
@@ -97,9 +96,9 @@
                                             <div class="nonInputContent">Start Date</div>
                                         </div>
 
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"  placeholder="MM"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"  placeholder="DD"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control"   placeholder="YYYY"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateMonth" placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateDay" placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateYear"  placeholder="YYYY"></div>
                                         
                                         <div class="col-md-6 d-none d-md-block centerContent" style="padding:0px">
                                             <div class="nonInputContent">End Date</div>
@@ -109,9 +108,9 @@
                                             <div class="nonInputContent">End Date</div>
                                         </div>
 
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="MM"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="DD"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="" placeholder="YYYY"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateMonth" placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateDay" placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateYear" placeholder="YYYY"></div>
 
                                             <div class="col-md-6 d-none d-md-block centerContent pool1" style="padding:0px">
                                                 <div class="nonInputContent">Pool Time</div>
@@ -119,12 +118,12 @@
                                             <div class="col-12 d-block d-md-none centerContent pool1">
                                                 <div class="nonInputContent">Pool Time</div>
                                             </div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="HH"></div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="MM"></div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="" placeholder="AM/PM"></div> 
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeHour" placeholder="HH"></div>
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeMinute" placeholder="MM"></div>
+                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeAMPM" placeholder="AM/PM"></div> 
                                 </div>  
                                 <div id="addAnotherPoolDiv"><button class="btn btn-info leagueBtn" id="addAnotherPoolButton" onclick="addNewPool()"><i class="fa fa-plus"></i> ADD POOL</button></div>
-                                <div id="submitNewLeagueDiv"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton">SUBMIT THIS LEAGUE</button></div>
+                                <div id="submitNewLeagueDiv"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton" onclick="submitLeague()">SUBMIT THIS LEAGUE</button></div>
                             </div>                        
                         </div>
 

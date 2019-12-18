@@ -1,5 +1,13 @@
 function initialize() {
+	
+	// play recsports video
     document.getElementById("recSportsVideo").play();
+
+	// clear session variables
+	window.localStorage.setItem("email",null);
+	window.localStorage.setItem("user_id",null);
+	window.localStorage.setItem("is_admin", null);
+
 }
 
 function playVideoAgain() {
@@ -153,14 +161,9 @@ function loginValidation()  {
     var email = document.getElementById("userEmail").value;
     var password = document.getElementById("userPassword").value;
 
-    /* TODO: connect to backend here */
-
-    /* TODO #3: throw "invalidEmail" alert if email does not exist in db */
-    /* TODO #4  throw "invalidPassword" alert if email exists in db but password is incorrect.*/
-    
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/users/email/' + email;
-    xhr.open('GET', url, true);
+    var url = 'http://project01.cse.nd.edu:51069/users/validate/';
+    xhr.open('POST', url, true);
 
     xhr.onload = function(e){
         if (xhr.readyState != 4){
@@ -168,14 +171,20 @@ function loginValidation()  {
         }
 
         response = JSON.parse(xhr.response);
-        var count = Object.keys(response).length;
-        if (count == 0){
-            activateSingleAlert("invalidEmail");
-        }
-        else {
-            if (response['pass_hash'] != password){
+		if (response['status'] == 'failure') {
+			if (response['reason'] == 'email not in system') {
+            	activateSingleAlert("invalidEmail");
+			}
+			else {
                 activateSingleAlert("invalidPassword");
-            }
-        }
+			}
+		}
+		else { // success
+			window.localStorage.setItem('email', email);
+			window.localStorage.setItem('user_id', response['user_id']);
+			window.localStorage.setItem('is_admin', response['is_admin']);
+			window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/user.html";
+		}
     }
+	xhr.send(JSON.stringify({"email": email, "password": password}));
 }

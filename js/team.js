@@ -23,6 +23,7 @@ var rosterData = [[true,"","Tommy","Clare","tclare@nd.edu", "M"],[false,"","Patr
 var noPlayersOnRosterDiv = '<div class="noNotificationsDiv"></div>';
 
 function loadData() { 
+	console.log("here");
   
     /* TODO: here is where you connect to the backend and modify teamGameData EXACTLY as the format above suggests */
     
@@ -82,4 +83,9 @@ function loadData() {
 
     /* DONE: compute footer margin */
     computeFooterMargin();
+
+	/* DONE: LOAD FOOTER */
+	console.log("here");
+	var loggedInAs = document.getElementById('loggedInAs');
+	loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
 }
