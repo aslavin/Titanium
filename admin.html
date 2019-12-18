@@ -71,72 +71,96 @@
             <div class="col-12 col-lg-10 offset-lg-2">
                 <div class="container-fluid">
                         <div id="blankDiv"></div>
-                        <h2>Admin Access Page</h2>
-                        <!-- ADD LEAGUE and INPUT SCORE BUTTONS -->
-                        <div id="adminButtonsWrapper"> 
-                            <div id="adminButtons" class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" id="btnAddLeague" class="btn btn-secondary adminPressed" onclick="changeBtnGroup(this.id)">Add League</button>
-                                    <button type="button" id="btnInputScore" class="btn btn-secondary adminUnpressed" onclick="changeBtnGroup(this.id)">Input Scores</button>
-                            </div>
-                        </div>
-
+                        <h2>Create New League</h2>
+                        
                         <!-- ADD LEAGUE AND INPUT SCORE CONTENT -->
                         
                         <div id="contentAddLeagueWrapper">
-                            <div class="row" id="contentAddLeague">
-                                    <div class="col-12" style="margin-bottom: 20px; padding: 0px;">
+                            <div class="row customContainer" id="contentAddLeague">
+                                    <div class="col-12" style="margin-bottom: 20px; padding: 0px;"> 
+                                        <div class="alert alert-danger" id="invalidLeagueDiv">Invalid league creation! Fix fields highlighted in red below.</div>
+                                        <div class="alert alert-success" id="successfulLeagueCreationDiv">New league created successfully!</div>
                                         <input type="text" class="form-control" id="leagueName" placeholder="League Name">
                                     </div>
 
-                                        <div class="col-12 d-block d-md-none centerContent">
+                                        <div class="col-12 d-flex d-md-none centerContent">
                                             <div class="nonInputContent">Start Date</div>
                                         </div>
 
-                                        <div class="col-md-6 d-md-block d-none centerContent" style="padding:0px">
+                                        <div class="col-md-6 d-md-flex d-none centerContent" style="padding:0px">
                                             <div class="nonInputContent">Start Date</div>
                                         </div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control monthInput"  placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control dayInput"  placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control yearInput"   placeholder="YYYY"></div>
 
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateMonth" placeholder="MM"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateDay" placeholder="DD"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="startDateYear"  placeholder="YYYY"></div>
-                                        
-                                        <div class="col-md-6 d-none d-md-block centerContent" style="padding:0px">
+                                        <div class="col-md-6 d-none d-md-flex centerContent" style="padding:0px">
                                             <div class="nonInputContent">End Date</div>
                                         </div>
 
-                                        <div class="col-12 d-block d-md-none centerContent">
+                                        <div class="col-12 d-flex d-md-none centerContent">
                                             <div class="nonInputContent">End Date</div>
                                         </div>
 
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateMonth" placeholder="MM"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateDay" placeholder="DD"></div>
-                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control" id="endDateYear" placeholder="YYYY"></div>
+                                        <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control monthInput" id="" placeholder="MM"></div>
+                                        <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control dayInput" placeholder="DD"></div>
+                                        <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control yearInput" placeholder="YYYY"></div>
 
-                                            <div class="col-md-6 d-none d-md-block centerContent pool1" style="padding:0px">
-                                                <div class="nonInputContent">Pool Time</div>
+                                        <div class="col-md-6 d-none d-md-flex centerContent" style="padding:0px">
+                                           <div class="nonInputContent">Max Teams/Pool<br><span class="totalTeamsText"><span class="totalTeamsNum">0</span> team(s) total</span></div>
+                                        </div>
+
+                                        <div class="col-12 d-flex d-md-none centerContent">
+                                           <div class="nonInputContent">Max Teams/Pool<br><span class="totalTeamsText"><span class="totalTeamsNum">0</span> team(s) total</span></div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 centerContent"><div id="incrementTeams" class="changeNTeams" onclick="incrementTeams()"><i class="fa fa-plus"></i></div><input type="text" class="form-control" id="nTeams" value="0" onkeyup="calculateTotalTeams()"><div id="decrementTeams" class="changeNTeams" onclick="decrementTeams()"><i class="fa fa-minus"></i></div></div>
+                                            <div class="col-md-6 d-none d-md-flex centerContent" style="padding:0px">
+                                                <div class="nonInputContent">Pool Time*</div>
                                             </div>
-                                            <div class="col-12 d-block d-md-none centerContent pool1">
-                                                <div class="nonInputContent">Pool Time</div>
+                                            <div class="col-12 d-flex d-md-none centerContent">
+                                                <div class="nonInputContent">Pool Time*</div>
                                             </div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeHour" placeholder="HH"></div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeMinute" placeholder="MM"></div>
-                                            <div class="col-md-2 col-4 centerContent pool1"><input type="text" class="form-control" id="poolTimeAMPM" placeholder="AM/PM"></div> 
-                                </div>  
-                                <div id="addAnotherPoolDiv"><button class="btn btn-info leagueBtn" id="addAnotherPoolButton" onclick="addNewPool()"><i class="fa fa-plus"></i> ADD POOL</button></div>
-                                <div id="submitNewLeagueDiv"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton" onclick="submitLeague()">SUBMIT THIS LEAGUE</button></div>
-                            </div>                        
+
+                                            <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control weekdayInput" placeholder="DDD"></div>
+                                            <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control hourInput" placeholder="HH"></div>
+                                            <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control minuteInput" placeholder="MM"><div class="punctuationText">:</div></div>
+                                       
+                                </div> 
+
+
+                                <div id="poolTimeDisclaimer" class="customContainer">*Note that DDD corresponds to the first three letters of a weekday (ex. MON) and all times are PM.</div>
+
+                                <div id="addAnotherPoolDiv" class="customContainer"><button class="btn btn-info leagueBtn" id="addAnotherPoolButton" onclick="addNewPool()"><i class="fa fa-plus" style="margin-right:5px;"></i> ADD POOL</button></div>
+                                <div id="submitNewLeagueDiv" class="customContainer" onclick="evaluateNewLeagueFormat()"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton">SUBMIT THIS LEAGUE</button></div>
+                            </div>                         
+
+                        </div>
+
+                        <div id="contentInputScoreWrapper">
+                                       <h2 class="subsequentHeader">Score Input</h2>
+                                       <div class="row customContainer">
+                                           <div class="col-12"><div class="alert alert-danger" id="invalidScoreDiv">Invalid search! Fix fields highlighted in red below.</div></div>
+
+                                           <div class="col-4 centerContent"><input type="text" class="form-control monthInputScore" id="searchMonthInput"  placeholder="MM"></div>
+                                        <div class="col-4 centerContent"><div class="punctuationText">/</div><input id="searchDayInput"type="text" class="form-control dayInputScore" placeholder="DD"></div>
+                                        <div class="col-4 centerContent"><div class="punctuationText">/</div><input id="searchYearInput"type="text" class="form-control yearInputScore" placeholder="YYYY"></div>
+                                <div class="col-12">
+                                        <input type="text" class="form-control" id="leagueNameScore" placeholder="League Name">
+                                        <button id="scoreGoButton" class="btn btn-info" onclick="evaluateScoreInput()">GO!</button>         
+                                        <button id="clearScoreSearchButton" class="btn btn-secondary" onclick="clearSearchResults()">Clear</button>
+                                </div>
+                                <div class="col-12">
+                                    <div id="scoreSearchResults">
+                                        <h3 class="subsequentHeader">Search Results</h3>
+                                        <div id="searchResultsDiv"> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                        </div>
-                        <div id="contentInputScoreWrapper">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div id="contentInputScore">
-                                        <input type="text" class="form-control" id="leagueName" placeholder="League Name">
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
                 </div>
             </div> 
         </div>
@@ -148,6 +172,6 @@
                     <div class="footerEntry">Notre Dame, IN 46556</div>
                     <div class="Email: pfische@nd.edu"></div>
                 </div>
-            </div></div>
+        </div></div>
     </body>
 </html>

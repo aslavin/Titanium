@@ -121,9 +121,9 @@ function activateSingleAlert(alertId) {
         if (alerts[i].id == alertId) {
             alerts[i].style.display = "block";
             alertToDelete = i;
-        }
+        }   
         else alerts[i].style.display = "none";
-    }
+    }   
 }
 
 

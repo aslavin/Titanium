@@ -8,10 +8,27 @@
     font-size: 40px;
 }
 
+.invalidInput { 
+    border: 2px solid rgba(212,31,0,0.69); 
+}
+
+.alert-success { 
+    color: white;
+    background-color: #28a745;
+}
+
+#invalidLeagueDiv, #invalidScoreDiv, #successfulLeagueCreationDiv { 
+    display: none;
+}
+
 .nav-link { 
     font-size: 20px;
     margin-right: 10px;
     border-radius: 15px;
+}
+
+.teamText, .connectorText, .scoreText, .detailsText { 
+    text-align: center;
 }
 
 .noNotificationsMessage { 
@@ -82,7 +99,7 @@ body {
 }
 
 .btn-danger, .alert-danger { 
-    background-color: rgb(212,31,0,0.75); 
+    background-color: rgba(212,31,0,0.75); 
     color: white;
 }
 
@@ -115,7 +132,7 @@ body {
     height: 10vh;
 }
 
-h2 { 
+h2, h3 { 
     text-align: center;
 }
 
