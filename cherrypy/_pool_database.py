@@ -22,25 +22,24 @@ class _pool_database:
         if pool_id is None:
             query = '''insert into Pools(
                 league_id,
-                name,
+                day,
                 pool_time,
                 max_size)
                 values (
-                {}, {}, {}, {})'''.format(
+                {}, \"{}\", \"{}\", {})'''.format(
                 data['league_id'],
-                data['name'],
+                data['day'],
                 data['pool_time'],
                 data['max_size'])
             self.db.query(query)
         else: 
             self.db.query('''update Pools set
                 league_id = {},
-                name = {},
+                day = {},
                 pool_time = {},
                 max_size = {}
                 where pool_id = {}'''.format(
                 data['league_id'],
-                data['name'],
                 data['pool_time'],
                 data['max_size'],
                 pool_id))
@@ -69,6 +68,8 @@ class _pool_database:
         self.db.query('''select team_id from Teams
             where pool_id = {}'''.format(pool_id))
         teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if len(teams_in_pool) == 0:
+            return {}
         if type(teams_in_pool) is dict: # only returned one item
             return_dict.update({"teams": [teams_in_pool["team_id"]]})
         else: # returned multiple items

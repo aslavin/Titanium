@@ -28,18 +28,14 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
-                        </li>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="./search.html"><i class="fa fa-search" aria-hidden="true"></i> Search</a>                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
-                        </li>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href=""><i class="fa fa-star" aria-hidden="true" disabled></i> Admin</a>
+                        </li>   
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
-                        </li>
-                    </ul>
+                            <a class="nav-link" href="./index.html" ><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                        </li>   
+                    </ul> 
                 </div>
             </nav>  
         </div>
@@ -112,9 +108,9 @@
                             <h2>Notifications</h2>
                             <div class="notificationsDiv">
                                 <div id="notificationBtns" class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" id="playersNotificationButton" class="btn btn-secondary notificationUnpressed" onclick="changeBtnGroup(this.id)">Player <span class="badge badge-light" id="nPlayerNotifications"></span></button>
-                                    <button type="button" id="pendingNotificationButton" class="btn btn-secondary notificationPressed" onclick="changeBtnGroup(this.id)">Pending <span class="badge badge-light" id="nPendingNotifications"></span></button>
-                                    <button type="button" id="captainNotificationButton" class="btn btn-secondary notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
+                                    <button type="button" id="playersNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Player <span class="badge badge-light" id="nPlayerNotifications"></span></button>
+                                    <button type="button" id="pendingNotificationButton" class="btn btn-info notificationPressed" onclick="changeBtnGroup(this.id)">Pending <span class="badge badge-light" id="nPendingNotifications"></span></button>
+                                    <button type="button" id="captainNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
                                 </div>
                                 <div class="underneathDiv">
                                     <div id="playersNotificationMessages" class="notificationMessages"></div>

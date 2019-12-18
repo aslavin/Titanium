@@ -24,10 +24,10 @@ def clean_query_input(input_dict, db_name, set_nulls=True):
         keys = ['pass_hash', 'netid', 'email', 'first_name', 'last_name', 'is_undergrad', 'is_admin', 'gender', 'residence_hall', 'wins', 'losses', 'ties']
         str_keys = ['pass_hash', 'netid', 'email', 'first_name', 'last_name', 'gender', 'residence_hall']
     elif db_name == 'Leagues':      
-        keys = ['name', 'start_time', 'end_time', 'gender', 'team_size']
-        str_keys = ['name', 'gender']
+        keys = ['name''start_time', 'end_time', 'team_size']
+        str_keys = ['name']
     elif db_name == 'Pools':
-        keys = ['name', 'pool_time', 'max_size']
+        keys = ['pool_time', 'day', 'max_size']
         str_keys = ['name']
     elif db_name == 'Sports':
         keys = ['name']

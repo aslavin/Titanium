@@ -18,37 +18,37 @@ class _league_database:
     def set_league(self, data):
         league_id = None # keeping this variable in case we need it later
         data = util.clean_query_input(data, "Leagues")
+        
 
+        # TODO: update sport id to grab from page rather than hard-coding in 1
         if league_id is None:
             self.db.query('''insert into Leagues(
                 sport_id,
                 name,
                 start_time,
                 end_time,
-                gender,
                 team_size) 
                 values (
-                {},{},{},{},{},{})'''.format(
-                data['sport_id'],
-                data['name'],
-                data['start_time'],
-                data['end_time'],
-                data['gender'],
-                data['team_size']))
+                {},\"{}\",\"{}\",\"{}\",{})'''.format(
+                #data['sport_id'],
+                1,
+                data['leagueName'],
+                data['startDate'],
+                data['endDate'],
+                #data['team_size']))
+                10))
         else:
             self.db.query('''update Leagues set 
                 sport_id = {},
                 name = {},
                 start_time = {},
                 end_time = {},
-                gender = {},
                 team_size = {}
                 where league_id = {}'''.format(
                 data['sport_id'],
                 data['name'],
                 data['start_time'],
                 data['end_time'],
-                data['gender'],
                 data['team_size'],
                 league_id))
     

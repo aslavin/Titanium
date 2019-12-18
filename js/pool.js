@@ -39,7 +39,8 @@ function loadData() {
                 team_resp = JSON.parse(xhr_team.response);
                 var team_info = ["", team_resp.name, team_resp.wins, team_resp.losses];
                 poolData.push(team_info);
-            }
+            };
+            
             xhr_team.send();
         });
     }
