@@ -1,12 +1,11 @@
 function initialize() {
-	console.log("here");
-	
 	// play recsports video
     document.getElementById("recSportsVideo").play();
 
 	// clear session variables
 	window.localStorage.setItem("email",null);
 	window.localStorage.setItem("user_id",null);
+	window.localStorage.setItem("is_admin", null);
 
 }
 
@@ -182,6 +181,7 @@ function loginValidation()  {
 		else { // success
 			window.localStorage.setItem('email', email);
 			window.localStorage.setItem('user_id', response['user_id']);
+			window.localStorage.setItem('is_admin', response['is_admin']);
 			window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/user.html";
 		}
     }
