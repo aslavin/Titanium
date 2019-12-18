@@ -4,5 +4,3 @@ function computeFooterMargin() {
     var sh = document.getElementById("mainContent").scrollHeight;
     if (ih - ch - sh > 0) document.getElementById("landingFooterUser").style.marginTop = (ih - ch - sh) + "px"; 
 }
-
-

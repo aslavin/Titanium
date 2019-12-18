@@ -149,27 +149,6 @@ function changeElementClass(element, from, to) {
 }
 
 
-function changeBtnGroup(id) { 
-    var notificationButtons = document.getElementById("notificationBtns").children;
-    for (var i = 0; i < notificationButtons.length; i++) {  
-        if (notificationButtons[i].id == id) { 
-            notificationButtons[i].classList.remove("notificationUnpressed");
-            notificationButtons[i].classList.add("notificationPressed");
-        } else { 
-             notificationButtons[i].classList.remove("notificationPressed");
-            notificationButtons[i].classList.add("notificationUnpressed");           
-        }
-    }
-
-    var notificationMessages = document.getElementsByClassName("notificationMessages");
-    for (var j = 0; j < notificationMessages.length; j++) {
-        notificationMessages[j].style.display = "none"; 
-    }
-
-    var buttonSubstr = id.substring(0, 7);
-    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
-}
-
 
 /* MOSTLY DONE: HELPER FUNCTIONS FOR ACCEPTING, DENYING, DISMISSING NOTIFICATIONS */
 
@@ -229,5 +208,27 @@ function dismissPendingInvitation(id) {
         document.getElementById("pendingNotificationMessages").innerHTML = pendingNoNotification;
         pendingNotifications.style.display = "none";
     } else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none"; 
+}
+
+
+function changeBtnGroup(id) { 
+    var notificationButtons = document.getElementById("notificationBtns").children;
+    for (var i = 0; i < notificationButtons.length; i++) {   
+        if (notificationButtons[i].id == id) { 
+            notificationButtons[i].classList.remove("notificationUnpressed");
+            notificationButtons[i].classList.add("notificationPressed");
+        } else { 
+             notificationButtons[i].classList.remove("notificationPressed");
+            notificationButtons[i].classList.add("notificationUnpressed");    
+        }   
+    }   
+
+    var notificationMessages = document.getElementsByClassName("notificationMessages");
+    for (var j = 0; j < notificationMessages.length; j++) {
+        notificationMessages[j].style.display = "none"; 
+    }   
+
+    var buttonSubstr = id.substring(0, 7); 
+    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
 }
 
