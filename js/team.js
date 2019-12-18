@@ -34,7 +34,117 @@ function loadData() {
     document.getElementById("nTies").innerHTML = ...; // a string
     document.getElementById("poolRank").innerHTML = ...; // a string
     document.getElementById("teamsInPool").innerHTML = ...; // a string
-    */ 
+    */
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var teamId = urlParams.get("teamId");
+
+    if (teamId == null){
+        console.error("No pool specified");
+    }
+
+    var schedule_data = [];
+
+    var wins = 0;
+    var losses = 0;
+    var ties = 0;
+    var new_roster_data = [];
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/teams/' + teamId;
+    xhr.open('GET', url, false);
+    xhr.onload = function(e){
+        if(xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        response = JSON.parse(xhr.response);
+        document.getElementById("teamName").innerHTML = response.name;
+        var users = response.users;
+        users.forEach(function(item){
+            var xhr_user = new XMLHttpRequest();
+            var url_user = 'http://project01.cse.nd.edu:51069/users/'+item;
+            xhr_user.open('GET', url_user, false);
+            xhr_user.onload = function(e){
+                if(xhr_user.readyState != 4){
+                    console.error(xhr_user.statusText);
+                }
+                user_resp = JSON.parse(xhr_user.response);
+                var user_holder = ['False', '', user_resp.first_name, user_resp.last_name, user_resp.email, user_resp.gender];
+                new_roster_data.push(user_holder);
+            }
+            xhr_user.send();
+        });
+
+        var xhr_team = new XMLHttpRequest();
+        var url_team = 'http://project01.cse.nd.edu:51069/pools/'+response.pool_id;
+        xhr_team.open('GET', url_team, false);
+        xhr_team.onload = function(e){
+            if(xhr_team.ready_state != 4){
+                console.error(xhr.statusText);
+            }
+            var teams_resp = JSON.parse(xhr_team.response);
+            var teams = teams_resp.teams;
+            console.log(teams);
+            var teams_good = teams.filter(function(value, index, arr){
+                return value != teamId;
+            });
+            console.log(teams_good);
+            const shuffled = teams_good.sort(() => Math.random() - 0.5);
+            console.log(shuffled);
+            var max = 4;
+            if (shuffled.length < max){
+                max = shuffled.length;
+            }
+            var new_list = [];
+            for (var x = 0; x < max; x++){
+                new_list.push(shuffled.pop());
+            }
+            console.log(new_list);
+            var order = 8;
+            new_list.forEach(function(item){
+                var temp = [];
+                var xhr_iteam = new XMLHttpRequest();
+                var url_iteam = 'http://project01.cse.nd.edu:51069/teams/' + item;
+                xhr_iteam.open('GET', url_iteam, false);
+                xhr_iteam.onload = function(e){
+                    if(xhr_iteam.readyState != 4){
+                        console.error(xhr_iteam.statusText);
+                    }
+                    var score1 = Math.floor((Math.random()*12)+1);
+                    var score2 = Math.floor((Math.random()*12)+1);
+                    if (order >= 11){
+                        score1 = -1;
+                        score2 = -1;
+                    }
+                    if(score1 > score2){
+                        wins++;
+                    }
+                    if(score1 < score2){
+                        losses++;
+                    }
+                    if(score1 == score2 && score1 != -1){
+                        ties++;
+                    }
+                    iteam_resp = JSON.parse(xhr_iteam.response);
+                    temp = [(order).toString() + "/" + Math.floor((Math.random()*30)+1).toString(), "", iteam_resp.name, score1, score2];
+                    schedule_data.push(temp);
+                    console.log(temp);
+                    order++;
+                }
+                xhr_iteam.send();
+            });
+
+        }
+        xhr_team.send();
+    }
+    xhr.send();
+
+    document.getElementById("nWins").innerHTML = wins;
+    document.getElementById("nLosses").innerHTML = losses;
+    document.getElementById("nTies").innerHTML = ties;
+
+
+    console.log(schedule_data);
+    teamGameData = schedule_data;
 
     /* DONE: calculate other statistics */
     var nWins = parseInt(document.getElementById("nWins").innerHTML);
@@ -74,6 +184,7 @@ function loadData() {
 
    
     /* DONE: grab data from rosterData and load it into the page */ 
+    rosterData = new_roster_data;
     innerHTMLString = "<tbody>";
     for (var j = 0; j < rosterData.length; j++) { 
         innerHTMLString += rosterComponents[0] + ((rosterData[j][0]) ? "fa-star" : "fa-user-o") + rosterComponents[1] + rosterData[j][1] + rosterComponents[2] + rosterData[j][2] + " " + rosterData[j][3] + " (" + rosterData[j][4] + ")" + rosterComponents[3] + rosterData[j][5];
