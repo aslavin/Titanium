@@ -1,19 +1,11 @@
 function initialize() {
-<<<<<<< HEAD
-=======
-	console.log("here");
->>>>>>> 7cfaa5b52bdec4bc525ab4077d7f5c6b6f340ace
-	
 	// play recsports video
     document.getElementById("recSportsVideo").play();
 
 	// clear session variables
 	window.localStorage.setItem("email",null);
 	window.localStorage.setItem("user_id",null);
-<<<<<<< HEAD
 	window.localStorage.setItem("is_admin", null);
-=======
->>>>>>> 7cfaa5b52bdec4bc525ab4077d7f5c6b6f340ace
 
 }
 
@@ -189,10 +181,7 @@ function loginValidation()  {
 		else { // success
 			window.localStorage.setItem('email', email);
 			window.localStorage.setItem('user_id', response['user_id']);
-<<<<<<< HEAD
 			window.localStorage.setItem('is_admin', response['is_admin']);
-=======
->>>>>>> 7cfaa5b52bdec4bc525ab4077d7f5c6b6f340ace
 			window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/user.html";
 		}
     }
