@@ -22,25 +22,24 @@ class _pool_database:
         if pool_id is None:
             query = '''insert into Pools(
                 league_id,
-                name,
+                day,
                 pool_time,
                 max_size)
                 values (
-                {}, {}, {}, {})'''.format(
+                {}, \"{}\", \"{}\", {})'''.format(
                 data['league_id'],
-                data['name'],
+                data['day'],
                 data['pool_time'],
                 data['max_size'])
             self.db.query(query)
         else: 
             self.db.query('''update Pools set
                 league_id = {},
-                name = {},
+                day = {},
                 pool_time = {},
                 max_size = {}
                 where pool_id = {}'''.format(
                 data['league_id'],
-                data['name'],
                 data['pool_time'],
                 data['max_size'],
                 pool_id))
