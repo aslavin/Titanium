@@ -316,3 +316,58 @@ function clearSearchResults () {
     document.getElementById("searchYearInput").value = "";
     document.getElementById("leagueNameScore").value = "";
 }
+
+function submitLeague() {
+
+	// get all data from page
+	leagueName = document.getElementById("leagueName").value;
+	startDateMonth = document.getElementById("startDateMonth").value;
+	startDateDay = document.getElementById("startDateDay").value;
+	startDateYear = document.getElementById("startDateYear").value;
+	endDateMonth = document.getElementById("endDateMonth").value;
+	endDateDay = document.getElementById("endDateDay").value;
+	endDateYear = document.getElementById("endDateYear").value;
+
+	/* TODO: grab all the pools, no matter how many there are */
+	poolTimeHour = document.getElementById("poolTimeMinute").value;
+	poolTimeMinute = document.getElementById("poolTimeMinute").value;
+	poolTimeAMPM = document.getElementById("poolTimeAMPM").value;
+
+	// create start and end date strings
+	startDate = startDateYear + '-' + startDateMonth + '-' + startDateDay + ' 00:00:00';
+	endDate = endDateYear + '-' + endDateMonth + '-' + endDateDay + ' 00:00:00';
+
+	// send POST request to server
+	var xhr = new XMLHttpRequest();
+	var url = 'http://project01.cse.nd.edu:51069/leagues/';
+	xhr.open('POST', url, true);
+
+	xhr.onload = function(e) {
+
+		if (xhr.readyState != 4) { // failed
+			console.error(xhr.statusText);
+		}
+		
+		response = JSON.parse(xhr.response);
+
+	}
+
+	xhr.send(JSON.stringify({"leagueName": leagueName, "startDate": startDate, "endDate": endDate}));
+
+
+}
+
+function computeLogin() {
+
+	/* DONE: LOAD FOOTER */
+	var loggedInAs = document.getElementById('loggedInAs');
+	loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
+
+}
+
+function confirmAdmin() {
+	/* DONE: REDIRECT TO INDEX IF USER ISN'T AN ADMIN */
+	if (window.localStorage.getItem("is_admin") != 1) {
+		window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/index.html#";
+	}
+}

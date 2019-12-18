@@ -3,10 +3,12 @@
 /* TODO: gather captain notification data and store it in captainNotifications as below. */
 
 // EXAMPLES for how to store (FOLLOW EXACTLY):
-
-var playerNotifications = [["","Brian Hall", "","Newfs", "", "Indoor Volleyball - CoRec"],["","Rosie Crisman", "", "Blue Bar", "","Bookstore Basketball - CoRec"],["","Will Huffman","", "Boolin Boys", "", "Springtime Curling - Intramural"]]; // indexed by CAPTAIN LINK - CAPTAIN  - TEAM LINK - TEAM  - LEAGUE LINK - LEAGUE
-var pendingNotifications = [["","Andy Slavin", "", "Jump Rope Nation"]]; // indexed by CAPTAIN LINK - CAPTAIN - TEAM LINK - TEAM
-var captainNotifications = [["","Noah Davis", "", "Andy's Army"]]; // indexed by PLAYER LINK - PLAYER - YOUR TEAM LINK - YOUR TEAM
+var playerNotifications = [];
+var pendingNotifications = [];
+var captainNotifications = [];
+//var playerNotifications = [["","Brian Hall", "","Newfs", "", "Indoor Volleyball - CoRec"],["","Rosie Crisman", "", "Blue Bar", "","Bookstore Basketball - CoRec"],["","Will Huffman","", "Boolin Boys", "", "Springtime Curling - Intramural"]]; // indexed by CAPTAIN LINK - CAPTAIN  - TEAM LINK - TEAM  - LEAGUE LINK - LEAGUE
+//var pendingNotifications = [["","Andy Slavin", "", "Jump Rope Nation"]]; // indexed by CAPTAIN LINK - CAPTAIN - TEAM LINK - TEAM
+//var captainNotifications = [["","Noah Davis", "", "Andy's Army"]]; // indexed by PLAYER LINK - PLAYER - YOUR TEAM LINK - YOUR TEAM
  
 
 var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1","0", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "0","","Stix Or It Didn't Happen", "2", "2", "1","Compton Family Ice Arena"]];
@@ -84,6 +86,58 @@ function loadData() {
     /* EXECUTE TODO items here. Connect to backend, manipulate playerNotifications, pendingNotifications, captainNotifications, gameNotifications
     variables as described above, EXACTLY. */
 
+    var userId = window.localStorage.getItem("user_id");
+
+    if (userId == null){
+        console.error("no userId specified");
+    }
+
+	// load player notification data
+	var xhr = new XMLHttpRequest();
+	var url = 'http://project01.cse.nd.edu:51069/users/notification/' + userId;
+	xhr.open('GET', url, true);
+
+	xhr.onload = function(e) {
+
+		if (xhr.readyState != 4) { // failed
+			console.error(xhr.statusText);
+		}
+		
+		response = JSON.parse(xhr.response);
+
+		// append data to player notifications
+        var i = 0;
+        while (typeof response["playerNotifications"][i].length != 'undefined'){
+		//for (var i = 0; i < response["playerNotifications"].length; i++) {
+			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
+		    i++;
+        }
+
+		// append data for pending notifications
+        i = 0;
+        while (typeof response["pendingNotifications"][i].length != 'undefined'){
+		//for (var i = 0; i < response["pendingNotifications"].length; i++) {
+			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
+		    i++;
+        }
+
+		// append data for captain notifications
+        i = 0;
+        while (typeof response["captainNotifications"][i].length != 'undefined'){
+		//for (var i = 0; i < response["captainNotifications"].length; i++) {
+			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
+		    i++;
+        }
+
+		loadPage();
+
+	}
+
+	xhr.send();
+}
+
+function loadPage() {
+
 
     var playersNotificationMessages = document.getElementById("playersNotificationMessages");
     var pendingNotificationMessages = document.getElementById("pendingNotificationMessages");
@@ -128,6 +182,10 @@ function loadData() {
     }
     games.innerHTML = gamesInnerHTML;
     computeFooterMargin();
+
+	/* DONE: LOAD FOOTER */
+	var loggedInAs = document.getElementById('loggedInAs');
+	loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
 }
 
 function changeExpandIcon(id) { 
@@ -148,27 +206,6 @@ function changeElementClass(element, from, to) {
     element.classList.add(to);
 }
 
-
-function changeBtnGroup(id) { 
-    var notificationButtons = document.getElementById("notificationBtns").children;
-    for (var i = 0; i < notificationButtons.length; i++) {  
-        if (notificationButtons[i].id == id) { 
-            notificationButtons[i].classList.remove("notificationUnpressed");
-            notificationButtons[i].classList.add("notificationPressed");
-        } else { 
-             notificationButtons[i].classList.remove("notificationPressed");
-            notificationButtons[i].classList.add("notificationUnpressed");           
-        }
-    }
-
-    var notificationMessages = document.getElementsByClassName("notificationMessages");
-    for (var j = 0; j < notificationMessages.length; j++) {
-        notificationMessages[j].style.display = "none"; 
-    }
-
-    var buttonSubstr = id.substring(0, 7);
-    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
-}
 
 
 /* MOSTLY DONE: HELPER FUNCTIONS FOR ACCEPTING, DENYING, DISMISSING NOTIFICATIONS */
@@ -229,5 +266,27 @@ function dismissPendingInvitation(id) {
         document.getElementById("pendingNotificationMessages").innerHTML = pendingNoNotification;
         pendingNotifications.style.display = "none";
     } else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none"; 
+}
+
+
+function changeBtnGroup(id) { 
+    var notificationButtons = document.getElementById("notificationBtns").children;
+    for (var i = 0; i < notificationButtons.length; i++) {   
+        if (notificationButtons[i].id == id) { 
+            notificationButtons[i].classList.remove("notificationUnpressed");
+            notificationButtons[i].classList.add("notificationPressed");
+        } else { 
+             notificationButtons[i].classList.remove("notificationPressed");
+            notificationButtons[i].classList.add("notificationUnpressed");    
+        }   
+    }   
+
+    var notificationMessages = document.getElementsByClassName("notificationMessages");
+    for (var j = 0; j < notificationMessages.length; j++) {
+        notificationMessages[j].style.display = "none"; 
+    }   
+
+    var buttonSubstr = id.substring(0, 7); 
+    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
 }
 

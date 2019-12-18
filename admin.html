@@ -14,7 +14,7 @@
         <script src="js/common.js"></script>
         <script src="js/admin.js"></script>
     </head>
-    <body onload="adminLoad()">
+    <body onload="confirmLogin(); confirmAdmin(); computeFooterMargin(); computeLogin()">
         <!-- NAVBAR -->
         <div id="navbarOnTheVideo">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,16 +28,13 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="./search.html"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="./admin.html"><i class="fa fa-star" aria-hidden="true" disabled></i> Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                            <a class="nav-link" href="./index.html" ><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -55,14 +52,13 @@
                         </div>
                         <div id="statisticsCollection">
                             <div id="adminDisclaimer">
-                            Welcome to your Admin Access Page.
+                            Welcome to your Admin Accesss Page.
                             This is where you can create new
                             leagues and input the results of 
                             existing games.
                             </div>
                         </div>
                         <div id="loggedInAs">
-                            Logged In As:<br>tclare@nd.edu
                         </div>
                     </div>
                 </div>
@@ -91,11 +87,10 @@
                                         <div class="col-md-6 d-md-flex d-none centerContent" style="padding:0px">
                                             <div class="nonInputContent">Start Date</div>
                                         </div>
-
                                         <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control monthInput"  placeholder="MM"></div>
                                         <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control dayInput"  placeholder="DD"></div>
                                         <div class="col-md-2 col-4 centerContent"><div class="punctuationText">/</div><input type="text" class="form-control yearInput"   placeholder="YYYY"></div>
-                                        
+
                                         <div class="col-md-6 d-none d-md-flex centerContent" style="padding:0px">
                                             <div class="nonInputContent">End Date</div>
                                         </div>
@@ -123,6 +118,7 @@
                                             <div class="col-12 d-flex d-md-none centerContent">
                                                 <div class="nonInputContent">Pool Time*</div>
                                             </div>
+
                                             <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control weekdayInput" placeholder="DDD"></div>
                                             <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control hourInput" placeholder="HH"></div>
                                             <div class="col-md-2 col-4 centerContent"><input type="text" class="form-control minuteInput" placeholder="MM"><div class="punctuationText">:</div></div>
@@ -135,6 +131,7 @@
                                 <div id="addAnotherPoolDiv" class="customContainer"><button class="btn btn-info leagueBtn" id="addAnotherPoolButton" onclick="addNewPool()"><i class="fa fa-plus" style="margin-right:5px;"></i> ADD POOL</button></div>
                                 <div id="submitNewLeagueDiv" class="customContainer" onclick="evaluateNewLeagueFormat()"><button class="btn btn-success leagueBtn" id="submitNewLeagueButton">SUBMIT THIS LEAGUE</button></div>
                             </div>                         
+
                         </div>
 
                         <div id="contentInputScoreWrapper">
