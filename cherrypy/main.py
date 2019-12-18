@@ -13,11 +13,13 @@ from _league_database import _league_database
 from _team_database import _team_database
 from _sport_database import _sport_database
 from _pool_database import _pool_database
+from _game_database import _game_database
 from users import usersController
 from leagues import leaguesController
 from teams import teamsController
 from sports import sportsController
 from pools import poolsController
+from games import gamesController
 
 # set up cors
 class optionsController:
@@ -38,6 +40,7 @@ leaguedb = _league_database(db)
 teamdb = _team_database(db)
 sportdb = _sport_database(db)
 pooldb = _pool_database(db)
+gamedb = _game_database(db)
 
 # load all data
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
@@ -55,6 +58,7 @@ leaguesController = leaguesController(leaguedb)
 teamsController = teamsController(teamdb)
 sportsController = sportsController(sportdb)
 poolsController = poolsController(pooldb)
+gamesController = gamesController(gamedb)
 
 # generic handlers for setting/deleting all users
 dispatcher.connect('getUsers', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
@@ -76,10 +80,10 @@ dispatcher.connect('getNotifications', '/users/notification/:user_id', controlle
 
 # generic league handlers
 dispatcher.connect('getLeagues', '/leagues/', controller=leaguesController, action='GET_LEAGUES', conditions=dict(method=['GET']))
+dispatcher.connect('postLeague', '/leagues/', controller=leaguesController, action='POST_LEAGUE', conditions=dict(method=['POST']))
 
 # specific league handlers
 dispatcher.connect('getLeague', '/leagues/:league_id', controller=leaguesController, action='GET_LEAGUE', conditions=dict(method=['GET']))
-dispatcher.connect('postLeague', '/leagues/:league_id', controller=leaguesController, action='POST_LEAGUE', conditions=dict(method=['POST']))
 dispatcher.connect('putLeague', '/leagues/:league_id', controller=leaguesController, action='PUT_LEAGUE', conditions=dict(method=['PUT']))
 dispatcher.connect('deleteLeague', '/leagues/:league_id', controller=leaguesController, action='DELETE_LEAGUE', conditions=dict(method=['DELETE']))
 
@@ -108,9 +112,13 @@ dispatcher.connect('postSport', '/sports/:sport_id', controller=sportsController
 # specific pool handlers
 dispatcher.connect('getPools', '/pools/', controller=poolsController, action='GET_POOLS', conditions=dict(method=['GET']))
 dispatcher.connect('getPool', '/pools/:pool_id', controller=poolsController, action='GET_POOL', conditions=dict(method=['GET']))
-dispatcher.connect('postPool', '/pools/', controller=poolsController, action='POST_POOL', conditions=dict(method=['POST']))
+dispatcher.connect('postPool', '/pools/', controller=poolsController, action='POST_POOLS', conditions=dict(method=['POST']))
 dispatcher.connect('putPool', '/pools/:pool_id', controller=poolsController, action='PUT_POOL', conditions=dict(method=['PUT']))
 dispatcher.connect('deletePool', '/pools/:pool_id', controller=poolsController, action='DELETE_POOL', conditions=dict(method=['DELETE']))
+
+# specific game hahndlers
+dispatcher.connect('getGames', '/games/:date', controller=gamesController, action='GET_GAMES', conditions=dict(method=['GET']))
+
 
 # options handlers - need one for each possible path definied above
 dispatcher.connect('users_all_op', '/users/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
