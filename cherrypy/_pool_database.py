@@ -69,6 +69,8 @@ class _pool_database:
         self.db.query('''select team_id from Teams
             where pool_id = {}'''.format(pool_id))
         teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if len(teams_in_pool) == 0:
+            return {}
         if type(teams_in_pool) is dict: # only returned one item
             return_dict.update({"teams": [teams_in_pool["team_id"]]})
         else: # returned multiple items
