@@ -20,6 +20,7 @@ from teams import teamsController
 from sports import sportsController
 from pools import poolsController
 from games import gamesController
+from search import searchController
 
 # set up cors
 class optionsController:
