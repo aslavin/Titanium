@@ -3,7 +3,7 @@
 import json
 import cherrypy
 
-class leaguesController:
+class searchController:
 
     def __init__(self, leaguedb, sportdb, userdb):
         self.leaguedb = leaguedb
