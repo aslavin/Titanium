@@ -88,14 +88,37 @@ function loadData() {
 
     var userId = window.localStorage.getItem("user_id");
 
+    var admin = false;
+
     if (userId == null){
         console.error("no userId specified");
     }
 
+    /*
+    var xhr = new XMLHttpRequest();
+    var url = 'http://project01.cse.nd.edu:51069/users/' + userId;
+    xhr.open('GET', url, false);
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        var r = JSON.parse(xhr.response);
+        if(r.is_admin == "1"){
+            admin = true;
+            console.log("admin");
+        }
+        else{
+            admin = false;
+            document.getElementById('admin_nav').remove();
+        }
+    }
+    xhr.send();
+    */
+
 	// load player notification data
 	var xhr = new XMLHttpRequest();
 	var url = 'http://project01.cse.nd.edu:51069/users/notification/' + userId;
-	xhr.open('GET', url, true);
+	xhr.open('GET', url, false);
 
 	xhr.onload = function(e) {
 

@@ -115,3 +115,9 @@ class _team_database:
             where team_id = {}'''.format(team_id))
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+    
+    def search_teams(self, query):
+        q = query.lower()
+        sql_query = f'SELECT * from Teams WHERE LOWER(Teams.name) LIKE \'%{q}%\''
+        self.db.query(sql_query)
+        return util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))

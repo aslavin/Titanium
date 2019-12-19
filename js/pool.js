@@ -247,7 +247,7 @@ function processTeam() {
             console.log(user_ids);
             console.log(user.user_id);
             console.log(leagueUsers);
-            if(leagueUsers.includes(user.user_id)){
+            if(typeof leagueUsers != 'undefined' && leagueUsers.includes(user.user_id)){
                 console.log("team member already exists");
                 activateSingleAlert("teamMemberAlreadyExists");
                 document.getElementById("teamMemberAlreadyExistsText").innerHTML = finalTeamMembers[i].value;

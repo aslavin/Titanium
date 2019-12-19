@@ -90,6 +90,12 @@ class _league_database:
         returner = {'users': [sql_return['user_id'] for sql_return in users_in_league]}
         return returner
 
+    def search_leagues(self, query):
+        q = query.lower()
+        sql_query = f'SELECT Leagues.league_id, Leagues.name FROM Leagues, Sports WHERE Leagues.sport_id = Sports.sport_id AND (LOWER(Leagues.name) LIKE \'%{q}%\' OR (LOWER(Sports.name) LIKE \'%{q}%\'))'
+        self.db.query(sql_query)
+        return util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+
     # remove league from database
     def delete_league(self, league_id):
         self.db.query('''delete from Leagues
