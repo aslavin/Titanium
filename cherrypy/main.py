@@ -78,6 +78,8 @@ dispatcher.connect('postUserTeam', '/users/:user_id/team/:team_id', controller=u
 
 dispatcher.connect('getNotifications', '/users/notification/:user_id', controller=usersController, action='GET_USER_NOTIFICATIONS', conditions=dict(method=['GET']))
 
+dispatcher.connect('sendNotification', '/users/notification/', controller=usersController, action='POST_USER_NOTIFICATIONS', conditions=dict(method=['POST']))
+
 # generic league handlers
 dispatcher.connect('getLeagues', '/leagues/', controller=leaguesController, action='GET_LEAGUES', conditions=dict(method=['GET']))
 dispatcher.connect('postLeague', '/leagues/', controller=leaguesController, action='POST_LEAGUE', conditions=dict(method=['POST']))
@@ -99,6 +101,7 @@ dispatcher.connect('getTeam', '/teams/:team_id', controller=teamsController, act
 dispatcher.connect('postTeam', '/teams/', controller=teamsController, action='POST_TEAM', conditions=dict(method=['POST']))
 dispatcher.connect('putTeam', '/teams/:team_id', controller=teamsController, action='PUT_TEAM', conditions=dict(method=['PUT']))
 dispatcher.connect('deleteTeam', '/teams/:team_id', controller=teamsController, action='DELETE_TEAM', conditions=dict(method=['DELETE']))
+
 
 # generic sports handlers
 dispatcher.connect('getSports', '/sports/', controller=sportsController, action='GET_SPORTS', conditions=dict(method=['GET']))

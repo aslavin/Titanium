@@ -23,6 +23,26 @@ class _user_database:
     def delete_users(self):
         self.db.query('delete from Users')
 
+    def set_notification(self, data):
+        print('data')
+        print(data)
+        data = json.loads(data);
+        team_id = data['team_id']
+        league_id = data['league_id']
+        captain_id = data['captain_id']
+        new_member_id = data['new_member_id']
+        invited = data['invited']
+        accepted = data['accepted']
+
+        self.db.query('''INSERT INTO Team_Requests values (
+        {},
+        {},
+        {},
+        {},
+        {},
+        {})'''.format(team_id, league_id, captain_id, new_member_id, invited, accepted)
+        )
+
     # set a new user
     def set_user(self, data):
         user_id = None # keeping this variable in case we need it later

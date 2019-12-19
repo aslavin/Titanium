@@ -27,10 +27,18 @@ class usersController:
     def GET_USER_NOTIFICATIONS(self, user_id):
         return json.dumps(self.userdb.get_user_notifications(user_id))
 
+    def POST_USER_NOTIFICATIONS(self):
+        #print(cherrypy.request.body.read())
+        msg = json.loads(cherrypy.request.body.read())
+        for user in msg['users']:
+            self.userdb.set_notification(user)
+        return json.dumps({'result':'sucess'})
+    
     # create a new user
     # any keys not included in request body will be set to
     #  null in the database
     def POST_USER(self):
+        #print(cherrypy.request.body.read())
         msg = json.loads(cherrypy.request.body.read())
         user_id = self.userdb.set_user(msg)
         return json.dumps({"result": "success", "user_id": user_id})
