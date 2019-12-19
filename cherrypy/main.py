@@ -59,6 +59,7 @@ teamsController = teamsController(teamdb)
 sportsController = sportsController(sportdb)
 poolsController = poolsController(pooldb)
 gamesController = gamesController(gamedb)
+searchController = searchController(leaguedb, teamdb, userdb)
 
 # generic handlers for setting/deleting all users
 dispatcher.connect('getUsers', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
@@ -116,9 +117,14 @@ dispatcher.connect('postPool', '/pools/', controller=poolsController, action='PO
 dispatcher.connect('putPool', '/pools/:pool_id', controller=poolsController, action='PUT_POOL', conditions=dict(method=['PUT']))
 dispatcher.connect('deletePool', '/pools/:pool_id', controller=poolsController, action='DELETE_POOL', conditions=dict(method=['DELETE']))
 
-# specific game hahndlers
+# specific game handlers
 dispatcher.connect('getGames', '/games/:date', controller=gamesController, action='GET_GAMES', conditions=dict(method=['GET']))
 
+# search handlers
+dispatcher.connect('searchLeagues', '/search/leagues/', controller=searchController, action='SEARCH_LEAGUES', conditions=dict(method=['POST']))
+dispatcher.connect('searchTeams', '/search/teams/', controller=searchController, action='SEARCH_TEAMS', conditions=dict(method=['POST']))
+dispatcher.connect('searchUsers', '/search/users/', controller=searchController, action='SEARCH_USERS', conditions=dict(method=['POST']))
+dispatcher.connect('searchAll', '/search/', controller=searchController, action='SEARCH_LEAGUES', conditions=dict(method=['POST']))
 
 # options handlers - need one for each possible path definied above
 dispatcher.connect('users_all_op', '/users/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
