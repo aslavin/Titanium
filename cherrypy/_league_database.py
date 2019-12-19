@@ -84,6 +84,10 @@ class _league_database:
     def get_league_users(self, league_id):
         self.db.query('''SELECT user_id FROM Users_Teams WHERE team_id IN (SELECT team_id FROM Teams WHERE pool_id IN (SELECT pool_id FROM Pools WHERE league_id = {}))'''.format(league_id))
         users_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if(len(users_in_league) == 0):
+                return {}
+        print(users_in_league)
+        print(sql_return)
         returner = {'users': [sql_return['user_id'] for sql_return in users_in_league]}
         return returner
 
