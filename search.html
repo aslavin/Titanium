@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/team.css">
+        <link rel="stylesheet" href="css/search.css">
         <link rel="stylesheet" href="css/common.css">
         <link href="https://fonts.googleapis.com/css?family=Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
         <script src="js/common.js"></script>
-        <script src="js/team.js"></script>
+        <script src="js/search.js"></script>
+        <script src="js/removeAdmin.js"></script>
     </head>
-    <body onload="loadData()">
+    <body onload="computeFooterMargin(); removeAdmin()">
         <!-- NAVBAR -->
         <div id="navbarOnTheVideo">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,18 +29,14 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-male" aria-hidden="true"></i> My Teams</a>
-                        </li>
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href="./search.html"><i class="fa fa-search" aria-hidden="true"></i> Search</a>                        </li>
+                        <li class="nav-item" id="admin_nav">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" href=""><i class="fa fa-star" aria-hidden="true" disabled></i> Admin</a>
+                        </li>   
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#createTeamModal" href="#"><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
-                        </li>
-                    </ul>
+                            <a class="nav-link" href="./index.html" ><i class="fa fa-mail-reply" aria-hidden="true"></i> Logout</a>
+                        </li>   
+                    </ul> 
                 </div>
             </nav>  
         </div>
@@ -52,41 +49,13 @@
                 <div id="lifetimeStatistics">
                     <div id="statisticsFlexbox">
                         <div id="lifetimeStatisticsTitle">
-                            Team<br>Statistics
+                            Search<br>
+                            Page
                         </div>
-                        <div id="statisticsCollection">
-                            <div class="statistic">
-                                <div class="statisticNumber">
-                                    <span id="nWins">1</span> - <span id="nLosses">1</span> - <span id="nTies">1</span>  <!-- placeholder -->
-                                </div>
-                                <div class="statisticTitle">
-                                    Season Record 
-                                </div>
-                            </div>
-                            <div class="statistic">
-                                <div class="statisticNumber">
-                                    <span id="winPercentage"></span>
-                                </div>
-                                <div class="statisticTitle">
-                                    Win Percentage 
-                                </div>
-                            </div>
-                            <div class="statistic">
-                                <div class="statisticNumber">
-                                    <span id="scoreDifferential"></span> 
-                                </div>
-                                <div class="statisticTitle">
-                                    Score Differential 
-                                </div>
-                            </div>
-                            <div class="statistic">
-                                <div class="statisticNumber">
-                                    <span id="poolRank">3</span> / <span id="teamsInPool">5</span> 
-                                </div>
-                                <div class="statisticTitle">
-                                    Pool Rank 
-                                </div>
-                            </div>
+                        <div id="searchDisclaimer">
+                                Welcome to the search page, where you can
+                                conduct a filtered search for the any team, 
+                                league or user throughout Titanium.
                         </div>
                         <div id="loggedInAs">
                             Logged In As:<br>tclare@nd.edu
@@ -95,36 +64,25 @@
                 </div>
             </div>
         </div>
+        <div id="blankDiv"></div>
         <div class="row" id="mainContent">
             <div class="col-12 col-lg-10 offset-lg-2">
-                <div class="container-fluid">
-                    <div id="userContent">
-                        <div id="blankDiv"></div>
-                        <h2><span id="teamName">Broom Roasted</span></h2>  
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="alert alert-dark" role="alert">
-                                    <strong><i class="fa fa-clock-o"></i> 10:30pm</strong>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="alert alert-dark" role="alert">
-                                    <strong><i class="fa fa-map-marker"></i> Compton Family Ice Arena</strong>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <h2 class="subsequentHeader">Schedule</h2>
-                        <div id="gameCards"></div>
-
-                        <h2 class="subsequentHeader">Roster</h2>
-                        <div id="teamRosterDiv">
-                            <table class="table" id="teamRosterTable">
-                            </table>
-                        </div>
-                    </div> 
+                <h2>Search Page</h2>
+                <div id="searchBoxDiv">
+                    <div id="searchBtns" class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" id="allSearchOption" class="btn btn-info notificationPressed" onclick="changeBtnGroupSearch(this.id)">Anything</button>
+                                    <button type="button" id="leagueSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Leagues</button>
+                                    <button type="button" id="teamSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Teams</button>
+                                    <button type="button" id="playerSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Players</button>
+                    </div>
+                    <input id="searchBox" class="form-control" type="text" placeholder="Search For Anything">
+                    <div id="searchButton"><button class="btn-info btn" onclick="search();"><i class="fa fa-search"></i></button></div> 
+                </div> 
+                <div id="resultsBox">
+                    <div id="searchResultsText"><span id="nResults"></span> result(s) found in <span id="searchScope"></span> for "<span id="originalSearch"></span>" :</div>
+                    <div id="searchResults"></div>
                 </div>
+                
             </div> 
         </div>
         <div class="row"><div class="col-lg-10 offset-lg-2 col-12">
