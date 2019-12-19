@@ -1,0 +1,50 @@
+#searchDisclaimer { 
+    margin: 0 10%;
+}
+
+#searchBoxDiv { 
+    width: 80%;
+    margin-left: 10%;
+    position: relative;
+}
+
+#searchBox { 
+    font-size: 20px;
+    margin-top: 25px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#searchButton { 
+    position: absolute;
+    right: 15px;
+    bottom: 3px;
+}
+
+#searchBtns { 
+    width: 100%;
+}
+
+#searchResultsText { 
+    text-align: center;
+    font-size: 22px;
+}
+
+#resultsBox { 
+    margin-top: 20px;
+    display: none;
+}
+
+#nResults { 
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#searchResults { 
+    margin-top: 25px;
+}
+
+.searchResult { 
+    text-align: center;
+    font-size: 20px;
+}
