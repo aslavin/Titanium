@@ -12,6 +12,7 @@ function changeBtnGroupSearch(id) {
             searchButtons[i].classList.add("notificationUnpressed");    
         } 
     }
+    document.getElementById("searchBox").value = "";
     document.getElementById("searchBox").placeholder = "Search For " + document.getElementById(id).innerHTML;
 }
 
@@ -49,3 +50,4 @@ function search() {
         document.getElementById("searchResults").insertAdjacentHTML("beforeend", htmlString);
     }
 }
+
