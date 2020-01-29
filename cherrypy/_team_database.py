@@ -74,18 +74,14 @@ class _team_database:
     # return None if team not found
     def get_team(self, team_id):
         lock.acquire()
-        print('Getting team: ' + team_id);
         self.db.query('''select * from Teams
             where team_id = {}'''.format(team_id))
         r = self.db.store_result()
         return_dict = util.get_dict_from_query(r.fetch_row(how=1))
 
-        print('Getting user teams: ' + team_id);
         self.db.query('''select user_id from Users_Teams
             where team_id = {}'''.format(team_id))
         teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        print('teams in pool: ' + team_id)
-        print(teams_in_pool)
         lock.release()
         if type(teams_in_pool) is dict: # only returned one item
             if len(teams_in_pool) == 0:

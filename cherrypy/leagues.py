@@ -14,7 +14,6 @@ class leaguesController:
         
     # get an existing league's info
     def GET_LEAGUE(self, league_id):
-        print('test')
         return json.dumps(self.leaguedb.get_league(league_id))
 
     # create a new league

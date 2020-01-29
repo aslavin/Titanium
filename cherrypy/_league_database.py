@@ -69,7 +69,7 @@ class _league_database:
 
         self.db.query('''select * from Leagues
             where league_id = {}'''.format(league_id))
-        return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(how=1))
+        return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
 
         self.db.query('''select pool_id from Pools
             where league_id = {}'''.format(league_id))
@@ -86,7 +86,6 @@ class _league_database:
         users_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
         if(len(users_in_league) == 0):
             return {}
-        print(users_in_league)
         returner = {'users': [sql_return['user_id'] for sql_return in users_in_league]}
         return returner
 

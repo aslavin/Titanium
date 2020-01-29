@@ -24,8 +24,6 @@ class _user_database:
         self.db.query('delete from Users')
 
     def set_notification(self, data):
-        print('data')
-        print(data)
         data = json.loads(data);
         team_id = data['team_id']
         league_id = data['league_id']
@@ -214,7 +212,6 @@ class _user_database:
         if not result:
             return {"status": "failure", "reason": "email not in system"}
         if result['pass_hash'] == pass_hash:
-            print(result['is_admin'])
             return {"status" :"success", "user_id": result['user_id'], "is_admin": result['is_admin']}
         else:
             return {"status":"failure", "reason": "unknown"}
