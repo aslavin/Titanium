@@ -83,7 +83,7 @@ class _league_database:
 
     def get_league_users(self, league_id):
         self.db.query('''SELECT user_id FROM Users_Teams WHERE team_id IN (SELECT team_id FROM Teams WHERE pool_id IN (SELECT pool_id FROM Pools WHERE league_id = {}))'''.format(league_id))
-        users_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        users_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(how=1))
         if(len(users_in_league) == 0):
             return {}
         returner = {'users': [sql_return['user_id'] for sql_return in users_in_league]}
@@ -91,9 +91,10 @@ class _league_database:
 
     def search_leagues(self, query):
         q = query.lower()
-        sql_query = f'SELECT Leagues.league_id, Leagues.name FROM Leagues, Sports WHERE Leagues.sport_id = Sports.sport_id AND (LOWER(Leagues.name) LIKE \'%{q}%\' OR (LOWER(Sports.name) LIKE \'%{q}%\'))'
-        self.db.query(sql_query)
-        return util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        mycursor = self.db.cursor()
+        sql_query = f'SELECT level, sport FROM Leagues WHERE LOWER(Leagues.sport) LIKE \'%{q}%\''
+        mycursor.execute(sql_query)
+        return mycursor.fetchall()
 
     # remove league from database
     def delete_league(self, league_id):

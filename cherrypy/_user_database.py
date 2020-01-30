@@ -196,9 +196,10 @@ class _user_database:
 
     def search_users(self, query):
         q = query.lower()
+        mycursor = self.db.cursor()
         sql_query = f'SELECT * from Users WHERE LOWER(Users.first_name) LIKE \'%{q}%\' OR LOWER(Users.last_name) LIKE \'%{q}%\''
-        self.db.query(sql_query)
-        return util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        mycursor.execute(sql_query)
+        return mycursor.fetchall()
 
     def validate_user(self, email, password):
         pass_hash = hashlib.sha256()
