@@ -7,7 +7,7 @@
 
 import cherrypy
 import json
-from MySQLdb import _mysql
+import MySQLdb
 from _user_database import _user_database
 from _league_database import _league_database
 from _team_database import _team_database
@@ -35,7 +35,7 @@ def CORS():
 cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
 
 # create new backend
-db = _mysql.connect("localhost", "root", "Andy_slavin_1234", "mydb")
+db = MySQLdb.connect("localhost", "root", "Andy_slavin_1234", "mydb")
 userdb = _user_database(db) # shared across all controllers
 leaguedb = _league_database(db)
 teamdb = _team_database(db)
@@ -128,7 +128,7 @@ dispatcher.connect('getGames', '/games/:date', controller=gamesController, actio
 dispatcher.connect('searchLeagues', '/search/leagues/', controller=searchController, action='SEARCH_LEAGUES', conditions=dict(method=['POST']))
 dispatcher.connect('searchTeams', '/search/teams/', controller=searchController, action='SEARCH_TEAMS', conditions=dict(method=['POST']))
 dispatcher.connect('searchUsers', '/search/users/', controller=searchController, action='SEARCH_USERS', conditions=dict(method=['POST']))
-dispatcher.connect('searchAll', '/search/', controller=searchController, action='SEARCH_LEAGUES', conditions=dict(method=['POST']))
+dispatcher.connect('searchAll', '/search/', controller=searchController, action='SEARCH_ALL', conditions=dict(method=['POST']))
 
 # options handlers - need one for each possible path definied above
 dispatcher.connect('users_all_op', '/users/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
