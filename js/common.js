@@ -7,6 +7,6 @@ function computeFooterMargin() {
 
 function confirmLogin() {
 	if(!window.localStorage.getItem("user_id") || window.localStorage.getItem("user_id") == 'null' ){
-		window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/index.html#";
+		window.location.href = "./index.html#";
 	} 
 }
