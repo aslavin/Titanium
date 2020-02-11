@@ -133,13 +133,14 @@ class _user_database:
     
     def get_user_notifications(self, user_id):
 
-        self.db.query('''select distinct Teams.name as team_name, Leagues.name as league_name, Users.first_name, Users.last_name 
-            from Team_Requests, Teams, Leagues, Users 
+        self.db.query('''select distinct Teams.name as team_name, Leagues.level as league_level, Leagues.sport as league_sport, Users.first_name, Users.last_name 
+            from Team_Requests, Teams, Leagues, Pools, Users 
             where Teams.team_id = Team_Requests.team_id
-            and Users.user_id = Team_Requests.captain_id
-            and Leagues.league_id = Team_Requests.league_id
-            and Team_Requests.invited = 1
-            and Team_Requests.accepted = 0
+            and Users.user_id = Teams.capt_id
+            and Pools.pool_id = Teams.pool_id
+            and Leagues.league_id = Pools.league_id
+            and Team_Requests.new_member_invited = 1
+            and Team_Requests.new_member_accepted = 0
             and Team_Requests.new_member_id = {};
             '''.format(user_id))
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
@@ -149,9 +150,9 @@ class _user_database:
         self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
             from Team_Requests, Teams, Users 
             where Teams.team_id = Team_Requests.team_id
-            and Users.user_id = Team_Requests.captain_id
-            and Team_Requests.invited = 0
-            and Team_Requests.accepted = 0
+            and Users.user_id = Teams.capt_id
+            and Team_Requests.new_member_invited = 0
+            and Team_Requests.new_member_accepted = 0
             and Team_Requests.new_member_id = {};
             '''.format(user_id))
         pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
@@ -162,9 +163,9 @@ class _user_database:
             from Team_Requests, Teams, Leagues, Users 
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Team_Requests.new_member_id
-            and Team_Requests.invited = 0
-            and Team_Requests.accepted = 0
-            and Team_Requests.captain_id = {};
+            and Team_Requests.new_member_invited = 0
+            and Team_Requests.new_member_accepted = 0
+            and Teams.capt_id = {};
             '''.format(user_id))
         captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
         if type(captainNotifications) is dict:
