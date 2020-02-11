@@ -339,7 +339,7 @@ function submitLeague() {
 
 	// send POST request to server
 	var xhr = new XMLHttpRequest();
-	var url = 'http://project01.cse.nd.edu:51069/leagues/';
+	var url = 'http://127.0.0.1:51069/leagues/';
 	xhr.open('POST', url, true);
 
 	xhr.onload = function(e) {

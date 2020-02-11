@@ -50,7 +50,7 @@ function loadData() {
     var ties = 0;
     var new_roster_data = [];
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/teams/' + teamId;
+    var url = 'http://127.0.0.1:51069/teams/' + teamId;
     xhr.open('GET', url, false);
     xhr.onload = function(e){
         if(xhr.readyState != 4){
@@ -61,7 +61,7 @@ function loadData() {
         var users = response.users;
         users.forEach(function(item){
             var xhr_user = new XMLHttpRequest();
-            var url_user = 'http://project01.cse.nd.edu:51069/users/'+item;
+            var url_user = 'http://127.0.0.1:51069/users/'+item;
             xhr_user.open('GET', url_user, false);
             xhr_user.onload = function(e){
                 if(xhr_user.readyState != 4){
@@ -75,7 +75,7 @@ function loadData() {
         });
 
         var xhr_team = new XMLHttpRequest();
-        var url_team = 'http://project01.cse.nd.edu:51069/pools/'+response.pool_id;
+        var url_team = 'http://127.0.0.1:51069/pools/'+response.pool_id;
         xhr_team.open('GET', url_team, false);
         xhr_team.onload = function(e){
             if(xhr_team.ready_state != 4){
@@ -103,7 +103,7 @@ function loadData() {
             new_list.forEach(function(item){
                 var temp = [];
                 var xhr_iteam = new XMLHttpRequest();
-                var url_iteam = 'http://project01.cse.nd.edu:51069/teams/' + item;
+                var url_iteam = 'http://127.0.0.1:51069/teams/' + item;
                 xhr_iteam.open('GET', url_iteam, false);
                 xhr_iteam.onload = function(e){
                     if(xhr_iteam.readyState != 4){

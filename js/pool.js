@@ -20,7 +20,7 @@ function loadData() {
     }
 
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/pools/' + poolId;
+    var url = 'http://127.0.0.1:51069/pools/' + poolId;
     xhr.open('GET', url, false);
     xhr.onload = function(e){
         if(xhr.readyState != 4){
@@ -30,7 +30,7 @@ function loadData() {
         var teams = response.teams;
         teams.forEach(function(item){
             var xhr_team = new XMLHttpRequest();
-            var url_team = 'http://project01.cse.nd.edu:51069/teams/' + item;
+            var url_team = 'http://127.0.0.1:51069/teams/' + item;
             xhr_team.open('GET', url_team, false);
             xhr_team.onload = function(e){
                 if(xhr_team.readyState != 4){
@@ -151,7 +151,7 @@ function processTeam() {
     var league_id;
     var teams;
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/pools/' + poolId;
+    var url = 'http://127.0.0.1:51069/pools/' + poolId;
     xhr.open('GET', url, false);
     xhr.onload = function(e){
         if (xhr.readyState != 4){
@@ -179,7 +179,7 @@ function processTeam() {
 
     var leagueUsers = [];
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/leagues/' + league_id + '/users';
+    var url = 'http://127.0.0.1:51069/leagues/' + league_id + '/users';
     xhr.open('GET', url, false);
     xhr.onload = function(e){
         if (xhr.readyState != 4){
@@ -208,7 +208,7 @@ function processTeam() {
             document.getElementById("invalidTeamMemberEmailText").innerHTML = finalTeamMembers[i].value;
             return;*/
             var xhr = new XMLHttpRequest();
-            var url = 'http://project01.cse.nd.edu:51069/users/email/' + finalTeamMembers[i].value;
+            var url = 'http://127.0.0.1:51069/users/email/' + finalTeamMembers[i].value;
             var user;
             xhr.open('GET', url, false);
             xhr.onload = function(e) {
@@ -267,7 +267,7 @@ function processTeam() {
 
 function getTeams(league_id){
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/leagues/'+league_id+'/teams';
+    var url = 'http://127.0.0.1:51069/leagues/'+league_id+'/teams';
     var teamList = [];
     xhr.open('GET', url, false);
     xhr.onload = function(e) {
@@ -299,7 +299,7 @@ function createTeamAndSendInvitations(poolId, finalTeamName, league_id, user_ids
     data.ties = 0;
     
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/teams/';
+    var url = 'http://127.0.0.1:51069/teams/';
     var json = JSON.stringify(data);
     var team_id;
     xhr.open('POST', url, false);
@@ -323,7 +323,7 @@ function createTeamAndSendInvitations(poolId, finalTeamName, league_id, user_ids
     user_ids.forEach(function(item) {
         /* TODO: add each user (email found with finalTeamMembers[i].value) to the team you just made. */
         var xhr = new XMLHttpRequest();
-        var url = 'http://project01.cse.nd.edu:51069/users/'+item+'/team/'+team_id;
+        var url = 'http://127.0.0.1:51069/users/'+item+'/team/'+team_id;
         xhr.open('POST', url, false);
         var response;
         xhr.onload = function(e) {

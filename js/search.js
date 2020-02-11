@@ -29,7 +29,7 @@ function search() {
         case 0:
             // search users, leagues, teams (all)
 			var xhr = new XMLHttpRequest();
-        	var url = 'http://project01.cse.nd.edu:51069/search/';
+        	var url = 'http://127.0.0.1:51069/search/';
         	xhr.open('POST', url, false);
         	xhr.onload = function(e) {
             	if (xhr.readyState != 4){
@@ -55,7 +55,7 @@ function search() {
         case 1:
 			// search leagues
             var xhr = new XMLHttpRequest();
-        	var url = 'http://project01.cse.nd.edu:51069/search/leagues/';
+        	var url = 'http://127.0.0.1:51069/search/leagues/';
         	xhr.open('POST', url, false);
         	xhr.onload = function(e) {
             	if (xhr.readyState != 4){
@@ -72,7 +72,7 @@ function search() {
         case 2:
             // search teams
 			var xhr = new XMLHttpRequest();
-        	var url = 'http://project01.cse.nd.edu:51069/search/teams/';
+        	var url = 'http://127.0.0.1:51069/search/teams/';
         	xhr.open('POST', url, false);
         	xhr.onload = function(e) {
             	if (xhr.readyState != 4){
@@ -90,7 +90,7 @@ function search() {
         case 3: 
             // search players
 			var xhr = new XMLHttpRequest();
-        	var url = 'http://project01.cse.nd.edu:51069/search/users/';
+        	var url = 'http://127.0.0.1:51069/search/users/';
         	xhr.open('POST', url, false);
         	xhr.onload = function(e) {
             	if (xhr.readyState != 4){

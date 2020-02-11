@@ -96,7 +96,7 @@ function loadData() {
 
     /*
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/users/' + userId;
+    var url = 'http://127.0.0.1:51069/users/' + userId;
     xhr.open('GET', url, false);
     xhr.onload = function(e){
         if (xhr.readyState != 4){
