@@ -109,7 +109,7 @@ function accountCreateValidation() {
     
     else {
 			var xhr = new XMLHttpRequest();
-			var url = 'http://project01.cse.nd.edu:51069/users/email/' + email;
+			var url = 'http://127.0.0.1:51069/users/email/' + email;
 			xhr.open('GET', url, true);
 
 			xhr.onload = function(e){
@@ -123,7 +123,7 @@ function accountCreateValidation() {
 				}
 				else {
 					var xhr2 = new XMLHttpRequest();
-					var url2 = 'http://project01.cse.nd.edu:51069/users/';
+					var url2 = 'http://127.0.0.1:51069/users/';
 					var data = {};
 					data.pass_hash = password;
 					data.email = email;
@@ -163,7 +163,7 @@ function loginValidation()  {
     var password = document.getElementById("userPassword").value;
 
     var xhr = new XMLHttpRequest();
-    var url = 'http://project01.cse.nd.edu:51069/users/validate/';
+    var url = 'http://127.0.0.1:51069/users/validate/';
     xhr.open('POST', url, true);
 
     xhr.onload = function(e){
@@ -184,7 +184,7 @@ function loginValidation()  {
 			window.localStorage.setItem('email', email);
 			window.localStorage.setItem('user_id', response['user_id']);
 			window.localStorage.setItem('is_admin', response['is_admin']);
-			window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/user.html";
+			window.location.href = "file:///Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/user.html";
 		}
     }
 	xhr.send(JSON.stringify({"email": email, "password": password}));

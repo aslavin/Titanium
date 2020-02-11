@@ -7,7 +7,10 @@
 
 import cherrypy
 import json
+import os
 import MySQLdb
+
+from dotenv import load_dotenv
 from _user_database import _user_database
 from _league_database import _league_database
 from _team_database import _team_database
@@ -22,6 +25,9 @@ from pools import poolsController
 from games import gamesController
 from search import searchController
 
+load_dotenv()
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+
 # set up cors
 class optionsController:
     def OPTIONS(self, *args, **kwargs):
@@ -34,20 +40,21 @@ def CORS():
 
 cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
 
-# create new backend
-db = MySQLdb.connect("localhost", "root", "Andy_slavin_1234", "mydb")
-userdb = _user_database(db) # shared across all controllers
+# create new backenddb = MySQLdb.connect("localhost", "root", "Andy_slavin_1234", "mydb")
+db = MySQLdb.connect("localhost", "root", DB_PASSWORD, "mydb")
+
 leaguedb = _league_database(db)
 teamdb = _team_database(db)
 sportdb = _sport_database(db)
 pooldb = _pool_database(db)
 gamedb = _game_database(db)
+userdb = _user_database(db)
 
 # load all data
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
 
 # create configuration, which is a dict
-conf = { 'global': {'server.socket_host': 'localhost',
+conf = { 'global': {'server.socket_host': '127.0.0.1',
              'server.socket_port': 51069},
              '/': {'request.dispatch':dispatcher,
                     'tools.CORS.on': True} # tells it to use the dispatcher on any path
