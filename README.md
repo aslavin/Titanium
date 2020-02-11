@@ -15,5 +15,6 @@ Setup:
 6. Run the server with `python3 main.py
 
 Database setup:
+
 Export database with `mysqldump -u username -p dbname > dbexport.sql`.
 Import database with `mysql -u username -p dbname < dbexport.sql`.
