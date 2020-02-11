@@ -184,7 +184,7 @@ function loginValidation()  {
 			window.localStorage.setItem('email', email);
 			window.localStorage.setItem('user_id', response['user_id']);
 			window.localStorage.setItem('is_admin', response['is_admin']);
-			window.location.href = "file:///Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/user.html";
+			window.location.href = "./user.html";
 		}
     }
 	xhr.send(JSON.stringify({"email": email, "password": password}));

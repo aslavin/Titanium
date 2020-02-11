@@ -368,6 +368,6 @@ function computeLogin() {
 function confirmAdmin() {
 	/* DONE: REDIRECT TO INDEX IF USER ISN'T AN ADMIN */
 	if (window.localStorage.getItem("is_admin") != 1) {
-		window.location.href = "http://project01.cse.nd.edu/tommy/Titanium/index.html#";
+		window.location.href = "./index.html#";
 	}
 }
