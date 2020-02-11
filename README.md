@@ -12,4 +12,8 @@ Setup:
 3. Create a new python virtual environment with `python3 -m venv myenv`
 4. Whenever you want to run the server, activate the virtual environment with `source myenv/bin/activate`
 5. Once the venv is activated, install dependencies with `pip3 install -r requirements.txt`
-6. Run the server with `python3 main.py`
+6. Run the server with `python3 main.py
+
+Database setup:
+Export database with `mysqldump -u username -p dbname > dbexport.sql`.
+Import database with `mysql -u username -p dbname < dbexport.sql`.
