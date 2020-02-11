@@ -47,7 +47,7 @@ gamedb = _game_database(db)
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
 
 # create configuration, which is a dict
-conf = { 'global': {'server.socket_host': 'project01.cse.nd.edu',
+conf = { 'global': {'server.socket_host': 'localhost',
              'server.socket_port': 51069},
              '/': {'request.dispatch':dispatcher,
                     'tools.CORS.on': True} # tells it to use the dispatcher on any path
