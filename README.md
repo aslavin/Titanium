@@ -17,4 +17,5 @@ Setup:
 Database setup:
 
 Export database with `mysqldump -u username -p dbname > dbexport.sql`.
+
 Import database with `mysql -u username -p dbname < dbexport.sql`.
