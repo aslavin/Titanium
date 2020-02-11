@@ -16,10 +16,9 @@ function loadData() {
 	// TODO: GET SESSION VARIABLE RATHER THAN HARD CODING IN LEAGUE ID
 	leagueId = 1;
 	
-
    /* DONE: CONNECT TO BACKEND, GET LEAGUE DATA, SEND POOL DATA TO HANDLER BELOW */
 	var xhr = new XMLHttpRequest();
-	var url = 'http://project01.cse.nd.edu:51069/leagues/' + leagueId;
+	var url = 'http://127.0.0.1:51069/leagues/' + leagueId;
 	xhr.open('GET', url, true);
 
 	xhr.onload = function(e) {
@@ -42,7 +41,7 @@ function loadData() {
 function setPoolData(poolId, nPools) {
 	
 	var xhr = new XMLHttpRequest();
-	var url = 'http://project01.cse.nd.edu:51069/pools/' + poolId;
+	var url = 'http://127.0.0.1:51069/pools/' + poolId;
 	xhr.open('GET', url, true);
 
 	xhr.onload = function(e) {

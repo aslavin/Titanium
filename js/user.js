@@ -117,7 +117,7 @@ function loadData() {
 
 	// load player notification data
 	var xhr = new XMLHttpRequest();
-	var url = 'http://project01.cse.nd.edu:51069/users/notification/' + userId;
+	var url = 'http://127.0.0.1:51069/users/notification/' + userId;
 	xhr.open('GET', url, false);
 
 	xhr.onload = function(e) {
