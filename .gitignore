@@ -1,4 +1,4 @@
 # virtual environement
 cherrypy/myenv
 cherrypy/__pycache__/
-.env
+cherrypy/.env
