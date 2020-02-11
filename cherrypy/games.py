@@ -10,5 +10,4 @@ class gamesController:
         result = self.gamedb.get_games(date)
         if type(result) is dict:
             result = [result]
-        print(result)
         return json.dumps(result)

@@ -5,9 +5,9 @@ import cherrypy
 
 class searchController:
 
-    def __init__(self, leaguedb, sportdb, userdb):
+    def __init__(self, leaguedb, teamdb, userdb):
         self.leaguedb = leaguedb
-        self.sportdb = sportdb
+        self.teamdb = teamdb
         self.userdb = userdb
     
     # return list of all leagues
