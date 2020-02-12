@@ -73,3 +73,20 @@ video {
     padding: 16px;
     margin-bottom: 10px;
 }
+
+.imageSquare { 
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+img { 
+   width: 75%; 
+}
+
+.imageDescription { 
+    margin-top: 30px;
+    margin: 30px auto;
+    width: 80%;
+}

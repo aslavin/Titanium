@@ -66,7 +66,7 @@ class _league_database:
 
     # get a specific league by id
     def get_league(self, league_id):
-
+        print(league_id)
         self.db.query('''select * from Leagues
             where league_id = {}'''.format(league_id))
         return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
