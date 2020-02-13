@@ -10,9 +10,9 @@ var captainNotifications = [];
 //var pendingNotifications = [["","Andy Slavin", "", "Jump Rope Nation"]]; // indexed by CAPTAIN LINK - CAPTAIN - TEAM LINK - TEAM
 //var captainNotifications = [["","Noah Davis", "", "Andy's Army"]]; // indexed by PLAYER LINK - PLAYER - YOUR TEAM LINK - YOUR TEAM
  
-
-var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1","0", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "0","","Stix Or It Didn't Happen", "2", "2", "1","Compton Family Ice Arena"]];
-// indexed by DATE - LEAGUE LINK - LEAGUE - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TIME - TIME - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 2 LINK - TEAM 2 WINS - TEAM 2 LOSSES - LOCATION
+var gameNotifications = [];
+//var gameNotifications = [["10/23", "","Broomball Co-Rec", "","Broom Roasted", "3","1","0", "10:30pm", "10:30pm", "", "Broom Roasted", "3", "1", "0","","Stix Or It Didn't Happen", "2", "2", "1","Compton Family Ice Arena"]];
+// indexed by DATE - LEAGUE LINK - LEAGUE - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 1 TIES - TIME - TIME - TEAM 1 LINK - TEAM 1 - TEAM 1 WINS - TEAM 1 LOSSES - TEAM 1 TIES - TEAM 2 LINK - TEAM 2 - TEAM 2 WINS - TEAM 2 LOSSES - TEAM 2 TIES - LOCATION
 
 
 /* DONE: MAKE HTML COMPONENTS for everythiNG */
@@ -115,7 +115,7 @@ function loadData() {
     xhr.send();
     */
 
-	// load player notification data
+	// load player notification data, including upcoming games
 	var xhr = new XMLHttpRequest();
 	var url = 'http://127.0.0.1:51069/users/notification/' + userId;
 	xhr.open('GET', url, false);
@@ -152,6 +152,12 @@ function loadData() {
 		    i++;
         }
 
+        // append data for upcoming games
+        i = 0;
+        //while (typeof response["gameNotifications"][i].length != 'undefined'){
+		for (var i = 0; i < response["gameNotifications"].length; i++) {
+            gameNotifications.push([response["gameNotifications"][i]["date"],  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], response["gameNotifications"][i]["time"], response["gameNotifications"][i]["time"], "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
+        }
 		loadPage();
 
 	}

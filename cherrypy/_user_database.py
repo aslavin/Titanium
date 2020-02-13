@@ -133,6 +133,7 @@ class _user_database:
     
     def get_user_notifications(self, user_id):
 
+        # get player Notifications
         self.db.query('''select distinct Teams.name as team_name, Leagues.level as league_level, Leagues.sport as league_sport, Users.first_name, Users.last_name 
             from Team_Requests, Teams, Leagues, Pools, Users 
             where Teams.team_id = Team_Requests.team_id
@@ -146,7 +147,8 @@ class _user_database:
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
         if type(playerNotifications) is dict:
             playerNotifications = [playerNotifications]
-            
+        
+        # get pending notifications
         self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
             from Team_Requests, Teams, Users 
             where Teams.team_id = Team_Requests.team_id
@@ -159,6 +161,7 @@ class _user_database:
         if type(pendingNotifications) is dict:
             pendingNotifications = [pendingNotifications]
 
+        # get captain notifications
         self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name 
             from Team_Requests, Teams, Leagues, Users 
             where Teams.team_id = Team_Requests.team_id
@@ -171,7 +174,28 @@ class _user_database:
         if type(captainNotifications) is dict:
             captainNotifications = [captainNotifications]
         
-        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications}
+        # get game notifications
+        self.db.query('''select Games.game_id, DATE_FORMAT(Games.date, '%Y-%m-%d') as date, cast(Pools.pool_time as char) as time, Leagues.location as location, concat(Leagues.level, " ", Leagues.sport) as league, Games.team1_id, Teams1.name as team1Name, Teams1.wins as team1Wins, Teams1.losses as team1Losses, Teams1.ties as team1Ties, Games.team2_id, Teams2.name as team2Name, Teams2.wins as team2Wins, Teams2.losses as team2Losses, Teams2.ties as team2Ties
+            from Games, Teams as Teams1, Teams as Teams2, Pools, Leagues
+            where (
+                Games.team1_id =
+                (select Users_Teams.team_id from Users_Teams where Users_Teams.user_id = {})
+                or Games.team2_id = 
+                (select Users_Teams.team_id from Users_Teams where Users_Teams.user_id = {})
+            )
+            and Teams1.team_id = Games.team1_id
+            and Teams2.team_id = Games.team2_id
+            and Teams1.pool_id = Pools.pool_id
+            and Pools.league_id = Leagues.league_id
+            and Games.date <= DATE_ADD(curdate(), interval 1 month)
+            order by Games.date
+            ;
+            '''.format(user_id, user_id))
+        #need: date, league_id, league, team1Id, team1Name, team1Wins, team1Losses, team1Ties, time, team2Id, team2Name, team2Wins, team2Losses, team2Ties, location
+        gameNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(gameNotifications) is dict:
+            gameNotifications = [gameNotifications]
+        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications, "gameNotifications": gameNotifications}
 
     # remove user from database
     def delete_user(self, user_id):
