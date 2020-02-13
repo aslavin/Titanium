@@ -114,7 +114,9 @@
                                     <button type="button" id="captainNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
                                 </div>
                                 <div class="underneathDiv">
-                                    <div id="playersNotificationMessages" class="notificationMessages"></div>
+                                    <div id="playersNotificationMessages" class="notificationMessages">
+                                    <div class="notificationMessage" id="playerNotificationMessage"><div class="row"><div class="col-lg-10 col-md-9 col-sm-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="">Tommy Clare</a> invited you to join <a class="userLink" href="">Leprechauns</a> in <a class="userLink" href="">CoRec Intramural Broomball</a>!</span></div></div><div class="col-lg-2 col-md-3 col-sm-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-danger" id="playerDenyInvitation" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>
+                                    </div>
                                     <div id="pendingNotificationMessages" class="notificationMessages"></div>
                                     <div id="captainNotificationMessages" class="notificationMessages"></div>
                                 </div>

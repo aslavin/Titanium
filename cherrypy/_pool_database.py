@@ -2,6 +2,7 @@
 
 from MySQLdb import _mysql
 import util
+from datetime import timedelta
 
 class _pool_database:
     
@@ -64,17 +65,20 @@ class _pool_database:
             where pool_id = {}'''.format(pool_id))
         r = self.db.store_result()
         return_dict = util.get_dict_from_query(r.fetch_row(how=1))
-
+        return_dict['pool_time'] = return_dict['pool_time'].strftime('%H:%M:%S')
+        #print("\n\n\n****POOL:return_dict", return_dict, "\n\n\n")
         self.db.query('''select team_id from Teams
             where pool_id = {}'''.format(pool_id))
         teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        #print("\n\n\n****TEAMS_IN_POOL:", teams_in_pool, "\n\n\n")
         if len(teams_in_pool) == 0:
             return {}
         if type(teams_in_pool) is dict: # only returned one item
             return_dict.update({"teams": [teams_in_pool["team_id"]]})
         else: # returned multiple items
             return_dict.update({"teams": [sql_return["team_id"] for sql_return in teams_in_pool]})
-        
+       
+        #print("made it to end of fcn")
         return return_dict
 
     # remove pool from database

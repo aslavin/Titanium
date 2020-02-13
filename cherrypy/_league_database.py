@@ -2,6 +2,7 @@
 
 from MySQLdb import _mysql
 import util
+from datetime import datetime
 
 class _league_database:
     
@@ -66,19 +67,19 @@ class _league_database:
 
     # get a specific league by id
     def get_league(self, league_id):
-        print(league_id)
         self.db.query('''select * from Leagues
             where league_id = {}'''.format(league_id))
         return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-
+        return_dict['start_time'] = return_dict['start_time'].strftime("%m/%d/%Y")
+        return_dict['end_time'] = return_dict['end_time'].strftime("%m/%d/%Y")
         self.db.query('''select pool_id from Pools
             where league_id = {}'''.format(league_id))
-        pools_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        pools_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))  
         if type(pools_in_league) is dict: # only returned one item
             return_dict.update({"pools": [pools_in_league["pool_id"]]})
         else: # returned multiple items
-            return_dict.update({"pools": [sql_return["pool_id"] for sql_return in pools_in_league]})
-        
+            return_dict.update({"pools": [sql_return["pool_id"] for sql_return in pools_in_league]})     
+        print("****return_dict****: ", return_dict);
         return return_dict
 
     def get_league_users(self, league_id):

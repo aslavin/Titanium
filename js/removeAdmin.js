@@ -1,4 +1,4 @@
-function removeAdmin(){
+/*function removeAdmin(){
     var userId = window.localStorage.getItem("user_id");
 
     if(userId == null){
@@ -18,4 +18,4 @@ function removeAdmin(){
         }
     }
     xhr.send();
-}
+}*/
