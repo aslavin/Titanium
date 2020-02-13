@@ -169,11 +169,11 @@ function loadPage() {
 
     /* DONE: LOAD PLAYER NOTIFICATION DATA */
 
-    document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
+    /*document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
     if (playerNotifications.length == 0) playersNotificationMessages.innerHTML = playerNoNotification;
     for (var i = 0; i < playerNotifications.length; i++) { 
         playersNotificationMessages.innerHTML += playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9];
-    }
+    }*/
 
 
     /* DONE: LOAD PENDING NOTIFICATION DATA */
