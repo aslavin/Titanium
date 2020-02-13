@@ -191,10 +191,11 @@ class _user_database:
             order by Games.date
             ;
             '''.format(user_id, user_id))
-        #need: date, league_id, league, team1Id, team1Name, team1Wins, team1Losses, team1Ties, time, team2Id, team2Name, team2Wins, team2Losses, team2Ties, location
         gameNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        if type(gameNotifications) is dict:
+        if type(gameNotifications) is dict and gameNotifications:
             gameNotifications = [gameNotifications]
+        elif type(gameNotifications) is dict and not gameNotifications:
+            gameNotifications = []
         return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications, "gameNotifications": gameNotifications}
 
     # remove user from database
