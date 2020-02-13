@@ -100,7 +100,7 @@ body {
 
 .userLink { 
     color: black;
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -147,7 +147,7 @@ body {
     height: 10vh;
 }
 
-h2, h3 { 
+h1, h2, h3 { 
     text-align: center;
 }
 

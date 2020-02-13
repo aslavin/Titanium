@@ -13,7 +13,7 @@ var leagueLeagueComponents = ['<div class="col-6 col-md-4 col-lg-3 leaguePoolCol
 
 function loadData() {
 	
-	// TODO: GET SESSION VARIABLE RATHER THAN HARD CODING IN LEAGUE ID
+	// TODO: GET QUERY VARIABLE RATHER THAN HARD CODING IN LEAGUE ID
 	leagueId = 1;
 	
    /* DONE: CONNECT TO BACKEND, GET LEAGUE DATA, SEND POOL DATA TO HANDLER BELOW */
@@ -27,7 +27,7 @@ function loadData() {
 			console.error(xhr.statusText);
 		}
 		response = JSON.parse(xhr.response);
-
+        console.log(response)
 		for (poolId of response['pools']) {
 			setPoolData(poolId, response['pools'].length);
 		}
@@ -39,7 +39,7 @@ function loadData() {
 
 /* DONE: SET POOL DATA FOR EACH POOL IN LEAGUEe */
 function setPoolData(poolId, nPools) {
-	
+    console.log("in setPoolData: poolId=" + poolId)	
 	var xhr = new XMLHttpRequest();
 	var url = 'http://127.0.0.1:51069/pools/' + poolId;
 	xhr.open('GET', url, true);
