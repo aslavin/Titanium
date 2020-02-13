@@ -16,7 +16,7 @@ function loadData() {
 	// TODO: GET QUERY VARIABLE RATHER THAN HARD CODING IN LEAGUE ID
 	leagueId = 1;
 	
-   /* DONE: CONNECT TO BACKEND, GET LEAGUE DATA, SEND POOL DATA TO HANDLER BELOW */
+   /* DONE: CONNECT TO BACKEND, GET LEAGUE DATA (INCLUDING DATA FOR POOLS IN LEAGUE) */
 	var xhr = new XMLHttpRequest();
 	var url = 'http://127.0.0.1:51069/leagues/' + leagueId;
 	xhr.open('GET', url, true);
@@ -27,39 +27,13 @@ function loadData() {
 			console.error(xhr.statusText);
 		}
 		response = JSON.parse(xhr.response);
-        console.log(response)
-		for (poolId of response['pools']) {
-			setPoolData(poolId, response['pools'].length);
-		}
+		for (pool of response['pools']) {
+            availableSpots = response['max_teams_in_pool'] - pool['num_teams'].length;
+            leagueData.push(["",pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
+        }
+        
+        loadPage();
 		
-	}
-
-	xhr.send();
-}
-
-/* DONE: SET POOL DATA FOR EACH POOL IN LEAGUEe */
-function setPoolData(poolId, nPools) {
-    console.log("in setPoolData: poolId=" + poolId)	
-	var xhr = new XMLHttpRequest();
-	var url = 'http://127.0.0.1:51069/pools/' + poolId;
-	xhr.open('GET', url, true);
-
-	xhr.onload = function(e) {
-
-		if (xhr.readyState != 4) { // failed
-			console.error(xhr.statusText);
-		}
-		response = JSON.parse(xhr.response);
-
-		availableSpots = response['max_size'] - response['teams'].length;
-
-		leagueData.push(["","Sun", "7:00p", availableSpots.toString(), response['max_size']]);
-		
-		// all pools have been loaded into leagueData, so load page
-		if (leagueData.length == nPools) {
-			loadPage();
-		}
-
 	}
 
 	xhr.send();

@@ -65,21 +65,46 @@ class _league_database:
                 where league_id = {}'''.format(
                 key, data[key], league_id))
 
+    
+#    # get a specific league by id
+#    def get_league(self, league_id):
+#        self.db.query('''select * from Leagues
+#           where league_id = {}'''.format(league_id))
+#        return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+#        return_dict['start_time'] = return_dict['start_time'].strftime("%m/%d/%Y")
+#        return_dict['end_time'] = return_dict['end_time'].strftime("%m/%d/%Y")
+#        self.db.query('''select Pools.pool_id, Pools.day, cast(Pools.pool_time as char) as time, Teams_In_Pools.num_teams
+#            from Pools, (select Teams.pool_id, count(*) as num_teams from Teams group by Teams.pool_id) as Teams_In_Pools
+#            where league_id = {}
+#            and Pools.pool_id = Teams_In_Pools.pool_id'''.format(league_id))
+#        pools_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1)) 
+#        if type(pools_in_league) is dict: # only returned one item
+#            return_dict.update({"pools": [pools_in_league]})
+#       else: # returned multiple items
+#            return_dict.update({"pools": [sql_return for sql_return in pools_in_league]})     
+#        print("****return_dict****: \n", return_dict);
+#        return return_dict
+    
+    
     # get a specific league by id
-    def get_league(self, league_id):
-        self.db.query('''select * from Leagues
-            where league_id = {}'''.format(league_id))
-        return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+    def get_league(self, league_id):        
+        self.db.query('''select Leagues.*, Pools.pool_id, Pools.day, cast(Pools.pool_time as char) as time, Teams_In_Pools.num_teams
+            from Leagues, Pools, (select Teams.pool_id, count(*) as num_teams from Teams group by Teams.pool_id) as Teams_In_Pools
+            where Leagues.league_id = {}
+            and Pools.league_id = {}
+            and Pools.pool_id = Teams_In_Pools.pool_id'''.format(league_id, league_id))
+        
+        return_list = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(return_list) is dict:
+            return_list = [return_list]
+        pool_list = [{'pool_id': pool['pool_id'], 'day': pool['day'], 'time': pool['time'], 'num_teams': pool['num_teams']} for pool in return_list]
+        return_dict = return_list[0]
+        for key in ['pool_id', 'day', 'time', 'num_teams']:
+            del return_dict[key]
         return_dict['start_time'] = return_dict['start_time'].strftime("%m/%d/%Y")
         return_dict['end_time'] = return_dict['end_time'].strftime("%m/%d/%Y")
-        self.db.query('''select pool_id from Pools
-            where league_id = {}'''.format(league_id))
-        pools_in_league = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))  
-        if type(pools_in_league) is dict: # only returned one item
-            return_dict.update({"pools": [pools_in_league["pool_id"]]})
-        else: # returned multiple items
-            return_dict.update({"pools": [sql_return["pool_id"] for sql_return in pools_in_league]})     
-        print("****return_dict****: ", return_dict);
+        return_dict['pools'] = pool_list
+
         return return_dict
 
     def get_league_users(self, league_id):
