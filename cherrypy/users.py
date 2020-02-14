@@ -25,7 +25,9 @@ class usersController:
         return json.dumps(self.userdb.get_user_email(email))
 
     def GET_USER_NOTIFICATIONS(self, user_id):
-        return json.dumps(self.userdb.get_user_notifications(user_id))
+        ret = json.dumps(self.userdb.get_user_notifications(user_id))
+        print(ret)
+        return ret 
 
     def POST_USER_NOTIFICATIONS(self):
         #print(cherrypy.request.body.read())

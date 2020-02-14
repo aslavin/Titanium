@@ -134,7 +134,8 @@ class _user_database:
     def get_user_notifications(self, user_id):
 
         # get player Notifications
-        self.db.query('''select distinct Teams.name as team_name, Leagues.level as league_level, Leagues.sport as league_sport, Users.first_name, Users.last_name 
+
+        notification_query = '''select distinct Teams.name as team_name, Leagues.level as league_level, Leagues.sport as league_sport, Users.first_name, Users.last_name, concat(Leagues.level, " ", Leagues.sport) as league_name 
             from Team_Requests, Teams, Leagues, Pools, Users 
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Teams.capt_id
@@ -142,12 +143,11 @@ class _user_database:
             and Leagues.league_id = Pools.league_id
             and Team_Requests.new_member_invited = 1
             and Team_Requests.new_member_accepted = 0
-            and Team_Requests.new_member_id = {};
-            '''.format(user_id))
+            and Team_Requests.new_member_id = {}'''.format(user_id);
+
+        self.db.query(notification_query)
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        if type(playerNotifications) is dict:
-            playerNotifications = [playerNotifications]
-        
+
         # get pending notifications
         self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
             from Team_Requests, Teams, Users 
@@ -158,8 +158,6 @@ class _user_database:
             and Team_Requests.new_member_id = {};
             '''.format(user_id))
         pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        if type(pendingNotifications) is dict:
-            pendingNotifications = [pendingNotifications]
 
         # get captain notifications
         self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name 
@@ -171,8 +169,6 @@ class _user_database:
             and Teams.capt_id = {};
             '''.format(user_id))
         captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        if type(captainNotifications) is dict:
-            captainNotifications = [captainNotifications]
         
         # get game notifications
         self.db.query('''select Games.game_id, DATE_FORMAT(Games.date, '%Y-%m-%d') as date, cast(Pools.pool_time as char) as time, Leagues.location as location, concat(Leagues.level, " ", Leagues.sport) as league, Games.team1_id, Teams1.name as team1Name, Teams1.wins as team1Wins, Teams1.losses as team1Losses, Teams1.ties as team1Ties, Games.team2_id, Teams2.name as team2Name, Teams2.wins as team2Wins, Teams2.losses as team2Losses, Teams2.ties as team2Ties
@@ -192,6 +188,22 @@ class _user_database:
             ;
             '''.format(user_id, user_id))
         gameNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+
+        if type(playerNotifications) is dict and playerNotifications:
+            playerNotifications = [playerNotifications]
+        elif type(playerNotifications) is dict and not playerNotifications:
+            playerNotifications = []
+
+        if type(pendingNotifications) is dict and pendingNotifications:
+            pendingNotifications = [pendingNotifications]
+        elif type(pendingNotifications) is dict and not pendingNotifications:
+            pendingNotifications = []
+
+        if type(captainNotifications) is dict and captainNotifications:
+            captainNotifications = [captainNotifications]
+        elif type(captainNotifications) is dict and not captainNotifications:
+            captainNotifications = []
+
         if type(gameNotifications) is dict and gameNotifications:
             gameNotifications = [gameNotifications]
         elif type(gameNotifications) is dict and not gameNotifications:

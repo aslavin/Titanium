@@ -87,7 +87,7 @@ function loadData() {
     variables as described above, EXACTLY. */
 
     var userId = window.localStorage.getItem("user_id");
-
+    console.log(userId);
     var admin = false;
 
     if (userId == null){
@@ -128,29 +128,29 @@ function loadData() {
 		
 		response = JSON.parse(xhr.response);
 
+        console.log(response);
 		// append data to player notifications
         var i = 0;
-        while (typeof response["playerNotifications"][i].length != 'undefined'){
-		//for (var i = 0; i < response["playerNotifications"].length; i++) {
+		for (var i = 0; i < response["playerNotifications"].length; i++) {
 			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
 		    i++;
         }
 
 		// append data for pending notifications
         i = 0;
-        while (typeof response["pendingNotifications"][i].length != 'undefined'){
-		//for (var i = 0; i < response["pendingNotifications"].length; i++) {
+		for (var i = 0; i < response["pendingNotifications"].length; i++) {
 			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
 		    i++;
         }
 
 		// append data for captain notifications
         i = 0;
-        while (typeof response["captainNotifications"][i].length != 'undefined'){
-		//for (var i = 0; i < response["captainNotifications"].length; i++) {
+        for (var i = 0; i < response["captainNotifications"].length; i++) {
 			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
 		    i++;
         }
+
+        console.log(playerNotifications, pendingNotifications, captainNotifications);
 
         // append data for upcoming games
         i = 0;
@@ -167,19 +167,20 @@ function loadData() {
 
 function loadPage() {
 
-
     var playersNotificationMessages = document.getElementById("playersNotificationMessages");
     var pendingNotificationMessages = document.getElementById("pendingNotificationMessages");
     var captainNotificationMessages = document.getElementById("captainNotificationMessages");
+    var allNotificationMessages = document.getElementById("allNotificationMessages");
     var games = document.getElementById("gameAccordion");
 
     /* DONE: LOAD PLAYER NOTIFICATION DATA */
 
-    /*document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
+    document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
     if (playerNotifications.length == 0) playersNotificationMessages.innerHTML = playerNoNotification;
     for (var i = 0; i < playerNotifications.length; i++) { 
         playersNotificationMessages.innerHTML += playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9];
-    }*/
+        allNotificationMessages.insertAdjacentHTML("afterend", playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9]);
+    }
 
 
     /* DONE: LOAD PENDING NOTIFICATION DATA */
@@ -188,6 +189,7 @@ function loadPage() {
     if (pendingNotifications.length == 0) pendingNotificationMessages.innerHTML = pendingNoNotification;
     for (var j = 0; j < pendingNotifications.length; j++) { 
         pendingNotificationMessages.innerHTML += pendingMessageComponents[0] + j + pendingMessageComponents[1] + pendingNotifications[j][0] + pendingMessageComponents[2]  + pendingNotifications[j][1] + pendingMessageComponents[3] + pendingNotifications[j][2] + pendingMessageComponents[4] + pendingNotifications[j][3] + pendingMessageComponents[5] + j + pendingMessageComponents[6];
+        allNotificationMessages.insertAdjacentHTML("afterend",pendingMessageComponents[0] + j + pendingMessageComponents[1] + pendingNotifications[j][0] + pendingMessageComponents[2]  + pendingNotifications[j][1] + pendingMessageComponents[3] + pendingNotifications[j][2] + pendingMessageComponents[4] + pendingNotifications[j][3] + pendingMessageComponents[5] + j + pendingMessageComponents[6]);
     }
 
 
@@ -196,12 +198,18 @@ function loadPage() {
     if (captainNotifications.length == 0) captainNotificationMessages.innerHTML = captainNoNotification;
     for (var k = 0; k < captainNotifications.length; k++) { 
         captainNotificationMessages.innerHTML += captainMessageComponents[0] + k + captainMessageComponents[1] + captainNotifications[k][0] + captainMessageComponents[2] + captainNotifications[k][1] + captainMessageComponents[3] + captainNotifications[k][2] + captainMessageComponents[4] + captainNotifications[k][3] + captainMessageComponents[5] + k + captainMessageComponents[6] + k + captainMessageComponents[7];
+        allNotificationMessages.insertAdjacentHTML("afterend",captainMessageComponents[0] + k + captainMessageComponents[1] + captainNotifications[k][0] + captainMessageComponents[2] + captainNotifications[k][1] + captainMessageComponents[3] + captainNotifications[k][2] + captainMessageComponents[4] + captainNotifications[k][3] + captainMessageComponents[5] + k + captainMessageComponents[6] + k + captainMessageComponents[7]);
     }
 
 
 
+
     /* DONE: LOAD GAME DATA */
-    if (gameNotifications.length == 0) games.innerHTML = gameNoNotification;
+    console.log(allNotificationMessages);
+    if (gameNotifications.length == 0) {
+        games.innerHTML = gameNoNotification;
+        document.getElementById("upcomingGamesHeader").style.display = "none";
+    }
     var gamesInnerHTML = "";
     for (var l = 0; l < gameNotifications.length; l++) { 
         gamesInnerHTML += gameComponents[0] + l + gameComponents[1] + gameNotifications[l][0] + gameComponents[2] + gameNotifications[l][1] + gameComponents[3] + gameNotifications[l][2] + gameComponents[4] + l + gameComponents[5] + l + gameComponents[6] + l + gameComponents[7] + l + gameComponents[8] + l + gameComponents[9];
@@ -310,10 +318,10 @@ function changeBtnGroup(id) {
         }   
     }   
 
-    var notificationMessages = document.getElementsByClassName("notificationMessages");
+    /*var notificationMessages = document.getElementsByClassName("notificationMessages");
     for (var j = 0; j < notificationMessages.length; j++) {
         notificationMessages[j].style.display = "none"; 
-    }   
+    }*/ 
 
     var buttonSubstr = id.substring(0, 7); 
     document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";

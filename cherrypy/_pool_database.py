@@ -65,6 +65,7 @@ class _pool_database:
             where pool_id = {}'''.format(pool_id))
         r = self.db.store_result()
         return_dict = util.get_dict_from_query(r.fetch_row(how=1))
+        print(return_dict)
         return_dict['pool_time'] = return_dict['pool_time'].strftime('%H:%M:%S')
         #print("\n\n\n****POOL:return_dict", return_dict, "\n\n\n")
         self.db.query('''select team_id from Teams

@@ -1,10 +1,12 @@
 // TODO: fetch pool data from database and store it in var called poolData with this format: TEAM LINK - TEAM NAME - TEAM WINS - TEAM LOSSES. 
 // NOTE that it is assumed that the array poolData has been sorted in RANK ORDER.
 // Example is here:
-//var poolData = [["","Andy's Army","4","0"],["","Broom Roasted","3","1"],["","Stix Or It Didn't Happen","2","2"],["","Another Team 1","1","3"]]; 
-function loadData() {
-    console.log('starting load data');
+//var poolData = {'league_name': CoRec Broomball'teams':[["","Andy's Army","4","0"],["","Broom Roasted","3","1"],["","Stix Or It Didn't Happen","2","2"],["","Another Team 1","1","3"]]};
 
+var leagueAndPoolInfo = {'leagueLevel': 'CoRec Intramural', 'leagueSport': 'Broomball', 'leagueLocation': 'Compton Family Ice Arena', 'poolDay': 'Wednesday', 'poolTime': '6:00pm'} 
+
+
+function loadData() {
     /* EXECUTE TODO items here; connect to backend, manipulate poolData variable as above.
         
     ALSO TODO:  set innerHTML of #poolCapacity, set innerHTML of #playoffEligible */
@@ -27,6 +29,7 @@ function loadData() {
             console.error(xhr.statusText);
         }
         response = JSON.parse(xhr.response);
+        console.log(response);
         var teams = response.teams;
         teams.forEach(function(item){
             var xhr_team = new XMLHttpRequest();
@@ -46,7 +49,14 @@ function loadData() {
     }
     xhr.send();
 
-    document.getElementById("teamsRegistered").innerHTML = poolData.length;  
+    document.getElementById("teamsRegistered").innerHTML = poolData.length;
+
+    /* DONE: FILL OUT LEAGUE AND POOL METADATA */
+
+    document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
+    document.getElementById("gameLocation").innerHTML = leagueAndPoolInfo["leagueLocation"];
+    document.getElementById("poolTime").innerHTML = leagueAndPoolInfo["poolTime"];
+    document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"];
 
     /* DONE: FILL OUT THE TABLE OF POOL DATA */
 
@@ -158,6 +168,7 @@ function processTeam() {
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
+        console.log(response);
         league_id = response.league_id;
         teams = getTeams(league_id);
     }
@@ -275,6 +286,7 @@ function getTeams(league_id){
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
+        console.log(response);
         response.forEach(function(item){
             teamList.push(item.name);
         });
