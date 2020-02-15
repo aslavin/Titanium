@@ -3,7 +3,7 @@
 // Example is here:
 //var poolData = {'league_name': CoRec Broomball'teams':[["","Andy's Army","4","0"],["","Broom Roasted","3","1"],["","Stix Or It Didn't Happen","2","2"],["","Another Team 1","1","3"]]};
 
-var leagueAndPoolInfo = {'leagueLevel': 'CoRec Intramural', 'leagueSport': 'Broomball', 'leagueLocation': 'Compton Family Ice Arena', 'poolDay': 'Wednesday', 'poolTime': '6:00pm'} 
+///var leagueAndPoolInfo = {'leagueLevel': 'CoRec Intramural', 'leagueSport': 'Broomball', 'leagueLocation': 'Compton Family Ice Arena', 'poolDay': 'Wednesday', 'poolTime': '6:00pm'} 
 
 
 function loadData() {
@@ -12,6 +12,7 @@ function loadData() {
     ALSO TODO:  set innerHTML of #poolCapacity, set innerHTML of #playoffEligible */
 
     var poolData = [];
+    var leagueAndPoolInfo = [];
 
     var urlParams = new URLSearchParams(window.location.search);
 
@@ -28,24 +29,14 @@ function loadData() {
         if(xhr.readyState != 4){
             console.error(xhr.statusText);
         }
+
         response = JSON.parse(xhr.response);
-        console.log(response);
-        var teams = response.teams;
-        teams.forEach(function(item){
-            var xhr_team = new XMLHttpRequest();
-            var url_team = 'http://127.0.0.1:51069/teams/' + item;
-            xhr_team.open('GET', url_team, false);
-            xhr_team.onload = function(e){
-                if(xhr_team.readyState != 4){
-                    console.error(xhr_team.statusText);
-                }
-                team_resp = JSON.parse(xhr_team.response);
-                var team_info = ["", team_resp.name, team_resp.wins, team_resp.losses];
-                poolData.push(team_info);
-            };
-            
-            xhr_team.send();
-        });
+        leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': response['poolTime']} 
+        // append team id, name, wins, losss, ties for each team in pool
+        for (team of response['teams']) {
+            poolData.push(["", team['team_name'], team['wins'], team['losses'], team['ties']]);
+        }
+
     }
     xhr.send();
 

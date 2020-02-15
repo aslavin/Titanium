@@ -60,26 +60,26 @@ class _pool_database:
     # get a specific pool by id
     # return {} if pool not found
     def get_pool(self, pool_id):
+
+        self.db.query('''select Pools.league_id, Pools.pool_id, Pools.day as poolDay, cast(Pools.pool_time as char) as poolTime, 
+            Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation, 
+            Teams.team_id, Teams.name as team_name, Teams.wins, Teams.losses, Teams.ties
+        from Pools, Teams, Leagues 
+        where Pools.league_id = Leagues.league_id 
+            and Teams.pool_id = Pools.pool_id
+            and Pools.pool_id = {}'''.format(pool_id))
         
-        self.db.query('''select * from Pools
-            where pool_id = {}'''.format(pool_id))
         r = self.db.store_result()
-        return_dict = util.get_dict_from_query(r.fetch_row(how=1))
-        print(return_dict)
-        return_dict['pool_time'] = return_dict['pool_time'].strftime('%H:%M:%S')
-        #print("\n\n\n****POOL:return_dict", return_dict, "\n\n\n")
-        self.db.query('''select team_id from Teams
-            where pool_id = {}'''.format(pool_id))
-        teams_in_pool = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        #print("\n\n\n****TEAMS_IN_POOL:", teams_in_pool, "\n\n\n")
-        if len(teams_in_pool) == 0:
-            return {}
-        if type(teams_in_pool) is dict: # only returned one item
-            return_dict.update({"teams": [teams_in_pool["team_id"]]})
-        else: # returned multiple items
-            return_dict.update({"teams": [sql_return["team_id"] for sql_return in teams_in_pool]})
+        return_list = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+        if type(return_list) is dict and return_list:
+            return_list = [return_list]
+        first_entry = return_list[0]
+        return_dict = {'leagueLevel': first_entry['leagueLevel'], 'leagueSport': first_entry['leagueSport'], 'leagueLocation': first_entry['leagueLocation'], 'poolDay': first_entry['poolDay'], 'poolTime': first_entry['poolTime']}
+        
+        # for each team, apppend id, name, wins, losses, ties
+        teams = [{'team_id': team['team_id'], 'team_name': team['team_name'], 'wins': team['wins'], 'losses': team['losses'], 'ties': team['ties']} for team in return_list]
+        return_dict['teams'] = teams
        
-        #print("made it to end of fcn")
         return return_dict
 
     # remove pool from database
