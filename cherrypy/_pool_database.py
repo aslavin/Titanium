@@ -71,8 +71,18 @@ class _pool_database:
         
         r = self.db.store_result()
         return_list = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
-        if type(return_list) is dict and return_list:
+        if type(return_list) is dict and return_list: # only one team in pool
             return_list = [return_list]
+        elif type(return_list ) is dict and not return_list: # league is empty, so just return metadata
+            self.db.query('''select Pools.league_id, Pools.pool_id, Pools.day as poolDay, cast(Pools.pool_time as char) as poolTime, 
+                Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation
+            from Pools, Leagues 
+            where Pools.league_id = Leagues.league_id 
+                and Pools.pool_id = {}'''.format(pool_id))
+            r = self.db.store_result()
+            return_dict = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+            return return_dict
+
         first_entry = return_list[0]
         return_dict = {'leagueLevel': first_entry['leagueLevel'], 'leagueSport': first_entry['leagueSport'], 'leagueLocation': first_entry['leagueLocation'], 'poolDay': first_entry['poolDay'], 'poolTime': first_entry['poolTime']}
 
