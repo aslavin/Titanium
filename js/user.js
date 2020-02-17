@@ -18,13 +18,13 @@ var gameNotifications = [];
 /* DONE: MAKE HTML COMPONENTS for everythiNG */
 
 var playerMessageComponents = ['<div class="notificationMessage" id="playerNotificationMessage',
-'"><div class="row"><div class="col-lg-10 col-md-9 col-sm-8 col-6"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="',
+'"><div class="row"><div class="col-lg-9 col-md-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="',
 '">',
 '</a> invited you to join <a class="userLink" href="',
 '">',
 '</a> in <a class="userLink" href="',
 '">',
-'</a>!</span></div></div><div class="col-lg-2 col-md-3 col-sm-4 col-6"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation', 
+'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation', 
 '" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-danger" id="playerDenyInvitation','" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
 
 var pendingMessageComponents = ['<div class="notificationMessage" id="pendingNotificationMessage',
@@ -36,22 +36,22 @@ var pendingMessageComponents = ['<div class="notificationMessage" id="pendingNot
     '" class="notificationResponse btn btn-warning" onclick="dismissPendingInvitation(this.id)">DISMISS</button></div></div></div></div>'];
 
 var captainMessageComponents = ['<div class="notificationMessage" id="captainNotificationMessage',
-'"><div class="row"><div class="col-lg-9 col-md-8 col-7"><div class="notificationTextDiv"><span class="notificationText"><a href="',
+'"><div class="row"><div class="col-lg-9 col-md-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a href="',
 '" class="userLink">',
 '</a> has requested to join your team <a href="',
 '" class="userLink">',
-'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-5"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="captainAcceptBtn',
+'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="captainAcceptBtn',
 '" onclick="captainAcceptInvitation(this.id)">ACCEPT</button><button class="notificationResponse btn btn-danger" id="captainDenyBtn',
 '" onclick="captainDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
 
 var gameComponents = ['<div class="card"><div class="card-header" id="heading',
-'"><div class="row"><div class="col-sm-2 col-3"><div class="gameDiv"><div class="gameDateText">',
-'</div></div></div><div class="col-sm-8 col-6"><div class="gameDiv"><div class="gameLeagueText"><a class="userLink" href="',
+'"><div class="row"><div class="col-sm-2 col-3 gameDiv"><div class="gameDateText">',
+'</div></div><div class="col-sm-8 col-6 gameDiv"><div class="gameLeagueText"><a class="userLink" href="',
 '">',
-'</a></div></div></div><div class="col-sm-2 col-3"><div class="gameDiv"><div class="gameExpandText"><button onclick="changeExpandIcon(this.id)" id="gameExpandBtn',
+'</a></div></div><div class="col-sm-2 col-3 gameDiv"><div class="gameExpandText"><button onclick="changeExpandIcon(this.id)" id="gameExpandBtn',
 '" class="btn btn-link expand gameExpandBtn" type="button" data-toggle="collapse" data-target="#collapse',
 '" aria-expanded="true" aria-controls="collapse',
-'"><i class="fa fa-caret-down"></i></button></div></div></div></div></div><div id="collapse',
+'"><i class="fa fa-caret-down"></i></button></div></div></div></div><div id="collapse',
 '" class="collapse" aria-labelledby="heading',
 '" data-parent="#gameAccordion"><div class="card-body"><div class="row"><div class="col-md-5 col-12"><div class="leftGameBody"><div class="leftGameBodyLarge d-none d-lg-block"><div class="myTeamName"><a class="userLink" href="',
 '">',
@@ -133,26 +133,20 @@ function loadData() {
         var i = 0;
 		for (var i = 0; i < response["playerNotifications"].length; i++) {
 			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + " " + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
-		    i++;
         }
 
 		// append data for pending notifications
-        i = 0;
 		for (var i = 0; i < response["pendingNotifications"].length; i++) {
 			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + " " + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
-		    i++;
         }
 
 		// append data for captain notifications
-        i = 0;
         for (var i = 0; i < response["captainNotifications"].length; i++) {
+            console.log(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
 			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
-		    i++;
         }
 
         // append data for upcoming games
-        i = 0;
-        //while (typeof response["gameNotifications"][i].length != 'undefined'){
 		for (var i = 0; i < response["gameNotifications"].length; i++) {
             gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }

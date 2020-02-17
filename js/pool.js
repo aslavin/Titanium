@@ -64,7 +64,7 @@ function loadData() {
             var record = row.insertCell(2);
             rank.innerHTML = (i+1);
             team.innerHTML = '<a href="' + poolData[i][0] + '" class="userLink">' + poolData[i][1] + '</a>';
-            record.innerHTML = '<span id="nWins' + (i+1) + '">' + poolData[i][2] + '</span> - <span id="nLosses' + (i+1) + '">' + poolData[i][3] + '</span></td></tr>';
+            record.innerHTML = '<span id="nWins' + (i+1) + '">' + poolData[i][2] + '</span> - <span id="nLosses' + (i+1) + '">' + poolData[i][3] + '</span> - <span id="nTies' + (i+1) + '">' + poolData[i][4] + '</span></td></tr>';
         }
 
         /* DONE: DETERMINE WHETHER A USER SHOULD BE ABLE TO REGISTER A NEW TEAM */

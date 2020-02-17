@@ -56,6 +56,7 @@ a.gameInstance {
     flex-direction: row;
     align-items: center; 
     height: 100%;
+    width: 100%;
 }
 
 .upcomingGameEvenStyle {
@@ -72,6 +73,10 @@ button.expand:hover {
 
 .gameDiv { 
     font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 .gameDateText { 
@@ -101,6 +106,9 @@ button.expand:hover {
     .rightGameBody { 
         text-align: right;
     }
+    .notificationText { 
+        text-align: left;
+    }
 }
 
 
@@ -111,7 +119,13 @@ button.expand:hover {
     .rightGameBody {
         text-align: center;
     }
-
+    .notificationText {
+        text-align: center;
+    } 
+    .notificationResponse { 
+        width: 50%;
+        margin-top: 15px;
+    }
 }
 
 .notificationMessage {

@@ -204,6 +204,8 @@ class _user_database:
         elif type(captainNotifications) is dict and not captainNotifications:
             captainNotifications = []
 
+        print(captainNotifications)
+
         if type(gameNotifications) is dict and gameNotifications:
             gameNotifications = [gameNotifications]
         elif type(gameNotifications) is dict and not gameNotifications:

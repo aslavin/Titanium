@@ -1,5 +1,16 @@
-/* TODO: connect to backend and store result in variable teamGameData. */
-var teamGameData = [["10/23","","Stix Or It Didn't Happen","15","10"],["10/30","","Another Team","9","20"],["11/7","","A Third Team","10","10"],["11/14","","A Fourth Team","-1","-1"]]; // formatted by DATE - OPP TEAM LINK - OPP TEAM - YOUR TEAM SCORE - OPP TEAM SCORE. IF GAME HAS NOT YET OCCURRED, MAKE SURE YOUR TEAM SCORE and OPP TEAM SCORE fields are negative! 
+/* TODO: connect to backend and store result in variable teamData["schedule"]. */
+var teamData = {'schedule': [["10/23","","Stix Or It Didn't Happen","15","10"],["10/30","","Another Team","9","20"],["11/7","","A Third Team","10","10"],["11/14","","A Fourth Team","-1","-1"]], 'roster': [[true,"","Tommy","Clare","tclare@nd.edu", "M"],[false,"","Patrick","Fischer","pfische@nd.edu","M"],[false,"","Sebastian","Miner","sminer@nd.edu","M"],[false,"","Andy","Slavin","aslavin@nd.edu","F"]]}; 
+
+// ^^ indexed by schedule = 2D array of all games for this team's season,
+//  GAME DATE - OPP NAME - YOUR SCORE - OPP SCORE
+// ^^ and roster = a 2D array of attributes of all users on this team.
+//  IS_CAPTAIN - USER LINK - FIRST NAME - LAST NAME - EMAIL - GENDER
+
+var teamMetaData = {'teamName': 'Broom Roasted','poolTime': '10:33pm', 'poolLocation': 'Compton Family Ice Arena', 'teamWins': 2, 'teamLosses': 1, 'teamTies': 0, 'teamRankInPool': 3, 'teamsInPool': 5}
+
+// ^^ all attributes are self-explanatory. Metadata for a team.
+
+
 
 var gameComponents = ['<div class="card ',
 '"><div class="card-body"><div class="row"><div class="col-3 col-md-2">',
@@ -18,14 +29,9 @@ var rosterComponents = ['<tr><th scope="row" class="align-middle"><i class="fa '
 '</a></td><td class="align-middle">',
 '</td></tr>']
 
-var rosterData = [[true,"","Tommy","Clare","tclare@nd.edu", "M"],[false,"","Patrick","Fischer","pfische@nd.edu","M"],[false,"","Sebastian","Miner","sminer@nd.edu","M"],[false,"","Andy","Slavin","aslavin@nd.edu","F"]]; // formatted by FNAME - LNAME - USER LINK - USER EMAIL - GENDER
-
-var noPlayersOnRosterDiv = '<div class="noNotificationsDiv"></div>';
-
 function loadData() { 
-	console.log("here");
-  
-    /* TODO: here is where you connect to the backend and modify teamGameData EXACTLY as the format above suggests */
+ 
+    /* TODO: here is where you connect to the backend and modify teamData["schedule"] EXACTLY as the format above suggests */
     
     /* ALSO TODO right here: connect to backend andinput a few side statistics (# wins, # losses, poolRank, teamsInPool) with data from db. 
     This is done with the following: 
@@ -36,19 +42,17 @@ function loadData() {
     document.getElementById("teamsInPool").innerHTML = ...; // a string
     */
 
+    /*
+
     var urlParams = new URLSearchParams(window.location.search);
     var teamId = urlParams.get("teamId");
 
     if (teamId == null){
         console.error("No pool specified");
     }
-
-    var schedule_data = [];
-
     var wins = 0;
     var losses = 0;
     var ties = 0;
-    var new_roster_data = [];
     var xhr = new XMLHttpRequest();
     var url = 'http://127.0.0.1:51069/teams/' + teamId;
     xhr.open('GET', url, false);
@@ -138,43 +142,46 @@ function loadData() {
     }
     xhr.send();
 
-    document.getElementById("nWins").innerHTML = wins;
-    document.getElementById("nLosses").innerHTML = losses;
-    document.getElementById("nTies").innerHTML = ties;
+    */
 
+    var nWins = teamMetaData['teamWins'];
+    var nLosses = teamMetaData['teamLosses'];
+    var nTies = teamMetaData['teamTies'];
 
-    console.log(schedule_data);
-    teamGameData = schedule_data;
+    document.getElementById("nWins").innerHTML = nWins;
+    document.getElementById("nLosses").innerHTML = nLosses;
+    document.getElementById("nTies").innerHTML = nTies;
+    document.getElementById("poolRank").innerHTML = teamMetaData["teamRankInPool"];
+    document.getElementById("teamsInPool").innerHTML = teamMetaData["teamsInPool"];
 
     /* DONE: calculate other statistics */
-    var nWins = parseInt(document.getElementById("nWins").innerHTML);
-    var nLosses = parseInt(document.getElementById("nLosses").innerHTML);
     var scoreDifferential = 0;
     document.getElementById("winPercentage").innerHTML = (nWins + nLosses > 0) ? Math.round((nWins / (nWins + nLosses)) * 1000) / 10 + "%" : "TBD";
 
-    /* DONE: grab data from teamGameData and load it into the page */
+    /* DONE: grab data from teamData["schedule"] and load it into the page */
     var gameCards = document.getElementById("gameCards");
     var innerHTMLString;
     var win = false, loss = false, tie = false;
-    for (var i = 0; i < teamGameData.length; i++) {
-
-        win = (parseInt(teamGameData[i][3]) > parseInt(teamGameData[i][4]));
-        loss = (parseInt(teamGameData[i][3]) < parseInt(teamGameData[i][4]));
-        tie = (parseInt(teamGameData[i][3]) == parseInt(teamGameData[i][4]) && (parseInt(teamGameData[i][3]) >= 0));
+    var teamSchedule = teamData["schedule"]
+    for (var i = 0; i < teamData["schedule"].length; i++) {
+        var gameData = teamSchedule[i]; 
+        win = (parseInt(gameData[3]) > parseInt(gameData[4]));
+        loss = (parseInt(gameData[3]) < parseInt(gameData[4]));
+        tie = (parseInt(gameData[3]) == parseInt(gameData[4]) && (parseInt(gameData[3]) >= 0));
 
         innerHTMLString = gameComponents[0];
         if (win) innerHTMLString += "outcomeWin"; 
         else if (loss) innerHTMLString += "outcomeLoss";
         else innerHTMLString += "outcomeTBDOrTie";
-        innerHTMLString += gameComponents[1] + teamGameData[i][0] + gameComponents[2] + teamGameData[i][1] + gameComponents[3] + teamGameData[i][2] + gameComponents[4];
+        innerHTMLString += gameComponents[1] + gameData[0] + gameComponents[2] + gameData[1] + gameComponents[3] + gameData[2] + gameComponents[4];
         if (win) { innerHTMLString += "W"; nWins++; } 
         else if (loss) innerHTMLString += "L";
         else if (tie) innerHTMLString += "T";
 
         if (win || loss || tie) {
-            innerHTMLString += gameComponents[5] + teamGameData[i][3] + gameComponents[6] + teamGameData[i][4] + gameComponents[7]; 
-            scoreDifferential += teamGameData[i][3] - teamGameData[i][4];
-        }else innerHTMLString += "TBD" + gameComponents[7];
+            innerHTMLString += gameComponents[5] + gameData[3] + gameComponents[6] + gameData[4] + gameComponents[7]; 
+            scoreDifferential += gameData[3] - gameData[4];
+        } else innerHTMLString += "TBD" + gameComponents[7];
         
         gameCards.innerHTML += innerHTMLString;
     }     
@@ -183,11 +190,10 @@ function loadData() {
     document.getElementById("scoreDifferential").innerHTML = (scoreDifferential >= 0) ? "+" + scoreDifferential : scoreDifferential;
 
    
-    /* DONE: grab data from rosterData and load it into the page */ 
-    rosterData = new_roster_data;
+    /* DONE: grab data from teamData["roster"] and load it into the page */ 
     innerHTMLString = "<tbody>";
-    for (var j = 0; j < rosterData.length; j++) { 
-        innerHTMLString += rosterComponents[0] + ((rosterData[j][0]) ? "fa-star" : "fa-user-o") + rosterComponents[1] + rosterData[j][1] + rosterComponents[2] + rosterData[j][2] + " " + rosterData[j][3] + " (" + rosterData[j][4] + ")" + rosterComponents[3] + rosterData[j][5];
+    for (var j = 0; j < teamData["roster"].length; j++) { 
+        innerHTMLString += rosterComponents[0] + ((teamData["roster"][j][0]) ? "fa-star" : "fa-user-o") + rosterComponents[1] + teamData["roster"][j][1] + rosterComponents[2] + teamData["roster"][j][2] + " " + teamData["roster"][j][3] + " (" + teamData["roster"][j][4] + ")" + rosterComponents[3] + teamData["roster"][j][5];
     }
     innerHTMLString += "</tbody>";
     document.getElementById("teamRosterTable").innerHTML = innerHTMLString;
@@ -195,8 +201,6 @@ function loadData() {
     /* DONE: compute footer margin */
     computeFooterMargin();
 
-	/* DONE: LOAD FOOTER */
-	console.log("here");
 	var loggedInAs = document.getElementById('loggedInAs');
 	loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
 }
