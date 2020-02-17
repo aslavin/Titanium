@@ -31,7 +31,8 @@ function loadData() {
         }
 
         response = JSON.parse(xhr.response);
-        leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': response['poolTime']} 
+
+        leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': readableTimeFromSQLDate(response['poolTime'])} 
         // append team id, name, wins, losss, ties for each team in pool
         for (team of response['teams']) {
             poolData.push(["", team['team_name'], team['wins'], team['losses'], team['ties']]);
@@ -45,7 +46,6 @@ function loadData() {
     /* DONE: FILL OUT LEAGUE AND POOL METADATA */
 
     document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
-    document.getElementById("gameLocation").innerHTML = leagueAndPoolInfo["leagueLocation"];
     document.getElementById("poolTime").innerHTML = leagueAndPoolInfo["poolTime"];
     document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"];
 
@@ -63,7 +63,7 @@ function loadData() {
             var team = row.insertCell(1);
             var record = row.insertCell(2);
             rank.innerHTML = (i+1);
-            team.innerHTML = '<a href="' + poolData[i][0] + '" class="tableUserLink">' + poolData[i][1] + '</a>';
+            team.innerHTML = '<a href="' + poolData[i][0] + '" class="userLink">' + poolData[i][1] + '</a>';
             record.innerHTML = '<span id="nWins' + (i+1) + '">' + poolData[i][2] + '</span> - <span id="nLosses' + (i+1) + '">' + poolData[i][3] + '</span></td></tr>';
         }
 

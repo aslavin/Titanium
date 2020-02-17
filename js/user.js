@@ -67,7 +67,7 @@ var gameComponents = ['<div class="card"><div class="card-header" id="heading',
 '</span> - <span class="myTeamTies">',
 '</span>)</a></div></div></div></div><div class="col-md-2 col-12"><div class="centerGameBody"><span class="versus">VS.</span></div></div><div class="col-md-5 col-12"><div class="rightGameBody"><div class="oppTeamName"><a class="userLink" href="',
 '">',
-'(<span class="oppTeamWins">',
+' (<span class="oppTeamWins">',
 '</span> - <span class="oppTeamLosses">',
 '</span> - <span class="oppTeamTies">',
 '</span>)</a></div><div class="gameLocation">',
@@ -132,31 +132,29 @@ function loadData() {
 		// append data to player notifications
         var i = 0;
 		for (var i = 0; i < response["playerNotifications"].length; i++) {
-			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
+			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + " " + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
 		    i++;
         }
 
 		// append data for pending notifications
         i = 0;
 		for (var i = 0; i < response["pendingNotifications"].length; i++) {
-			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
+			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + " " + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
 		    i++;
         }
 
 		// append data for captain notifications
         i = 0;
         for (var i = 0; i < response["captainNotifications"].length; i++) {
-			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
+			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
 		    i++;
         }
-
-        console.log(playerNotifications, pendingNotifications, captainNotifications);
 
         // append data for upcoming games
         i = 0;
         //while (typeof response["gameNotifications"][i].length != 'undefined'){
 		for (var i = 0; i < response["gameNotifications"].length; i++) {
-            gameNotifications.push([response["gameNotifications"][i]["date"],  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], response["gameNotifications"][i]["time"], response["gameNotifications"][i]["time"], "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
+            gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 		loadPage();
 
@@ -167,37 +165,37 @@ function loadData() {
 
 function loadPage() {
 
-    var playersNotificationMessages = document.getElementById("playersNotificationMessages");
-    var pendingNotificationMessages = document.getElementById("pendingNotificationMessages");
-    var captainNotificationMessages = document.getElementById("captainNotificationMessages");
+    //var playersNotificationMessages = document.getElementById("playersNotificationMessages");
+    //var pendingNotificationMessages = document.getElementById("pendingNotificationMessages");
+    //var captainNotificationMessages = document.getElementById("captainNotificationMessages");
     var allNotificationMessages = document.getElementById("allNotificationMessages");
     var games = document.getElementById("gameAccordion");
 
     /* DONE: LOAD PLAYER NOTIFICATION DATA */
 
-    document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
-    if (playerNotifications.length == 0) playersNotificationMessages.innerHTML = playerNoNotification;
+    //document.getElementById("nPlayerNotifications").innerHTML = playerNotifications.length ? playerNotifications.length : "";
+    //if (playerNotifications.length == 0) playersNotificationMessages.innerHTML = playerNoNotification;
     for (var i = 0; i < playerNotifications.length; i++) { 
-        playersNotificationMessages.innerHTML += playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9];
+        //playersNotificationMessages.innerHTML += playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9];
         allNotificationMessages.insertAdjacentHTML("afterend", playerMessageComponents[0] + i + playerMessageComponents[1] + playerNotifications[i][0] + playerMessageComponents[2]  + playerNotifications[i][1] + playerMessageComponents[3] + playerNotifications[i][2] + playerMessageComponents[4] + playerNotifications[i][3] + playerMessageComponents[5] + playerNotifications[i][4] + playerMessageComponents[6] + playerNotifications[i][5]+ playerMessageComponents[7] + i + playerMessageComponents[8] + i + playerMessageComponents[9]);
     }
 
 
     /* DONE: LOAD PENDING NOTIFICATION DATA */
 
-    document.getElementById("nPendingNotifications").innerHTML = pendingNotifications.length ? pendingNotifications.length : "";
-    if (pendingNotifications.length == 0) pendingNotificationMessages.innerHTML = pendingNoNotification;
+    //document.getElementById("nPendingNotifications").innerHTML = pendingNotifications.length ? pendingNotifications.length : "";
+    //if (pendingNotifications.length == 0) pendingNotificationMessages.innerHTML = pendingNoNotification;
     for (var j = 0; j < pendingNotifications.length; j++) { 
-        pendingNotificationMessages.innerHTML += pendingMessageComponents[0] + j + pendingMessageComponents[1] + pendingNotifications[j][0] + pendingMessageComponents[2]  + pendingNotifications[j][1] + pendingMessageComponents[3] + pendingNotifications[j][2] + pendingMessageComponents[4] + pendingNotifications[j][3] + pendingMessageComponents[5] + j + pendingMessageComponents[6];
+        //pendingNotificationMessages.innerHTML += pendingMessageComponents[0] + j + pendingMessageComponents[1] + pendingNotifications[j][0] + pendingMessageComponents[2]  + pendingNotifications[j][1] + pendingMessageComponents[3] + pendingNotifications[j][2] + pendingMessageComponents[4] + pendingNotifications[j][3] + pendingMessageComponents[5] + j + pendingMessageComponents[6];
         allNotificationMessages.insertAdjacentHTML("afterend",pendingMessageComponents[0] + j + pendingMessageComponents[1] + pendingNotifications[j][0] + pendingMessageComponents[2]  + pendingNotifications[j][1] + pendingMessageComponents[3] + pendingNotifications[j][2] + pendingMessageComponents[4] + pendingNotifications[j][3] + pendingMessageComponents[5] + j + pendingMessageComponents[6]);
     }
 
 
     /* DONE: LOAD CAPTAIN NOTIFICATION DATA */
-    document.getElementById("nCaptainNotifications").innerHTML = captainNotifications.length ? captainNotifications.length : "";
-    if (captainNotifications.length == 0) captainNotificationMessages.innerHTML = captainNoNotification;
+    //document.getElementById("nCaptainNotifications").innerHTML = captainNotifications.length ? captainNotifications.length : "";
+    //if (captainNotifications.length == 0) captainNotificationMessages.innerHTML = captainNoNotification;
     for (var k = 0; k < captainNotifications.length; k++) { 
-        captainNotificationMessages.innerHTML += captainMessageComponents[0] + k + captainMessageComponents[1] + captainNotifications[k][0] + captainMessageComponents[2] + captainNotifications[k][1] + captainMessageComponents[3] + captainNotifications[k][2] + captainMessageComponents[4] + captainNotifications[k][3] + captainMessageComponents[5] + k + captainMessageComponents[6] + k + captainMessageComponents[7];
+        //captainNotificationMessages.innerHTML += captainMessageComponents[0] + k + captainMessageComponents[1] + captainNotifications[k][0] + captainMessageComponents[2] + captainNotifications[k][1] + captainMessageComponents[3] + captainNotifications[k][2] + captainMessageComponents[4] + captainNotifications[k][3] + captainMessageComponents[5] + k + captainMessageComponents[6] + k + captainMessageComponents[7];
         allNotificationMessages.insertAdjacentHTML("afterend",captainMessageComponents[0] + k + captainMessageComponents[1] + captainNotifications[k][0] + captainMessageComponents[2] + captainNotifications[k][1] + captainMessageComponents[3] + captainNotifications[k][2] + captainMessageComponents[4] + captainNotifications[k][3] + captainMessageComponents[5] + k + captainMessageComponents[6] + k + captainMessageComponents[7]);
     }
 
@@ -205,7 +203,7 @@ function loadPage() {
 
 
     /* DONE: LOAD GAME DATA */
-    console.log(allNotificationMessages);
+
     if (gameNotifications.length == 0) {
         games.innerHTML = gameNoNotification;
         document.getElementById("upcomingGamesHeader").style.display = "none";
@@ -218,7 +216,7 @@ function loadPage() {
         }
     }
     games.innerHTML = gamesInnerHTML;
-    computeFooterMargin();
+    /*computeFooterMargin();*/
 
 	/* DONE: LOAD FOOTER */
 	var loggedInAs = document.getElementById('loggedInAs');
@@ -306,7 +304,7 @@ function dismissPendingInvitation(id) {
 }
 
 
-function changeBtnGroup(id) { 
+/*function changeBtnGroup(id) { 
     var notificationButtons = document.getElementById("notificationBtns").children;
     for (var i = 0; i < notificationButtons.length; i++) {   
         if (notificationButtons[i].id == id) { 
@@ -318,12 +316,12 @@ function changeBtnGroup(id) {
         }   
     }   
 
-    /*var notificationMessages = document.getElementsByClassName("notificationMessages");
+    var notificationMessages = document.getElementsByClassName("notificationMessages");
     for (var j = 0; j < notificationMessages.length; j++) {
         notificationMessages[j].style.display = "none"; 
-    }*/ 
+    }
 
     var buttonSubstr = id.substring(0, 7); 
     document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
-}
+}*/
 

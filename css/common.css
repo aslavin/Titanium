@@ -100,7 +100,6 @@ body {
 
 .userLink { 
     color: black;
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -242,4 +241,40 @@ button:focus {
 
 .subsequentHeader { 
     margin-top: 45px;
+}
+
+
+.breadcrumb {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    background-color: white;
+}
+
+.breadcrumb-item::before {
+    content: none;
+}
+
+.breadcrumb-content, .breadcrumb-divider {
+    border-radius: 50px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+
+.breadcrumb-current {
+    background-color: white;
+}
+
+.breadcrumb-content {
+    background-color: #eeeeee;
+    padding: 0px 5px;
+}
+
+
+
+.breadcrumb-divider {
+    margin-left: 10px;
+    margin-right: 10px;
 }

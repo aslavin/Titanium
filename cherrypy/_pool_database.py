@@ -75,7 +75,7 @@ class _pool_database:
             return_list = [return_list]
         first_entry = return_list[0]
         return_dict = {'leagueLevel': first_entry['leagueLevel'], 'leagueSport': first_entry['leagueSport'], 'leagueLocation': first_entry['leagueLocation'], 'poolDay': first_entry['poolDay'], 'poolTime': first_entry['poolTime']}
-        
+
         # for each team, apppend id, name, wins, losses, ties
         teams = [{'team_id': team['team_id'], 'team_name': team['team_name'], 'wins': team['wins'], 'losses': team['losses'], 'ties': team['ties']} for team in return_list]
         return_dict['teams'] = teams
