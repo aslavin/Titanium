@@ -1,12 +1,12 @@
 /* TODO: connect to backend and store result in variable teamData["schedule"]. */
-var teamData = {'schedule': [["10/23","","Stix Or It Didn't Happen","15","10"],["10/30","","Another Team","9","20"],["11/7","","A Third Team","10","10"],["11/14","","A Fourth Team","-1","-1"]], 'roster': [[true,"","Tommy","Clare","tclare@nd.edu", "M"],[false,"","Patrick","Fischer","pfische@nd.edu","M"],[false,"","Sebastian","Miner","sminer@nd.edu","M"],[false,"","Andy","Slavin","aslavin@nd.edu","F"]]}; 
-
+//var teamData = {'schedule': [["10/23","","Stix Or It Didn't Happen","15","10"],["10/30","","Another Team","9","20"],["11/7","","A Third Team","10","10"],["11/14","","A Fourth Team","-1","-1"]], 'roster': [[true,"","Tommy","Clare","tclare@nd.edu", "M"],[false,"","Patrick","Fischer","pfische@nd.edu","M"],[false,"","Sebastian","Miner","sminer@nd.edu","M"],[false,"","Andy","Slavin","aslavin@nd.edu","F"]]}; 
+var teamData = {};
 // ^^ indexed by schedule = 2D array of all games for this team's season,
 //  GAME DATE - OPP NAME - YOUR SCORE - OPP SCORE
 // ^^ and roster = a 2D array of attributes of all users on this team.
 //  IS_CAPTAIN - USER LINK - FIRST NAME - LAST NAME - EMAIL - GENDER
-
-var teamMetaData = {'teamName': 'Broom Roasted','poolTime': '10:30pm', 'poolLocation': 'Compton Family Ice Arena', 'teamWins': 2, 'teamLosses': 1, 'teamTies': 0, 'teamRankInPool': 3, 'teamsInPool': 5, 'malePlayers': 6, 'femalePlayers': 10}
+var teamMetaData = {};
+//var teamMetaData = {'teamName': 'Broom Roasted','poolTime': '10:30pm', 'poolLocation': 'Compton Family Ice Arena', 'teamWins': 2, 'teamLosses': 1, 'teamTies': 0, 'teamRankInPool': 3, 'teamsInPool': 5, 'malePlayers': 6, 'femalePlayers': 10}
 
 // ^^ all attributes are self-explanatory. Metadata for a team.
 
@@ -31,7 +31,41 @@ var rosterComponents = ['<tr><th scope="row" class="align-middle"><i class="fa '
 
 function loadData() { 
  
+    var urlParams = new URLSearchParams(window.location.search);
+    var teamId = urlParams.get("teamId");
+
+    if (teamId == null){
+        console.error("No pool specified");
+    }
+
     /* TODO: here is where you connect to the backend and modify teamData["schedule"] EXACTLY as the format above suggests */
+    var xhr = new XMLHttpRequest();
+	var url = 'http://127.0.0.1:51069/teams/' + teamId;
+	xhr.open('GET', url, true);
+
+	xhr.onload = function(e) {
+
+		if (xhr.readyState != 4) { // failed
+			console.error(xhr.statusText);
+		}
+		response = JSON.parse(xhr.response);
+        teamMetaData = {'teamName': response["teamName"],'poolTime': readableTimeFromSQLDate(response["poolTime"]), 'poolLocation': response["poolLocation"], 'teamWins': response["teamWins"], 'teamLosses': response["teamLosses"], 'teamTies': response["teamTies"], 'teamRankInPool': response["teamRankInPool"], 'teamsInPool': response["teamsInPool"], 'malePlayers': response["malePlayers"], 'femalePlayers': response["femalePlayers"]};
+        var schedule = [];
+        var roster = [];
+        for (var game of response["schedule"]) {
+            schedule.push([game["date"], "", game["opponentName"], game["yourScore"], game["opponentScore"]]);
+        }
+        for (var player of response["roster"]) {
+            roster.push([player["is_capt"], "", player["first_name"], player["last_name"], player["email"], player["gender"]]);
+        }
+        teamData = {"schedule": schedule, "roster": roster};
+        
+        loadPage();
+		
+	}
+
+    xhr.send();
+}
     
     /* ALSO TODO right here: connect to backend andinput a few side statistics (# wins, # losses, poolRank, teamsInPool) with data from db. 
     This is done with the following: 
@@ -44,12 +78,6 @@ function loadData() {
 
     /*
 
-    var urlParams = new URLSearchParams(window.location.search);
-    var teamId = urlParams.get("teamId");
-
-    if (teamId == null){
-        console.error("No pool specified");
-    }
     var wins = 0;
     var losses = 0;
     var ties = 0;
@@ -143,7 +171,7 @@ function loadData() {
     xhr.send();
 
     */
-
+function loadPage() {
     var nWins = teamMetaData['teamWins'];
     var nLosses = teamMetaData['teamLosses'];
     var nTies = teamMetaData['teamTies'];

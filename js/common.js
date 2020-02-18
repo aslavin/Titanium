@@ -15,7 +15,6 @@ function confirmLogin() {
 
 
 function readableTimeFromSQLDate(timeString) { // 2020-02-03 18:00:00 
-    console.log(timeString.split(" "));
     var timePortion = timeString.split(" ")[1];
     var militaryTime = timePortion.split(":")
     var militaryHours = militaryTime[0];
