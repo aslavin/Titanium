@@ -91,7 +91,7 @@ CREATE TABLE `Pools` (
   `pool_id` int(11) NOT NULL AUTO_INCREMENT,
   `league_id` int(11) NOT NULL,
   `day` varchar(255) NOT NULL,
-  `pool_time` time NOT NULL,
+  `pool_time` datetime NOT NULL,
   PRIMARY KEY (`pool_id`),
   KEY `league_id` (`league_id`),
   CONSTRAINT `Pools_ibfk_1` FOREIGN KEY (`league_id`) REFERENCES `leagues` (`league_id`)
@@ -104,7 +104,7 @@ CREATE TABLE `Pools` (
 
 LOCK TABLES `Pools` WRITE;
 /*!40000 ALTER TABLE `Pools` DISABLE KEYS */;
-INSERT INTO `Pools` VALUES (1,1,'Wednesday','18:00:00'),(2,1,'Wednesday','19:00:00'),(3,1,'Thursday','21:00:00'),(4,2,'Monday','22:00:00'),(5,2,'Sunday','14:00:00'),(6,2,'Sunday','16:00:00'),(7,3,'Saturday','15:30:00'),(8,3,'Sunday','12:00:00'),(9,3,'Monday','22:00:00');
+INSERT INTO `Pools` VALUES (1,1,'Wednesday','2020-02-13 18:00:00'),(2,1,'Wednesday','2020-02-13 19:00:00'),(3,1,'Thursday','2020-02-13 21:00:00'),(4,2,'Monday','2020-02-13 22:00:00'),(5,2,'Sunday','2020-02-13 14:00:00'),(6,2,'Sunday','2020-02-13 16:00:00'),(7,3,'Saturday','2020-02-13 15:30:00'),(8,3,'Sunday','2020-02-13 12:00:00'),(9,3,'Monday','2020-02-13 22:00:00');
 /*!40000 ALTER TABLE `Pools` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,6 +147,7 @@ CREATE TABLE `Team_Requests` (
   `new_member_id` int(11) NOT NULL,
   `new_member_invited` int(11) NOT NULL,
   `new_member_accepted` int(11) NOT NULL,
+  `moment_initiated` datetime DEFAULT NULL,
   PRIMARY KEY (`team_id`,`new_member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -157,7 +158,7 @@ CREATE TABLE `Team_Requests` (
 
 LOCK TABLES `Team_Requests` WRITE;
 /*!40000 ALTER TABLE `Team_Requests` DISABLE KEYS */;
-INSERT INTO `Team_Requests` VALUES (2,11,1,0),(2,12,1,0),(2,13,1,0),(3,14,1,0),(3,15,1,0);
+INSERT INTO `Team_Requests` VALUES (2,11,0,0,'2020-02-16 12:00:00'),(2,12,0,0,'2020-02-17 12:00:00'),(2,13,1,0,'2020-02-18 12:00:00'),(3,14,1,0,'2020-02-18 18:00:00'),(3,15,1,0,'2020-02-19 12:00:00');
 /*!40000 ALTER TABLE `Team_Requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +250,7 @@ CREATE TABLE `Users_Teams` (
 
 LOCK TABLES `Users_Teams` WRITE;
 /*!40000 ALTER TABLE `Users_Teams` DISABLE KEYS */;
-INSERT INTO `Users_Teams` VALUES (1,1),(2,2),(3,3),(4,4),(6,6),(7,7),(8,8),(9,9),(10,10);
+INSERT INTO `Users_Teams` VALUES (1,1),(2,2),(3,3),(4,4),(16,5),(6,6),(7,7),(8,8),(9,9),(10,10);
 /*!40000 ALTER TABLE `Users_Teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -262,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-12 21:38:46
+-- Dump completed on 2020-02-17 21:50:56
