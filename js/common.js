@@ -14,7 +14,8 @@ function confirmLogin() {
 }
 
 
-function readableTimeFromSQLDate(timeString) { 
+function readableTimeFromSQLDate(timeString) { // 2020-02-03 18:00:00 
+    console.log(timeString.split(" "));
     var timePortion = timeString.split(" ")[1];
     var militaryTime = timePortion.split(":")
     var militaryHours = militaryTime[0];
@@ -24,10 +25,12 @@ function readableTimeFromSQLDate(timeString) {
     return readableHours + ":" + militaryMinutes + amOrPm; 
 }
 
-function readableDateFromSQLDate(dateString) { 
+function readableDateFromSQLDate(dateString) { // 2020-02-03 
     var dateList = dateString.split("-");
     var monthName = monthNames[dateList[1]-1];
     var monthDay = parseInt(dateList[2]);
     
     return monthName + " " + monthDay; 
-}   
+}  
+
+

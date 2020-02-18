@@ -12,7 +12,7 @@ class _league_database:
 
     # return dictionary of leagues
     def get_leagues(self):
-        self.db.query('select * from Leagues')
+        self.db.query('select l.level, l.sport from Leagues l order by l.sport ASC')
         return util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1)) # return all rows as a dictionary
 
     # set a new league

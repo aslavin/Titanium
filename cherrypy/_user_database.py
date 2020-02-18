@@ -210,6 +210,10 @@ class _user_database:
             gameNotifications = [gameNotifications]
         elif type(gameNotifications) is dict and not gameNotifications:
             gameNotifications = []
+        
+        print(gameNotifications);
+        
+        
         return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications, "gameNotifications": gameNotifications}
 
     # remove user from database

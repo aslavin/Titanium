@@ -15,7 +15,7 @@
         <script src="js/search.js"></script>
         <script src="js/removeAdmin.js"></script>
     </head>
-    <body onload="removeAdmin()">
+    <body onload="loadData();removeAdmin()">
         <!-- NAVBAR -->
         <div id="navbarOnTheVideo">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -70,12 +70,11 @@
                 <h2>Search Page</h2>
                 <div id="searchBoxDiv">
                     <div id="searchBtns" class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" id="allSearchOption" class="btn btn-info notificationPressed" onclick="changeBtnGroupSearch(this.id)">Anything</button>
-                                    <button type="button" id="leagueSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Leagues</button>
+                                    <button type="button" id="leagueSearchOption" class="btn btn-info notificationPressed" onclick="changeBtnGroupSearch(this.id)">Leagues</button>
                                     <button type="button" id="teamSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Teams</button>
                                     <button type="button" id="playerSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Players</button>
                     </div>
-                    <input id="searchBox" class="form-control" type="text" placeholder="Search For Anything">
+                    <input id="searchBox" class="form-control" type="text" placeholder="Search For Leagues">
                     <div id="searchButton"><button class="btn-info btn" onclick="search();"><i class="fa fa-search"></i></button></div> 
                 </div> 
                 <div id="resultsBox">
@@ -84,24 +83,6 @@
                 </div>
                
           <div class="row" id="sportsImageCollection">
-                    <div class="col-md-4 col-sm-6 col-12 sportsImageContainer">
-                        <img class="sportsImage" src="data/Basketball.jpg">                      
-                            <a href="#"><div class="sportsImageTextContainer">                            
-                            <p class="sportsImageText">Men's<br>Interhall<br>Basketball</p>
-                            </div></a>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-12 sportsImageContainer">
-                        <img class="sportsImage" src="data/Broomball.jpg">      
-                         <a href="#"><div class="sportsImageTextContainer">                            
-                            <p class="sportsImageText">CoRec<br>Intramural<br>Broomball</p>
-                        </div></a>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-12 sportsImageContainer">
-                        <img class="sportsImage" src="data/Volleyball.jpg"></a>    
-                        <a href="#"><div class="sportsImageTextContainer">                            
-                            <p class="sportsImageText">Women's<br>Interhall<br>Volleyball</p>
-                        </div></a>
-                    </div>
                 </div>
 
             </div> 

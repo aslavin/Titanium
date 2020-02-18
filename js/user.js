@@ -147,7 +147,7 @@ function loadData() {
         }
 
         // append data for upcoming games
-		for (var i = 0; i < response["gameNotifications"].length; i++) {
+        for (var i = 0; i < response["gameNotifications"].length; i++) {
             gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 		loadPage();
