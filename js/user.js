@@ -45,10 +45,10 @@ var captainMessageComponents = ['<div class="notificationMessage" id="captainNot
 '" onclick="captainDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
 
 var gameComponents = ['<div class="card"><div class="card-header" id="heading',
-'"><div class="row"><div class="col-sm-2 col-3 gameDiv"><div class="gameDateText">',
-'</div></div><div class="col-sm-8 col-6 gameDiv"><div class="gameLeagueText"><a class="userLink" href="',
+'"><div class="row"><div class="col-sm-2 col-3 verticallyCenteredFlexbox gameDiv"><div class="gameDateText">',
+'</div></div><div class="col-sm-8 col-6 verticallyCenteredFlexbox gameDiv"><div class="gameLeagueText"><a class="userLink" href="',
 '">',
-'</a></div></div><div class="col-sm-2 col-3 gameDiv"><div class="gameExpandText"><button onclick="changeExpandIcon(this.id)" id="gameExpandBtn',
+'</a></div></div><div class="col-sm-2 col-3 verticallyCenteredFlexbox gameDiv"><div class="gameExpandText"><button onclick="changeExpandIcon(this.id)" id="gameExpandBtn',
 '" class="btn btn-link expand gameExpandBtn" type="button" data-toggle="collapse" data-target="#collapse',
 '" aria-expanded="true" aria-controls="collapse',
 '"><i class="fa fa-caret-down"></i></button></div></div></div></div><div id="collapse',

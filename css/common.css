@@ -53,9 +53,13 @@
 
 th, td { 
     text-align: center;
-    border: 5px solid #006db0 !important;
+    border: 1px solid white !important;
     color: black;
     font-size: 20px;
+}
+
+table { 
+    background-image: linear-gradient(to bottom, #19A5FC, #eeeeee);
 }
 
 
@@ -277,4 +281,16 @@ button:focus {
 .breadcrumb-divider {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.nonTeamText { 
+    font-size: 17px;
+}
+
+.verticallyCenteredFlexbox {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }

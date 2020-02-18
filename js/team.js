@@ -6,21 +6,21 @@ var teamData = {'schedule': [["10/23","","Stix Or It Didn't Happen","15","10"],[
 // ^^ and roster = a 2D array of attributes of all users on this team.
 //  IS_CAPTAIN - USER LINK - FIRST NAME - LAST NAME - EMAIL - GENDER
 
-var teamMetaData = {'teamName': 'Broom Roasted','poolTime': '10:33pm', 'poolLocation': 'Compton Family Ice Arena', 'teamWins': 2, 'teamLosses': 1, 'teamTies': 0, 'teamRankInPool': 3, 'teamsInPool': 5}
+var teamMetaData = {'teamName': 'Broom Roasted','poolTime': '10:30pm', 'poolLocation': 'Compton Family Ice Arena', 'teamWins': 2, 'teamLosses': 1, 'teamTies': 0, 'teamRankInPool': 3, 'teamsInPool': 5, 'malePlayers': 6, 'femalePlayers': 10}
 
 // ^^ all attributes are self-explanatory. Metadata for a team.
 
 
 
 var gameComponents = ['<div class="card ',
-'"><div class="card-body"><div class="row"><div class="col-3 col-md-2">',
-'</div><div class="col-6 col-md-8"><a href="',
+'"><div class="card-body"><div class="row gameText"><div class="col-3 col-md-2 verticallyCenteredFlexbox"><div class="nonTeamText">',
+'</div></div><div class="col-6 col-md-8 verticallyCenteredFlexbox"><div><a href="',
 '" class="userLink">',
-'</a></div><div class="col-3 col-md-2"><strong><span class="gameOutcome">',
+'</a></div></div><div class="col-3 col-md-2 verticallyCenteredFlexbox"><strong><div class="nonTeamText"><span class="gameOutcome">',
 '</span></strong> <span class="myPoints">',
 '</span> - <span class="oppPoints">',
 '</span></div></div></div></div>',
-'</span></strong></div></div></div></div>'];
+'</div></strong></div></div></div></div></div>'];
 
 
 var rosterComponents = ['<tr><th scope="row" class="align-middle"><i class="fa ',
@@ -151,8 +151,12 @@ function loadData() {
     document.getElementById("nWins").innerHTML = nWins;
     document.getElementById("nLosses").innerHTML = nLosses;
     document.getElementById("nTies").innerHTML = nTies;
+    document.getElementById("poolTime").innerHTML = teamMetaData["poolTime"];
+    document.getElementById("poolLocation").innerHTML = teamMetaData["poolLocation"];
     document.getElementById("poolRank").innerHTML = teamMetaData["teamRankInPool"];
     document.getElementById("teamsInPool").innerHTML = teamMetaData["teamsInPool"];
+    document.getElementById("nMen").innerHTML = teamMetaData["malePlayers"];
+    document.getElementById("nWomen").innerHTML = teamMetaData["femalePlayers"];
 
     /* DONE: calculate other statistics */
     var scoreDifferential = 0;
@@ -172,11 +176,12 @@ function loadData() {
         innerHTMLString = gameComponents[0];
         if (win) innerHTMLString += "outcomeWin"; 
         else if (loss) innerHTMLString += "outcomeLoss";
+        else if (tie) innerHTMLString += "outcomeTBDOrTie";
         else innerHTMLString += "outcomeTBDOrTie";
         innerHTMLString += gameComponents[1] + gameData[0] + gameComponents[2] + gameData[1] + gameComponents[3] + gameData[2] + gameComponents[4];
-        if (win) { innerHTMLString += "W"; nWins++; } 
-        else if (loss) innerHTMLString += "L";
-        else if (tie) innerHTMLString += "T";
+        if (win) { innerHTMLString += "Win<br>"; nWins++; } 
+        else if (loss) innerHTMLString += "Loss<br>";
+        else if (tie) innerHTMLString += "Tie<br>";
 
         if (win || loss || tie) {
             innerHTMLString += gameComponents[5] + gameData[3] + gameComponents[6] + gameData[4] + gameComponents[7]; 

@@ -15,6 +15,10 @@
     width: 100%;
 }
 
+.gameDiv { 
+    font-size: 20px;
+}
+
 .btn-secondary:hover { 
     background-color: rgb(100,100,100) !important;
 } 
@@ -69,14 +73,6 @@ button.expand {
 
 button.expand:hover { 
     color: black;
-}
-
-.gameDiv { 
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
 }
 
 .gameDateText { 

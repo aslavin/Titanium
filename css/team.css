@@ -22,27 +22,40 @@ th, td {
     padding-right: 5px;
 }
 
+.outcomeWin { 
+  background-image: url("../data/confetti.png");     
+}
+
+.outcomeLoss { 
+  background-image: url("../data/raindrops.jpg");
+  background-size: cover;
+}
+
 .outcomeWin, .outcomeTBDOrTie, .outcomeLoss { 
     margin-bottom: 10px;
 }
 
-.outcomeTBDOrTie { 
-    background-color: rgba(0,0,0,0.125);
-    border: 1px solid rgba(0,0,0,0.125);
+.card-body { 
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.outcomeWin { 
-    background-color: rgba(0,212,120,0.5);
-    border: 1px solid rgb(0,212,120); 
-}
-
-.outcomeLoss { 
-    background-color: rgba(212,31,0,0.5);
-    border: 1px solid rgb(212,31,0);
-
+.gameText { 
+    background-color: white;
 }
 
 .captain, .gender { 
     width: 15%;
 }
-.
+
+.gameDiv {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.teamMetaInfo { 
+    text-align: center;
+}
