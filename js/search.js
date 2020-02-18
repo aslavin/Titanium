@@ -14,6 +14,19 @@ function changeBtnGroupSearch(id) {
     }
     document.getElementById("searchBox").value = "";
     document.getElementById("searchBox").placeholder = "Search For " + document.getElementById(id).innerHTML;
+    document.getElementById("sportsImageCollection").innerHTML = "";
+
+    switch (currentButton) { 
+        case 0:
+            loadLeagues();
+            break;
+        case 1:
+            loadTeams();
+            break;
+        case 2:
+            loadUsers();
+            break;
+    }
 }
 
 var currentButtons = ["Leagues","Teams","Players"]
@@ -30,8 +43,10 @@ var searchResultComponents = [
 ] 
 
 
-function loadData() { 
-    var leagueData = [];
+var currentSearchResults; 
+
+
+function loadLeagues() { 
     var xhr = new XMLHttpRequest();
     var url = 'http://127.0.0.1:51069/leagues/';
     xhr.open('GET', url, false);
@@ -40,12 +55,55 @@ function loadData() {
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
-        console.log(response);
+        currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
             htmlString = searchResultComponents[0] + response[i]["sport"] + searchResultComponents[1] +
             "#" + searchResultComponents[2] + response[i]["level"].split(" ").join("<br>") + "<br>" + 
             response[i]["sport"] + searchResultComponents[3];
+            document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
+        } 
+    }
+    xhr.send();
+}
+
+
+function loadUsers() {
+    var xhr = new XMLHttpRequest();
+    var url = 'http://127.0.0.1:51069/users/';
+    xhr.open('GET', url, false);
+    xhr.onload = function(e) { 
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        var response = JSON.parse(xhr.response);
+        currentSearchResults = response;
+        var htmlString;
+        for (var i = 0; i < response.length; i++) { 
+            htmlString = searchResultComponents[0] + "blankProfilePic" + searchResultComponents[1] +
+            "#" + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  
+            + searchResultComponents[3];
+            document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
+        } 
+    }
+    xhr.send();
+}
+
+function loadTeams() {
+    var xhr = new XMLHttpRequest();
+    var url = 'http://127.0.0.1:51069/teams/';
+    xhr.open('GET', url, false);
+    xhr.onload = function(e) { 
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        var response = JSON.parse(xhr.response);
+        currentSearchResults = response;
+        var htmlString;
+        for (var i = 0; i < response.length; i++) { 
+            htmlString = searchResultComponents[0] + response[i]["sport"] + searchResultComponents[1] +
+            "#" + searchResultComponents[2] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +
+            " - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }

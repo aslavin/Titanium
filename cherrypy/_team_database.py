@@ -13,7 +13,9 @@ class _team_database:
     
     # return dictionary of teams
     def get_teams(self):
-        self.db.query('select * from Teams')
+        self.db.query('''select t.team_id, t.name as team_name, t.wins, t.losses, t.ties, l.sport 
+                from Teams t natural join Pools p natural join Leagues l 
+                order by team_name''')
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 

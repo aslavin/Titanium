@@ -15,7 +15,7 @@ class _user_database:
 
     # return dictionary of users
     def get_users(self):
-        self.db.query('select * from Users')
+        self.db.query('select user_id, first_name, last_name from Users order by last_name')
         r = self.db.store_result()
         return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 
