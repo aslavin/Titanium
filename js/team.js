@@ -48,12 +48,12 @@ function loadData() {
 		if (xhr.readyState != 4) { // failed
 			console.error(xhr.statusText);
 		}
-		response = JSON.parse(xhr.response);
+        response = JSON.parse(xhr.response);
         teamMetaData = {'teamName': response["teamName"],'poolTime': readableTimeFromSQLDate(response["poolTime"]), 'poolLocation': response["poolLocation"], 'teamWins': response["teamWins"], 'teamLosses': response["teamLosses"], 'teamTies': response["teamTies"], 'teamRankInPool': response["teamRankInPool"], 'teamsInPool': response["teamsInPool"], 'malePlayers': response["malePlayers"], 'femalePlayers': response["femalePlayers"]};
         var schedule = [];
         var roster = [];
         for (var game of response["schedule"]) {
-            schedule.push([game["date"], "", game["opponentName"], game["yourScore"], game["opponentScore"]]);
+            schedule.push([game["date"], "./team.html?teamId="+game["opponentId"], game["opponentName"], game["yourScore"], game["opponentScore"]]);
         }
         for (var player of response["roster"]) {
             roster.push([player["is_capt"], "", player["first_name"], player["last_name"], player["email"], player["gender"]]);

@@ -13,8 +13,14 @@ var leagueLeagueComponents = ['<div class="col-6 col-md-4 col-lg-3 leaguePoolCol
 
 function loadData() {
 	
-	// TODO: GET QUERY VARIABLE RATHER THAN HARD CODING IN LEAGUE ID
-	leagueId = 1;
+	// DONE: GET QUERY VARIABLE
+	var urlParams = new URLSearchParams(window.location.search);
+
+    var leagueId = urlParams.get("leagueId");
+
+    if (leagueId == null){
+        console.error("No league specified");
+    }
 	
    /* DONE: CONNECT TO BACKEND, GET LEAGUE DATA (INCLUDING DATA FOR POOLS IN LEAGUE) */
 	var xhr = new XMLHttpRequest();
@@ -29,7 +35,7 @@ function loadData() {
 		response = JSON.parse(xhr.response);
 		for (pool of response['pools']) {
             availableSpots = response['max_teams_in_pool'] - pool['num_teams'].length;
-            leagueData.push(["",pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
+            leagueData.push(["./pool.html?poolId="+pool["pool_id"], pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
         }
         
         loadPage();

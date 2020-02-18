@@ -35,7 +35,7 @@ function loadData() {
         leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': readableTimeFromSQLDate(response['poolTime'])} 
         // append team id, name, wins, losss, ties for each team in pool
         for (team of response['teams']) {
-            poolData.push(["", team['team_name'], team['wins'], team['losses'], team['ties']]);
+            poolData.push(["./team.html?teamId="+team["team_id"], team['team_name'], team['wins'], team['losses'], team['ties']]);
         }
 
     }

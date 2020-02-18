@@ -99,7 +99,7 @@ class _team_database:
             if len(users_on_team) == 0:
                 return_dict.update({'roster': []})
             else:
-                return_dict.update({"roster": [users_on_team["user_id"]]})
+                return_dict.update({"roster": [users_on_team]})
         else: # returned multiple items
             return_dict.update({"roster": users_on_team})
         return_dict["malePlayers"] = sum([1 for player in return_dict["roster"] if player["gender"] == "Male"])
@@ -141,7 +141,7 @@ class _team_database:
                 game["opponentScore"] = game["team2Score"]
             elif game["team2Id"] == int(team_id):
                 game["opponentId"] = game["team1Id"]
-                game["opponentName"] = game["team2Name"]
+                game["opponentName"] = game["team1Name"]
                 game["yourScore"] = game["team2Score"]
                 game["opponentScore"] = game["team1Score"]
         schedule = [{"date": game["date"], "opponentId": game["opponentId"], "opponentName": game["opponentName"], "yourScore": game["yourScore"], "opponentScore": game["opponentScore"]} for game in games]

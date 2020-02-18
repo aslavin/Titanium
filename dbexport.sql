@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.17, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for macos10.15 (x86_64)
 --
 -- Host: localhost    Database: mydb
 -- ------------------------------------------------------
--- Server version	8.0.17
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,17 +23,19 @@ DROP TABLE IF EXISTS `Games`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Games` (
-  `game_id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_id` int NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
-  `team1_id` int(11) NOT NULL,
-  `team2_id` int(11) NOT NULL,
+  `team1_id` int NOT NULL,
+  `team2_id` int NOT NULL,
+  `team1_score` int DEFAULT '-1',
+  `team2_score` int DEFAULT '-1',
   `sub_location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`game_id`),
   KEY `team1_id` (`team1_id`),
   KEY `team2_id` (`team2_id`),
   CONSTRAINT `Games_ibfk_1` FOREIGN KEY (`team1_id`) REFERENCES `teams` (`team_id`),
   CONSTRAINT `Games_ibfk_2` FOREIGN KEY (`team2_id`) REFERENCES `teams` (`team_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +44,7 @@ CREATE TABLE `Games` (
 
 LOCK TABLES `Games` WRITE;
 /*!40000 ALTER TABLE `Games` DISABLE KEYS */;
-INSERT INTO `Games` VALUES (1,'2020-03-01',1,2,'Rink 2'),(2,'2020-03-01',3,4,'Rink 1'),(3,'2020-03-08',1,3,'Rink 2'),(4,'2020-03-08',2,5,'Rink 1'),(5,'2020-03-15',1,4,'Rink 2'),(6,'2020-03-15',3,5,'Rink 1'),(7,'2020-03-22',1,5,'Rink 2'),(8,'2020-03-22',2,4,'Rink 1'),(9,'2020-03-29',2,3,'Rink 2'),(10,'2020-03-29',4,5,'Rink 1');
+INSERT INTO `Games` VALUES (1,'2020-03-01',1,2,-1,-1,'Rink 2'),(2,'2020-03-01',3,4,-1,-1,'Rink 1'),(3,'2020-03-08',1,3,-1,-1,'Rink 2'),(4,'2020-03-08',2,5,-1,-1,'Rink 1'),(5,'2020-03-15',1,4,-1,-1,'Rink 2'),(6,'2020-03-15',3,5,-1,-1,'Rink 1'),(7,'2020-03-22',1,5,-1,-1,'Rink 2'),(8,'2020-03-22',2,4,-1,-1,'Rink 1'),(9,'2020-03-29',2,3,-1,-1,'Rink 2'),(10,'2020-03-29',4,5,-1,-1,'Rink 1'),(11,'2020-02-17',5,1,8,10,'Rink 2');
 /*!40000 ALTER TABLE `Games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,14 +56,14 @@ DROP TABLE IF EXISTS `Leagues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Leagues` (
-  `league_id` int(11) NOT NULL AUTO_INCREMENT,
+  `league_id` int NOT NULL AUTO_INCREMENT,
   `season` varchar(255) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  `max_players_on_team` int(11) DEFAULT NULL,
-  `max_teams_in_pool` int(11) NOT NULL,
-  `max_pools_in_league` int(11) NOT NULL,
-  `school_id` int(11) NOT NULL,
+  `max_players_on_team` int DEFAULT NULL,
+  `max_teams_in_pool` int NOT NULL,
+  `max_pools_in_league` int NOT NULL,
+  `school_id` int NOT NULL,
   `sport` varchar(255) NOT NULL,
   `level` varchar(255) NOT NULL,
   `location` varchar(255) DEFAULT NULL,
@@ -88,8 +90,8 @@ DROP TABLE IF EXISTS `Pools`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Pools` (
-  `pool_id` int(11) NOT NULL AUTO_INCREMENT,
-  `league_id` int(11) NOT NULL,
+  `pool_id` int NOT NULL AUTO_INCREMENT,
+  `league_id` int NOT NULL,
   `day` varchar(255) NOT NULL,
   `pool_time` datetime NOT NULL,
   PRIMARY KEY (`pool_id`),
@@ -116,11 +118,11 @@ DROP TABLE IF EXISTS `Schools`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Schools` (
-  `school_id` int(11) NOT NULL AUTO_INCREMENT,
+  `school_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `city` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
-  `zip` int(11) DEFAULT NULL,
+  `zip` int DEFAULT NULL,
   PRIMARY KEY (`school_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -143,10 +145,10 @@ DROP TABLE IF EXISTS `Team_Requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Team_Requests` (
-  `team_id` int(11) NOT NULL,
-  `new_member_id` int(11) NOT NULL,
-  `new_member_invited` int(11) NOT NULL,
-  `new_member_accepted` int(11) NOT NULL,
+  `team_id` int NOT NULL,
+  `new_member_id` int NOT NULL,
+  `new_member_invited` int NOT NULL,
+  `new_member_accepted` int NOT NULL,
   `moment_initiated` datetime DEFAULT NULL,
   PRIMARY KEY (`team_id`,`new_member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -170,13 +172,13 @@ DROP TABLE IF EXISTS `Teams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Teams` (
-  `team_id` int(11) NOT NULL AUTO_INCREMENT,
-  `pool_id` int(11) NOT NULL,
-  `capt_id` int(11) NOT NULL,
+  `team_id` int NOT NULL AUTO_INCREMENT,
+  `pool_id` int NOT NULL,
+  `capt_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `wins` int(11) NOT NULL,
-  `losses` int(11) NOT NULL,
-  `ties` int(11) NOT NULL,
+  `wins` int NOT NULL,
+  `losses` int NOT NULL,
+  `ties` int NOT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -199,7 +201,7 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
   `pass_hash` varchar(255) DEFAULT NULL,
   `netid` varchar(255) DEFAULT NULL,
@@ -209,9 +211,9 @@ CREATE TABLE `Users` (
   `is_admin` tinyint(1) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `residence_hall` varchar(255) DEFAULT NULL,
-  `wins` int(11) DEFAULT NULL,
-  `losses` int(11) DEFAULT NULL,
-  `ties` int(11) DEFAULT NULL,
+  `wins` int DEFAULT NULL,
+  `losses` int DEFAULT NULL,
+  `ties` int DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -234,8 +236,8 @@ DROP TABLE IF EXISTS `Users_Teams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Users_Teams` (
-  `user_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
+  `user_id` int NOT NULL,
+  `team_id` int NOT NULL,
   PRIMARY KEY (`user_id`,`team_id`),
   KEY `team_id` (`team_id`),
   KEY `idx_users_teams` (`user_id`,`team_id`),
@@ -250,7 +252,7 @@ CREATE TABLE `Users_Teams` (
 
 LOCK TABLES `Users_Teams` WRITE;
 /*!40000 ALTER TABLE `Users_Teams` DISABLE KEYS */;
-INSERT INTO `Users_Teams` VALUES (1,1),(2,2),(3,3),(4,4),(16,5),(6,6),(7,7),(8,8),(9,9),(10,10);
+INSERT INTO `Users_Teams` VALUES (1,1),(2,1),(3,3),(4,4),(16,5),(6,6),(7,7),(8,8),(9,9),(10,10);
 /*!40000 ALTER TABLE `Users_Teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -263,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-17 21:50:56
+-- Dump completed on 2020-02-18 11:48:22
