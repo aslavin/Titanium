@@ -36,7 +36,7 @@ var searchResultComponents = ['<div class="searchResult"><a class="userLink" hre
 '</a></div>'];
 
 var searchResultComponents = [
-'<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="data/',
+'<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="',
 '.jpg"><a href="',
 '"><div class="sportsImageTextContainer"><p class="sportsImageText">',
 '</p></div></a></div>'
@@ -58,7 +58,7 @@ function loadLeagues() {
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + response[i]["sport"] + searchResultComponents[1] +
+            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] +
             "#" + searchResultComponents[2] + response[i]["level"].split(" ").join("<br>") + "<br>" + 
             response[i]["sport"] + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
@@ -77,12 +77,15 @@ function loadUsers() {
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
+        console.log(response);
         currentSearchResults = response;
         var htmlString;
-        for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + "blankProfilePic" + searchResultComponents[1] +
-            "#" + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  
-            + searchResultComponents[3];
+        var profilePictureURL;
+        for (var i = 0; i < response.length; i++) {
+            profilePictureURL = response[i]["profilePicExists"] ? "file:///Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/userPictures/" + response[i]["user_id"] : "./data/blankProfilePic";
+            console.log(profilePictureURL);
+            htmlString = searchResultComponents[0] + profilePictureURL + searchResultComponents[1] +
+            "#" + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
@@ -101,7 +104,7 @@ function loadTeams() {
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + response[i]["sport"] + searchResultComponents[1] +
+            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] +
             "#" + searchResultComponents[2] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +
             " - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
@@ -182,5 +185,4 @@ function displayResults() {
         htmlString = searchResultComponents[0] + searchResults[i][0] + searchResultComponents[1] + searchResults[i][1] + searchResultComponents[2];
         document.getElementById("searchResults").insertAdjacentHTML("beforeend", htmlString);
     }
-
 }

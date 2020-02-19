@@ -19,6 +19,13 @@
     font-size: 20px;
 }
 
+#profilePicture {
+    width: 100px;
+    height: 100px;
+}
+
+
+
 .btn-secondary:hover { 
     background-color: rgb(100,100,100) !important;
 } 

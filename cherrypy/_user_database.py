@@ -6,6 +6,7 @@ import copy
 import util
 import json
 import hashlib
+import os
 
 class _user_database:
     
@@ -17,7 +18,13 @@ class _user_database:
     def get_users(self):
         self.db.query('select user_id, first_name, last_name from Users order by last_name')
         r = self.db.store_result()
-        return util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+        d = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
+        for m in range(len(d)):
+            if os.path.isfile("../data/userPictures/{}.jpg".format(d[m]["user_id"])):
+                d[m]["profilePicExists"] = 1;
+            else: 
+                d[m]["profilePicExists"] = 0;
+        return d;
 
     # delete all users
     def delete_users(self):
@@ -187,7 +194,12 @@ class _user_database:
             order by Games.date
             ;
             '''.format(user_id, user_id))
-        gameNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        gameNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1)) 
+
+
+        # get user's first name to welcome them
+        self.db.query('''select first_name from Users where user_id = {}'''.format(user_id));
+        firstName = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1)) 
 
         if type(playerNotifications) is dict and playerNotifications:
             playerNotifications = [playerNotifications]
@@ -204,17 +216,12 @@ class _user_database:
         elif type(captainNotifications) is dict and not captainNotifications:
             captainNotifications = []
 
-        print(captainNotifications)
-
         if type(gameNotifications) is dict and gameNotifications:
             gameNotifications = [gameNotifications]
         elif type(gameNotifications) is dict and not gameNotifications:
             gameNotifications = []
-        
-        print(gameNotifications);
-        
-        
-        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications, "gameNotifications": gameNotifications}
+            
+        return {"playerNotifications": playerNotifications, "pendingNotifications": pendingNotifications, "captainNotifications": captainNotifications, "gameNotifications": gameNotifications, "profilePicExists": os.path.exists("../data/userPictures/{}.jpg".format(user_id)), "first_name": firstName["first_name"]}
 
     # remove user from database
     def delete_user(self, user_id):

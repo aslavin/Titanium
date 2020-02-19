@@ -190,6 +190,7 @@ h1, h2, h3 {
     justify-content: space-between;
     height: 100vh;
     padding-top: 86px;
+    align-items: center;
 }
 
 #loggedInAs {
@@ -293,4 +294,26 @@ button:focus {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+.sidebarButton { 
+    margin-top: 10px;
+    width: 100px;
+    color: #006db0;
+    background-color: white;
+}
+
+.halfWidthSidebarButton { 
+    margin-top: 10px;
+    width: 50px;
+}
+
+.sidebarButtonSemantics { 
+    background-color: white;
+    color: #006db0;
+}
+
+.sidebarButtonSemantics:hover { 
+    background-color: #d4af37;
+    color: white;
 }
