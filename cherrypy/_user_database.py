@@ -135,7 +135,9 @@ class _user_database:
 
         # get player Notifications
 
-        notification_query = '''select distinct Teams.name as team_name, Leagues.level as league_level, Leagues.sport as league_sport, Users.first_name, Users.last_name, concat(Leagues.level, " ", Leagues.sport) as league_name 
+        notification_query = '''select distinct Teams.name as team_name, Teams.team_id as team_id,
+            Leagues.league_id as league_id, Leagues.level as league_level, Leagues.sport as league_sport, concat(Leagues.level, " ", Leagues.sport) as league_name,
+            Users.first_name, Users.last_name
             from Team_Requests, Teams, Leagues, Pools, Users 
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Teams.capt_id
@@ -149,7 +151,8 @@ class _user_database:
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
 
         # get pending notifications
-        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name
+        self.db.query('''select distinct Teams.name as team_name, Teams.team_id as team_id
+            Users.first_name, Users.last_name
             from Team_Requests, Teams, Users 
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Teams.capt_id
@@ -160,7 +163,8 @@ class _user_database:
         pendingNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
 
         # get captain notifications
-        self.db.query('''select distinct Teams.name as team_name, Users.first_name, Users.last_name 
+        self.db.query('''select distinct Teams.name as team_name, Teams.team_id, 
+            Users.first_name, Users.last_name, Users.user_id
             from Team_Requests, Teams, Leagues, Users 
             where Teams.team_id = Team_Requests.team_id
             and Users.user_id = Team_Requests.new_member_id
@@ -171,7 +175,11 @@ class _user_database:
         captainNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
         
         # get game notifications
-        self.db.query('''select Games.game_id, DATE_FORMAT(Games.date, '%Y-%m-%d') as date, cast(Pools.pool_time as char) as time, Leagues.location as location, concat(Leagues.level, " ", Leagues.sport) as league, Games.team1_id, Teams1.name as team1Name, Teams1.wins as team1Wins, Teams1.losses as team1Losses, Teams1.ties as team1Ties, Games.team2_id, Teams2.name as team2Name, Teams2.wins as team2Wins, Teams2.losses as team2Losses, Teams2.ties as team2Ties
+        self.db.query('''select Games.game_id, DATE_FORMAT(Games.date, '%Y-%m-%d') as date, Games.team1_id, Games.team2_id, 
+            cast(Pools.pool_time as char) as time, 
+            Leagues.location as location, concat(Leagues.level, " ", Leagues.sport) as league, Leagues.league_id,
+            Teams1.name as team1Name, Teams1.wins as team1Wins, Teams1.losses as team1Losses, Teams1.ties as team1Ties, 
+            Teams2.name as team2Name, Teams2.wins as team2Wins, Teams2.losses as team2Losses, Teams2.ties as team2Ties
             from Games, Teams as Teams1, Teams as Teams2, Pools, Leagues
             where (
                 Games.team1_id =

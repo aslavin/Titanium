@@ -132,23 +132,22 @@ function loadData() {
 		// append data to player notifications
         var i = 0;
 		for (var i = 0; i < response["playerNotifications"].length; i++) {
-			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + " " + response["playerNotifications"][i]["last_name"], "", response["playerNotifications"][i]["team_name"], "", response["playerNotifications"][i]["league_name"]]);
+			playerNotifications.push(["", response["playerNotifications"][i]["first_name"] + " " + response["playerNotifications"][i]["last_name"], "./team.html?teamId="+response["playerNotifications"][i]["team_id"], response["playerNotifications"][i]["team_name"], "./league.html?leagueId="+response["playerNotifications"][i]["league_id"], response["playerNotifications"][i]["league_name"]]);
         }
 
 		// append data for pending notifications
 		for (var i = 0; i < response["pendingNotifications"].length; i++) {
-			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + " " + response["pendingNotifications"][i]["last_name"], "", response["pendingNotifications"][i]["team_name"]]);
+			pendingNotifications.push(["", response["pendingNotifications"][i]["first_name"] + " " + response["pendingNotifications"][i]["last_name"], "./team.html?teamId="+response["pendingNotifications"][i]["team_id"], response["pendingNotifications"][i]["team_name"]]);
         }
 
 		// append data for captain notifications
         for (var i = 0; i < response["captainNotifications"].length; i++) {
-            console.log(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
-			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "", response["captainNotifications"][i]["team_name"]]);
+			captainNotifications.push(["", response["captainNotifications"][i]["first_name"] + " " + response["captainNotifications"][i]["last_name"], "./team.html?teamId="+response["captainNotifications"][i]["team_id"], response["captainNotifications"][i]["team_name"]]);
         }
 
         // append data for upcoming games
         for (var i = 0; i < response["gameNotifications"].length; i++) {
-            gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "", response["gameNotifications"][i]["league"], "", response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "",  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "", response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
+            gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "./league.html?leagueId="+response["gameNotifications"][i]["league_id"], response["gameNotifications"][i]["league"], "./team.html?teamId="+response["gameNotifications"][i]["team1_id"], response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "./team.html?teamId="+response["gameNotifications"][i]["team1_id"],  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "./team.html?teamId="+response["gameNotifications"][i]["team2_id"], response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 		loadPage();
 
