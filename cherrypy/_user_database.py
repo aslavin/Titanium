@@ -158,7 +158,7 @@ class _user_database:
         playerNotifications = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
 
         # get pending notifications
-        self.db.query('''select distinct Teams.name as team_name, Teams.team_id as team_id
+        self.db.query('''select distinct Teams.name as team_name, Teams.team_id as team_id,
             Users.first_name, Users.last_name
             from Team_Requests, Teams, Users 
             where Teams.team_id = Team_Requests.team_id

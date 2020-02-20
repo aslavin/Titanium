@@ -24,8 +24,8 @@ var playerMessageComponents = ['<div class="notificationMessage" id="playerNotif
 '">',
 '</a> in <a class="userLink" href="',
 '">',
-'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation', 
-'" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-danger" id="playerDenyInvitation','" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
+'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-gold" id="playerAcceptInvitation', 
+'" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-gold-outline" id="playerDenyInvitation','" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
 
 var pendingMessageComponents = ['<div class="notificationMessage" id="pendingNotificationMessage',
     '"><div class="row"><div class="col-lg-11 col-md-10 col-9"><div class="notificationTextDiv"><span class="notificationText">Waiting for captain (<a class="userLink" href="',
@@ -33,15 +33,15 @@ var pendingMessageComponents = ['<div class="notificationMessage" id="pendingNot
     '</a>) to approve your request to join <a href="',
     '" class="userLink">',
     '</a>!</span></div></div><div class="col-lg-1 col-md-2 col-3"><div class="buttonFlexbox"><button id="dismissPendingBtn',
-    '" class="notificationResponse btn btn-warning" onclick="dismissPendingInvitation(this.id)">DISMISS</button></div></div></div></div>'];
+    '" class="notificationResponse btn btn-gold" onclick="dismissPendingInvitation(this.id)">DISMISS</button></div></div></div></div>'];
 
 var captainMessageComponents = ['<div class="notificationMessage" id="captainNotificationMessage',
 '"><div class="row"><div class="col-lg-9 col-md-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a href="',
 '" class="userLink">',
 '</a> has requested to join your team <a href="',
 '" class="userLink">',
-'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="captainAcceptBtn',
-'" onclick="captainAcceptInvitation(this.id)">ACCEPT</button><button class="notificationResponse btn btn-danger" id="captainDenyBtn',
+'</a>!</span></div></div><div class="col-lg-3 col-md-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-gold" id="captainAcceptBtn',
+'" onclick="captainAcceptInvitation(this.id)">ACCEPT</button><button class="notificationResponse btn btn-gold-outline" id="captainDenyBtn',
 '" onclick="captainDenyInvitation(this.id)">DENY</button></div></div></div></div>'];
 
 var gameComponents = ['<div class="card"><div class="card-header" id="heading',

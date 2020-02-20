@@ -53,14 +53,14 @@
 
 th, td { 
     text-align: center;
-    border: 1px solid white !important;
+    border-bottom: 1px solid black !important;
     color: black;
     font-size: 20px;
 }
 
-table { 
+/*table { 
     background-image: linear-gradient(to bottom, #19A5FC, #eeeeee);
-}
+}*/
 
 
 .tableUserLink { 
@@ -103,13 +103,15 @@ body {
 
 
 .userLink { 
-    color: black;
+    color: #d4af37;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .userLink:hover { 
-    color: rgb(80,80,80);
+    font-weight: bolder;
     text-decoration: none;
+    color: #d4af37;
 }
 
 .alert { 
@@ -208,24 +210,6 @@ h1, h2, h3 {
     margin-top: 0px;
 }
 
-@media only screen and (min-width: 768px) {
-    .nav-link:hover { 
-        background-color: rgb(200,200,200);
-    }
-    .nav-link { 
-        transition: background-color 1s;
-    }
-}
-
-@media only screen and (max-width: 767px) { 
-    .nav-link:hover { 
-        background-color: none;
-    }
-    .nav-link { 
-       transition: none; 
-    }
-}
-
 .btn-outline-info:hover, .btn-outline-info:active, .btn-info:hover, .btn-info:active { 
     background-color: #005d90 !important;
     border: 1px solid #005d90;
@@ -299,7 +283,7 @@ button:focus {
 .sidebarButton { 
     margin-top: 10px;
     width: 100px;
-    color: #006db0;
+    color: #d4af37;;
     background-color: white;
 }
 
@@ -310,10 +294,31 @@ button:focus {
 
 .sidebarButtonSemantics { 
     background-color: white;
-    color: #006db0;
+    color: #d4af37;
 }
 
 .sidebarButtonSemantics:hover { 
     background-color: #d4af37;
     color: white;
+}
+
+
+.btn-gold { 
+    background-color: #d4af37;
+    color: white;
+}
+
+.btn-gold:hover { 
+    background-color: #DAA520;
+    color: white;
+}
+
+.btn-gold-outline { 
+    color: #d4af37;
+    background-color: white;
+}
+
+.btn-gold-outline:hover { 
+    color: #DAA520;
+    background-color: white;
 }

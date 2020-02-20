@@ -7,13 +7,14 @@
         <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/user.css">
         <link rel="stylesheet" href="css/common.css">
-       <link href="https://fonts.googleapis.com/css?family=Inria+Serif|Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Inria+Serif|Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet"> 
+        <script src="https://unpkg.com/@popperjs/core@2" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="js/common.js"></script>
         <script src="js/user.js"></script>
-        <script src="js/removeAdmin.js"></script>
+        <script src="js/tooltip.js"></script>
     </head>
     <body onload="loadData(); removeAdmin()">
         <!-- NAVBAR -->
@@ -29,7 +30,7 @@
                             <a class="nav-link" href="./user.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  href="./search.html"><i class="fa fa-search" aria-hidden="true"></i> Search</a>                        </li>
+                            <a class="nav-link"  href="./search.html"><i class="fa fa-search" aria-hidden="true"></i> Search</a>                                   </li>
                         <li class="nav-item" id="admin_nav">
                             <a class="nav-link"  href="./admin.html"><i class="fa fa-star" aria-hidden="true" disabled></i> Admin</a>
                         </li>   
@@ -51,14 +52,17 @@
                         </div>
                         <div id="middleFlexbox">
                             <img id="profilePicture">
-                            <div>
-                                <button class="btn halfWidthSidebarButton sidebarButtonSemantics"><i class="fa fa-camera-retro"></i></button>
-                                <button class="btn halfWidthSidebarButton sidebarButtonSemantics"><i class="fa fa-bookmark"></i></button>
-                            </div>
-                            <button type="button" class="btn btn-sm sidebarButton sidebarButtonSemantics">
+                            <button type="button" class="btn btn-sm sidebarButton btn-gold">
                                 <i class="fa fa-cog"></i>
                                 Settings
                             </button>
+                            <div id="privateSlider"> 
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>                                
+                                </label>
+                                <span id="sliderText" data-toggle="tooltip" data-placement="right" title="When your profile is Public, other users can see your overall statistics and teams. No sensitive personal information will ever be disclosed.">Public</span>
+                            </div>
                         </div>
                         <div id="loggedInAs">
                             Logged In As:<br>tclare@nd.edu
@@ -76,49 +80,49 @@
                         <!--<div id="whatsNew" class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Welcome back!</strong> Here are details you will be updated on. Maybe things like a congratulations on a win streak, or a reminder to check games that are coming up soon? 
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>-->
+                            </div>-->
 
 
 
-                        <div id="notifications">
-                            <h2>Notifications</h2>
-                            <div class="notificationsDiv">
-                                <!--<div id="notificationBtns" class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" id="playersNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Player <span class="badge badge-light" id="nPlayerNotifications"></span></button>
-                                    <button type="button" id="pendingNotificationButton" class="btn btn-info notificationPressed" onclick="changeBtnGroup(this.id)">Pending <span class="badge badge-light" id="nPendingNotifications"></span></button>
-                                    <button type="button" id="captainNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
-                                </div>-->
-                                <div class="underneathDiv">
-                                    <!--<div id="playersNotificationMessages" class="notificationMessages">
-                                    <div class="notificationMessage" id="playerNotificationMessage"><div class="row"><div class="col-lg-10 col-md-9 col-sm-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="">Tommy Clare</a> invited you to join <a class="userLink" href="">Leprechauns</a> in <a class="userLink" href="">CoRec Intramural Broomball</a>!</span></div></div><div class="col-lg-2 col-md-3 col-sm-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-danger" id="playerDenyInvitation" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>
-                                    </div>
-                                    <div id="pendingNotificationMessages" class="notificationMessages"></div>
-                                    <div id="captainNotificationMessages" class="notificationMessages"></div>-->
-                                    <div id="allNotificationMessages" class="notificationMessages"></div>
+                            <div id="notifications">
+                                <h2>Notifications</h2>
+                                <div class="notificationsDiv">
+                                    <!--<div id="notificationBtns" class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" id="playersNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Player <span class="badge badge-light" id="nPlayerNotifications"></span></button>
+                                        <button type="button" id="pendingNotificationButton" class="btn btn-info notificationPressed" onclick="changeBtnGroup(this.id)">Pending <span class="badge badge-light" id="nPendingNotifications"></span></button>
+                                        <button type="button" id="captainNotificationButton" class="btn btn-info notificationUnpressed" onclick="changeBtnGroup(this.id)">Captain<span class="badge badge-light" id="nCaptainNotifications"></span></button>
+                                        </div>-->
+                                        <div class="underneathDiv">
+                                            <!--<div id="playersNotificationMessages" class="notificationMessages">
+                                                <div class="notificationMessage" id="playerNotificationMessage"><div class="row"><div class="col-lg-10 col-md-9 col-sm-8 col-12"><div class="notificationTextDiv"><span class="notificationText"><a class="userLink" href="">Tommy Clare</a> invited you to join <a class="userLink" href="">Leprechauns</a> in <a class="userLink" href="">CoRec Intramural Broomball</a>!</span></div></div><div class="col-lg-2 col-md-3 col-sm-4 col-12"><div class="buttonFlexbox"><button class="notificationResponse btn btn-info" id="playerAcceptInvitation" onclick="playerAcceptInvitation(this.id)">ACCEPT</button><div class="d-block d-sm-none"><br></div><button class="notificationResponse btn btn-danger" id="playerDenyInvitation" onclick="playerDenyInvitation(this.id)">DENY</button></div></div></div></div>
+                                                </div>
+                                                <div id="pendingNotificationMessages" class="notificationMessages"></div>
+                                                <div id="captainNotificationMessages" class="notificationMessages"></div>-->
+                                                <div id="allNotificationMessages" class="notificationMessages"></div>
+                                        </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div id="upcomingGames">
-                            <h2 id="upcomingGamesHeader">Upcoming Games</h2>
+                            <div id="upcomingGames">
+                                <h2 id="upcomingGamesHeader">Upcoming Games</h2>
 
-                            <div class="accordion" id="gameAccordion"> </div> 
-                        </div>
+                                <div class="accordion" id="gameAccordion"> </div> 
+                            </div>
                     </div> 
                 </div>
             </div> 
         </div>
         <!--<div class="row"><div class="col-lg-10 offset-lg-2 col-12">
-        <div id="landingFooterUser">
+            <div id="landingFooterUser">
             <div class="footerEntry">Copyright 2019 &copy; Titanium</div>
             <div class="footerEntry">The Dragons</div>
             <div class="footerEntry">136 Debartolo Hall</div>
             <div class="footerEntry">Notre Dame, IN 46556</div>
             <div class="Email: pfische@nd.edu"></div>
-        </div>
-        </div></div>-->
+            </div>
+            </div></div>-->
     </body>
 </html>

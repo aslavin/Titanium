@@ -1,4 +1,5 @@
 var currentButton = 0;
+var searchLinkType = "./league.html?leagueId=";
 
 function changeBtnGroupSearch(id) { 
     var searchButtons = document.getElementById("searchBtns").children;
@@ -18,12 +19,15 @@ function changeBtnGroupSearch(id) {
 
     switch (currentButton) { 
         case 0:
+            searchLinkType = "./league.html?leagueId=";
             loadLeagues();
             break;
         case 1:
+            searchLinkType = "./team.html?teamId=";
             loadTeams();
             break;
         case 2:
+            searchLinkType = "./user.html?userId=";
             loadUsers();
             break;
     }
@@ -31,9 +35,6 @@ function changeBtnGroupSearch(id) {
 
 var currentButtons = ["Leagues","Teams","Players"]
 var searchResults = []; // things will be added with the form [LINK, NAME, TYPE]
-var searchResultComponents = ['<div class="searchResult"><a class="userLink" href="',
-'">',
-'</a></div>'];
 
 var searchResultComponents = [
 '<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="',
@@ -55,11 +56,11 @@ function loadLeagues() {
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
+        console.log(response);
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] +
-            "#" + searchResultComponents[2] + response[i]["level"].split(" ").join("<br>") + "<br>" + 
+            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] + searchLinkType + response[i]["league_id"] + searchResultComponents[2] + response[i]["level"].split(" ").join("<br>") + "<br>" + 
             response[i]["sport"] + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
@@ -83,9 +84,7 @@ function loadUsers() {
         var profilePictureURL;
         for (var i = 0; i < response.length; i++) {
             profilePictureURL = response[i]["profilePicExists"] ? "file:///Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/userPictures/" + response[i]["user_id"] : "./data/blankProfilePic";
-            console.log(profilePictureURL);
-            htmlString = searchResultComponents[0] + profilePictureURL + searchResultComponents[1] +
-            "#" + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  + searchResultComponents[3];
+            htmlString = searchResultComponents[0] + profilePictureURL + searchResultComponents[1] + searchLinkType + response[i]["user_id"] + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
@@ -104,9 +103,7 @@ function loadTeams() {
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] +
-            "#" + searchResultComponents[2] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +
-            " - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[3];
+            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] + searchLinkType + response[i]["team_id"] + searchResultComponents[2] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +" - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[3];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
