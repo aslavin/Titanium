@@ -50,7 +50,7 @@ function loadData() {
 		}
         response = JSON.parse(xhr.response);
         console.log(response);
-        teamMetaData = {'teamName': response["teamName"],'poolTime': readableTimeFromSQLDate(response["poolTime"]), 'poolLocation': response["poolLocation"], 'teamWins': response["teamWins"], 'teamLosses': response["teamLosses"], 'teamTies': response["teamTies"], 'teamRankInPool': response["teamRankInPool"], 'teamsInPool': response["teamsInPool"], 'malePlayers': response["malePlayers"], 'femalePlayers': response["femalePlayers"]};
+        teamMetaData = {'leagueName': response["leagueName"], 'leagueId': response["leagueId"], 'teamName': response["teamName"],'poolId': response["poolId"], 'poolTime': readableTimeFromSQLDate(response["poolTime"]), 'poolDay': response["poolDay"], 'poolLocation': response["poolLocation"], 'teamWins': response["teamWins"], 'teamLosses': response["teamLosses"], 'teamTies': response["teamTies"], 'teamRankInPool': response["teamRankInPool"], 'teamsInPool': response["teamsInPool"], 'malePlayers': response["malePlayers"], 'femalePlayers': response["femalePlayers"]};
         var schedule = [];
         var roster = [];
         console.log(response["schedule"])
@@ -191,6 +191,12 @@ function loadPage() {
     /* DONE: calculate other statistics */
     var scoreDifferential = 0;
     document.getElementById("winPercentage").innerHTML = (nWins + nLosses > 0) ? Math.round((nWins / (nWins + nLosses)) * 1000) / 10 + "%" : "TBD";
+
+    /* DONE: FILL IN BREADCRUMBS */
+    document.getElementById("leagueName").innerHTML = teamMetaData["leagueName"];
+    document.getElementById("leagueName").href = "./league.html?leagueId=" + teamMetaData["leagueId"];
+    document.getElementById("poolDescription").innerHTML = teamMetaData["poolDay"] + " " + teamMetaData["poolTime"];
+    document.getElementById("poolDescription").href = "./pool.html?poolId=" + teamMetaData["poolId"];
 
     /* DONE: grab data from teamData["schedule"] and load it into the page */
     var gameCards = document.getElementById("gameCards");

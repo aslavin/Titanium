@@ -62,7 +62,7 @@ class _pool_database:
     def get_pool(self, pool_id):
 
         self.db.query('''select Pools.league_id, Pools.pool_id, Pools.day as poolDay, cast(Pools.pool_time as char) as poolTime, 
-            Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation, 
+            Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation, Leagues.league_id as leagueId,
             Teams.team_id, Teams.name as team_name, Teams.wins, Teams.losses, Teams.ties
         from Pools, Teams, Leagues 
         where Pools.league_id = Leagues.league_id 
@@ -75,7 +75,7 @@ class _pool_database:
             return_list = [return_list]
         elif type(return_list ) is dict and not return_list: # league is empty, so just return metadata
             self.db.query('''select Pools.league_id, Pools.pool_id, Pools.day as poolDay, cast(Pools.pool_time as char) as poolTime, 
-                Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation
+                Leagues.level as leagueLevel, Leagues.sport as leagueSport, Leagues.location as leagueLocation, Leagues.league_id as leagueId
             from Pools, Leagues 
             where Pools.league_id = Leagues.league_id 
                 and Pools.pool_id = {}'''.format(pool_id))
@@ -84,7 +84,7 @@ class _pool_database:
             return return_dict
 
         first_entry = return_list[0]
-        return_dict = {'leagueLevel': first_entry['leagueLevel'], 'leagueSport': first_entry['leagueSport'], 'leagueLocation': first_entry['leagueLocation'], 'poolDay': first_entry['poolDay'], 'poolTime': first_entry['poolTime']}
+        return_dict = {'leagueLevel': first_entry['leagueLevel'], 'leagueSport': first_entry['leagueSport'], 'leagueLocation': first_entry['leagueLocation'], 'leagueId': first_entry['leagueId'], 'poolDay': first_entry['poolDay'], 'poolTime': first_entry['poolTime']}
 
         # for each team, apppend id, name, wins, losses, ties
         teams = [{'team_id': team['team_id'], 'team_name': team['team_name'], 'wins': team['wins'], 'losses': team['losses'], 'ties': team['ties']} for team in return_list]

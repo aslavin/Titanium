@@ -78,8 +78,8 @@ class _team_database:
         
         # get team metadata
         self.db.query('''select Teams.name as teamName, Teams.wins as teamWins, Teams.losses as teamLosses, Teams.ties as teamTies, Teams.capt_id,
-                cast(Pools.pool_time as char) as poolTime,
-                Leagues.location as poolLocation
+                cast(Pools.pool_time as char) as poolTime, Pools.day as poolDay, Pools.pool_id as poolId,
+                Leagues.location as poolLocation, concat(Leagues.level, " ", Leagues.sport) as leagueName, Leagues.league_id as leagueId
             from Teams, Pools, Leagues
             where Teams.pool_id = Pools.pool_id
                 and Pools.league_id = Leagues.league_id
