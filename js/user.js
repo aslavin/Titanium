@@ -87,7 +87,6 @@ function loadData() {
     variables as described above, EXACTLY. */
 
     var userId = window.localStorage.getItem("user_id");
-    console.log(userId);
     var admin = false;
 
     if (userId == null){
@@ -238,6 +237,20 @@ function changeExpandIcon(id) {
 function changeElementClass(element, from, to) { 
     element.classList.remove(from);
     element.classList.add(to);
+}
+
+
+function fileToUploadChosen() {
+    var userId = window.localStorage.getItem("user_id");
+    var xhr = new XMLHttpRequest();
+    var url = "http://127.0.0.1:51069/userPictures/" + userId;
+    xhr.open('PUT', url, false);
+    xhr.onload = function(e){
+        if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+        }
+        console.log(JSON.parse(xhr.response));
+    }
 }
 
 

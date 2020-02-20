@@ -23,8 +23,8 @@ var gameComponents = ['<div class="card ',
 '</div></strong></div></div></div></div></div>'];
 
 
-var rosterComponents = ['<tr><th scope="row" class="align-middle"><i class="fa ',
-'"></i></th><td class="align-middle"><a class="userLink" href="',
+var rosterComponents = ['<tr><th scope="row" class="align-middle">',
+'</th><td class="align-middle"><a class="userLink" href="',
 '">',
 '</a></td><td class="align-middle">',
 '</td></tr>']
@@ -51,9 +51,9 @@ function loadData() {
         response = JSON.parse(xhr.response);
         console.log(response);
         teamMetaData = {'teamName': response["teamName"],'poolTime': readableTimeFromSQLDate(response["poolTime"]), 'poolLocation': response["poolLocation"], 'teamWins': response["teamWins"], 'teamLosses': response["teamLosses"], 'teamTies': response["teamTies"], 'teamRankInPool': response["teamRankInPool"], 'teamsInPool': response["teamsInPool"], 'malePlayers': response["malePlayers"], 'femalePlayers': response["femalePlayers"]};
+        console.log(teamMetaData);
         var schedule = [];
         var roster = [];
-        console.log(response["schedule"])
         for (var game of response["schedule"]) {
             schedule.push([readableDateFromSQLDate(game["date"]), "./team.html?teamId="+game["opponentId"], game["opponentName"], game["yourScore"], game["opponentScore"]]);
         }
@@ -181,7 +181,7 @@ function loadPage() {
     document.getElementById("nWins").innerHTML = nWins;
     document.getElementById("nLosses").innerHTML = nLosses;
     document.getElementById("nTies").innerHTML = nTies;
-    document.getElementById("poolTime").innerHTML = teamMetaData["poolTime"];
+    document.getElementById("teamName").innerHTML = teamMetaData["teamName"];
     document.getElementById("poolLocation").innerHTML = teamMetaData["poolLocation"];
     document.getElementById("poolRank").innerHTML = teamMetaData["teamRankInPool"];
     document.getElementById("teamsInPool").innerHTML = teamMetaData["teamsInPool"];
@@ -228,7 +228,7 @@ function loadPage() {
     /* DONE: grab data from teamData["roster"] and load it into the page */ 
     innerHTMLString = "<tbody>";
     for (var j = 0; j < teamData["roster"].length; j++) { 
-        innerHTMLString += rosterComponents[0] + ((teamData["roster"][j][0]) ? "fa-star" : "fa-user-o") + rosterComponents[1] + teamData["roster"][j][1] + rosterComponents[2] + teamData["roster"][j][2] + " " + teamData["roster"][j][3] + " (" + teamData["roster"][j][4] + ")" + rosterComponents[3] + teamData["roster"][j][5];
+        innerHTMLString += rosterComponents[0] + ((teamData["roster"][j][0]) ? "<i class=\"fa fa-star\"></i>" : "") + rosterComponents[1] + teamData["roster"][j][1] + rosterComponents[2] + teamData["roster"][j][2] + " " + teamData["roster"][j][3] + " (" + teamData["roster"][j][4] + ")" + rosterComponents[3] + ((teamData["roster"][j][5] == "Male") ? "<i class=\"fa fa-male\"></i>" : "<i class=\"fa fa-female\"></i>") + rosterComponents[4];
     }
     innerHTMLString += "</tbody>";
     document.getElementById("teamRosterTable").innerHTML = innerHTMLString;

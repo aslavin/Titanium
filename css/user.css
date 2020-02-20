@@ -24,6 +24,10 @@
     height: 100px;
 }
 
+.uploadInstruction {
+    width: 100px; 
+    z-index: 5;
+}
 
 
 .btn-secondary:hover { 
@@ -245,3 +249,16 @@ input:checked + .slider:before {
 
 
 /* end slider css */
+
+
+/* begin image upload css */
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload { 
+    cursor: pointer;
+}
+
+/* end image upload css */

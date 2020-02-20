@@ -51,7 +51,12 @@
                             Welcome, <br> <span id="firstName"></span>!
                         </div>
                         <div id="middleFlexbox">
-                            <img id="profilePicture">
+                            <label class="custom-file-upload">
+                                <input onchange="fileToUploadChosen()" accept="image/*" type="file"/>
+                                <img id="profilePicture">
+                                <div id="uploadInstruction">
+                                </div>
+                            </label>
                             <button type="button" class="btn btn-sm sidebarButton btn-gold">
                                 <i class="fa fa-cog"></i>
                                 Settings

@@ -49,6 +49,7 @@ sportdb = _sport_database(db)
 pooldb = _pool_database(db)
 gamedb = _game_database(db)
 userdb = _user_database(db)
+picturedb = _picture_database(db)
 
 # load all data
 dispatcher = cherrypy.dispatch.RoutesDispatcher()
@@ -68,6 +69,7 @@ sportsController = sportsController(sportdb)
 poolsController = poolsController(pooldb)
 gamesController = gamesController(gamedb)
 searchController = searchController(leaguedb, teamdb, userdb)
+#pictureController = pictureController(userpicturesdb)
 
 # generic handlers for setting/deleting all users
 dispatcher.connect('getUsers', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
@@ -88,6 +90,10 @@ dispatcher.connect('postUserTeam', '/users/:user_id/team/:team_id', controller=u
 dispatcher.connect('getNotifications', '/users/notification/:user_id', controller=usersController, action='GET_USER_NOTIFICATIONS', conditions=dict(method=['GET']))
 
 dispatcher.connect('sendNotification', '/users/notification/', controller=usersController, action='POST_USER_NOTIFICATIONS', conditions=dict(method=['POST']))
+
+# specific pictures handlers
+#dispatcher.connect('putUserPicture', '/pictures/user/:user_id', controller=pictureController, action='PUT_USER_PICTURE', conditions=dict(method=['PUT']))
+#dispatcher.connect('putTeamPicture', '/pictures/team/:team_id', controller=pictureController, action='PUT_TEAM_PICTURE', conditions=dict(method=['PUT']))
 
 # generic league handlers
 dispatcher.connect('getLeagues', '/leagues/', controller=leaguesController, action='GET_LEAGUES', conditions=dict(method=['GET']))
