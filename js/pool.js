@@ -32,7 +32,7 @@ function loadData() {
 
         response = JSON.parse(xhr.response);
 
-        leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': readableTimeFromSQLDate(response['poolTime'])} 
+        leagueAndPoolInfo = {'leagueLevel': response['leagueLevel'], 'leagueSport': response['leagueSport'], 'leagueId': response['leagueId'], 'leagueLocation': response['leagueLocation'], 'poolDay': response['poolDay'], 'poolTime': readableTimeFromSQLDate(response['poolTime'])} 
         // append team id, name, wins, losss, ties for each team in pool
         for (team of response['teams']) {
             poolData.push(["./team.html?teamId="+team["team_id"], team['team_name'], team['wins'], team['losses'], team['ties']]);
@@ -46,6 +46,7 @@ function loadData() {
     /* DONE: FILL OUT LEAGUE AND POOL METADATA */
 
     document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
+    document.getElementById("leagueName").href = "./league.html?leagueId=" + leagueAndPoolInfo["leagueId"];
     document.getElementById("poolTime").innerHTML = leagueAndPoolInfo["poolTime"];
     document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"];
 
