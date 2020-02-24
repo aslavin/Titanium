@@ -17,6 +17,7 @@ from _team_database import _team_database
 from _sport_database import _sport_database
 from _pool_database import _pool_database
 from _game_database import _game_database
+from _picture_database import _picture_database
 from users import usersController
 from leagues import leaguesController
 from teams import teamsController
@@ -24,6 +25,7 @@ from sports import sportsController
 from pools import poolsController
 from games import gamesController
 from search import searchController
+from pictures import picturesController
 
 load_dotenv()
 DB_PASSWORD = os.getenv("DB_PASSWORD")
@@ -69,7 +71,7 @@ sportsController = sportsController(sportdb)
 poolsController = poolsController(pooldb)
 gamesController = gamesController(gamedb)
 searchController = searchController(leaguedb, teamdb, userdb)
-#pictureController = pictureController(userpicturesdb)
+picturesController = picturesController(picturedb)
 
 # generic handlers for setting/deleting all users
 dispatcher.connect('getUsers', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
@@ -92,7 +94,7 @@ dispatcher.connect('getNotifications', '/users/notification/:user_id', controlle
 dispatcher.connect('sendNotification', '/users/notification/', controller=usersController, action='POST_USER_NOTIFICATIONS', conditions=dict(method=['POST']))
 
 # specific pictures handlers
-#dispatcher.connect('putUserPicture', '/pictures/user/:user_id', controller=pictureController, action='PUT_USER_PICTURE', conditions=dict(method=['PUT']))
+dispatcher.connect('putUserPicture', '/pictures/user/:user_id', controller=picturesController, action='PUT_USER_PICTURE', conditions=dict(method=['PUT']))
 #dispatcher.connect('putTeamPicture', '/pictures/team/:team_id', controller=pictureController, action='PUT_TEAM_PICTURE', conditions=dict(method=['PUT']))
 
 # generic league handlers
@@ -154,6 +156,7 @@ dispatcher.connect('sports_all_op', '/sports/', controller=optionsController, ac
 dispatcher.connect('sports_key_op', '/sports/:sport_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('pools_key_op', '/pools/:pool_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 dispatcher.connect('user_validate_all_op', '/users/validate/', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
+dispatcher.connect('pictures_key_op', '/pictures/user/:user_id', controller=optionsController, action='OPTIONS', conditions=dict(method=['OPTIONS']))
 
 cherrypy.config.update(conf) #tells library what the configuration is
 

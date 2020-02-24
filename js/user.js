@@ -149,7 +149,7 @@ function loadData() {
             gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "./league.html?leagueId="+response["gameNotifications"][i]["league_id"], response["gameNotifications"][i]["league"], "./team.html?teamId="+response["gameNotifications"][i]["team1_id"], response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "./team.html?teamId="+response["gameNotifications"][i]["team1_id"],  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "./team.html?teamId="+response["gameNotifications"][i]["team2_id"], response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 
-        document.getElementById("profilePicture").src = "./data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
+        document.getElementById("profilePicture").src = "/Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
         document.getElementById("firstName").innerHTML = response["first_name"];
 
 		loadPage();
@@ -240,18 +240,44 @@ function changeElementClass(element, from, to) {
 }
 
 
-function fileToUploadChosen() {
-    var userId = window.localStorage.getItem("user_id");
-    var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:51069/userPictures/" + userId;
-    xhr.open('PUT', url, false);
-    xhr.onload = function(e){
-        if (xhr.readyState != 4){
-            console.error(xhr.statusText);
-        }
-        console.log(JSON.parse(xhr.response));
-    }
+function fileToUploadChosen(filesArray) {
+    new FileUpload(filesArray[0]);
 }
+
+function FileUpload(file) {
+  const reader = new FileReader();
+  const xhr = new XMLHttpRequest();
+  this.xhr = xhr;
+  const self = this;
+  document.getElementById("progressBarDiv").style.display = "";
+
+  this.xhr.upload.addEventListener("progress", function(e) {
+        if (e.lengthComputable) {
+          const percentage = Math.round((e.loaded * 100) / e.total);
+          document.getElementById("progressBar").style.width = percentage + "%"; 
+        }
+  }, false);
+
+  xhr.upload.addEventListener("load", function(e){
+    document.getElementById("progressBarDiv").style.display = "none";
+  }, false);
+  xhr.open("PUT", "http://127.0.0.1:51069/pictures/user/" + window.localStorage.getItem("user_id"));
+  xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+
+  xhr.onload = function(e){
+      if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+      }
+      location.reload(); // refresh the page to show an accurate profile pic
+  }
+
+
+  reader.onload = function(evt) {
+    xhr.send(evt.target.result);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
 
 
 
