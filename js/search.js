@@ -1,5 +1,6 @@
 var currentButton = 0;
 var searchLinkType = "./league.html?leagueId=";
+var currentButtons = ["Leagues","Teams","Players"]
 
 function changeBtnGroupSearch(id) { 
     var searchButtons = document.getElementById("searchBtns").children;
@@ -33,11 +34,9 @@ function changeBtnGroupSearch(id) {
     }
 }
 
-var currentButtons = ["Leagues","Teams","Players"]
-var searchResults = []; // things will be added with the form [LINK, NAME, TYPE]
-
 var searchResultComponents = [
-'<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="',
+'<div class="col-md-4 col-6 sportsImageContainer" id="sportsImageContainer',
+'"><img class="sportsImage" src="',
 '.jpg"><a href="',
 '"><div class="sportsImageTextContainer"><p class="sportsImageText">',
 '</p></div></a></div>'
@@ -60,8 +59,7 @@ function loadLeagues() {
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] + searchLinkType + response[i]["league_id"] + searchResultComponents[2] + response[i]["level"].split(" ").join("<br>") + "<br>" + 
-            response[i]["sport"] + searchResultComponents[3];
+            htmlString = searchResultComponents[0] + response[i]["league_id"] +searchResultComponents[1] + "./data/" + response[i]["sport"] + searchResultComponents[2] + searchLinkType + response[i]["league_id"] + searchResultComponents[3] + response[i]["level"].split(" ").join("<br>") + "<br>" + response[i]["sport"] + searchResultComponents[4];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
@@ -84,7 +82,7 @@ function loadUsers() {
         var profilePictureURL;
         for (var i = 0; i < response.length; i++) {
             profilePictureURL = response[i]["profilePicExists"] ? "file:///Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/userPictures/" + response[i]["user_id"] : "./data/blankProfilePic";
-            htmlString = searchResultComponents[0] + profilePictureURL + searchResultComponents[1] + searchLinkType + response[i]["user_id"] + searchResultComponents[2] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  + searchResultComponents[3];
+            htmlString = searchResultComponents[0] + response[i]["user_id"] + searchResultComponents[1] + profilePictureURL + searchResultComponents[2] + searchLinkType + response[i]["user_id"] + searchResultComponents[3] + response[i]["first_name"] + "<br>" + response[i]["last_name"]  + searchResultComponents[4];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
@@ -100,10 +98,11 @@ function loadTeams() {
             console.error(xhr.statusText);
         }
         var response = JSON.parse(xhr.response);
+        console.log(response);
         currentSearchResults = response;
         var htmlString;
         for (var i = 0; i < response.length; i++) { 
-            htmlString = searchResultComponents[0] + "./data/" + response[i]["sport"] + searchResultComponents[1] + searchLinkType + response[i]["team_id"] + searchResultComponents[2] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +" - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[3];
+            htmlString = searchResultComponents[0] + response[i]["team_id"] + searchResultComponents[1] + "./data/" + response[i]["sport"] + searchResultComponents[2] + searchLinkType + response[i]["team_id"] + searchResultComponents[3] + response[i]["team_name"] + "<br>(" + response[i]["wins"] +" - " + response[i]["losses"] + " - " + response[i]["ties"] + ")" + searchResultComponents[4];
             document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString)
         } 
     }
@@ -111,75 +110,65 @@ function loadTeams() {
 }
 
 
-
-function search() {
-    searchResults = []; // clear search results
-    var searchInput = document.getElementById("searchBox").value;
+function narrowSearch(searchValue) {
     switch (currentButton) { 
         case 0:
-            // search leagues
-            var xhr = new XMLHttpRequest();
-            var url = 'http://127.0.0.1:51069/search/leagues/';
-            xhr.open('POST', url, false);
-            xhr.onload = function(e) {
-                if (xhr.readyState != 4){
-                    console.error(xhr.statusText);
-                }
-                var response = JSON.parse(xhr.response);
-                for (var i = 0; i < response.length; i++) {
-                    searchResults.push(["", response[i][0] + " " + response[i][1], "League"]);
-                }
-                displayResults();
+            for (var i = 0; i < currentSearchResults.length; i++) { 
+                if (!narrowSearchHelper(currentSearchResults[i], searchValue)) document.getElementById("sportsImageContainer" + currentSearchResults[i]["league_id"]).style.display = "none";
+                else document.getElementById("sportsImageContainer" + currentSearchResults[i]["league_id"]).style.display = "flex";
             }
-            xhr.send(JSON.stringify({"query": searchInput}));
             break;
         case 1:
-            // search teams
-            var xhr = new XMLHttpRequest();
-            var url = 'http://127.0.0.1:51069/search/teams/';
-            xhr.open('POST', url, false);
-            xhr.onload = function(e) {
-                if (xhr.readyState != 4){
-                    console.error(xhr.statusText);
-                }
-                var response = JSON.parse(xhr.response);
-                console.log(response);
-                for (var i = 0; i < response.length; i++) {
-                    searchResults.push(["", response[i][0], "Team"]);
-                }
-                displayResults();
+            for (var i = 0; i < currentSearchResults.length; i++) { 
+                if (!narrowSearchHelper(currentSearchResults[i], searchValue)) document.getElementById("sportsImageContainer" + currentSearchResults[i]["team_id"]).style.display = "none";
+                else document.getElementById("sportsImageContainer" + currentSearchResults[i]["team_id"]).style.display = "flex";
             }
-            xhr.send(JSON.stringify({"query": searchInput}));
             break;
-        case 2: 
-            // search players
-            var xhr = new XMLHttpRequest();
-            var url = 'http://127.0.0.1:51069/search/users/';
-            xhr.open('POST', url, false);
-            xhr.onload = function(e) {
-                if (xhr.readyState != 4){
-                    console.error(xhr.statusText);
-                }
-                var response = JSON.parse(xhr.response);
-                for (var i = 0; i < response.length; i++) {
-                    searchResults.push(["", response[i][4] + " " + response[i][5] + " (" + response[i][1] + ")", "Player"]);
-                }
-                displayResults();
+        case 2:
+            for (var i = 0; i < currentSearchResults.length; i++) { 
+                if (!narrowSearchHelper(currentSearchResults[i], searchValue)) document.getElementById("sportsImageContainer" + currentSearchResults[i]["user_id"]).style.display = "none";
+                else document.getElementById("sportsImageContainer" + currentSearchResults[i]["user_id"]).style.display = "flex";
             }
-            xhr.send(JSON.stringify({"query": searchInput}));
+            break;
+        
+    }   
+}
+/* new approach: split search query, make it uppercase. Make sure every value in that split matches one of the elements in the league response */
+function narrowSearchHelper(someEntitySet, searchValue) { 
+    var uppercaseSearch = searchValue.toUpperCase();
+    var splitUppercaseSearch = uppercaseSearch.split(/ +/); // split on multiple spaces    
+    var uppercaseWordsToMatch = determineWordsToMatch(someEntitySet)
+    for (var i = 0; i < splitUppercaseSearch.length; i++) { 
+        var match = false;
+        for (var j = 0; j < uppercaseWordsToMatch.length; j++) { 
+            if (uppercaseWordsToMatch[j].startsWith(splitUppercaseSearch[i])) { 
+                match = true;
+                break;
+            }
+        }
+        if (!match) return false;
+    }
+    return true;
+}
+
+function determineWordsToMatch(someEntitySet) {
+    switch (currentButton) { 
+        case 0: // league
+            return [someEntitySet["sport"].toUpperCase(), someEntitySet["level"].split(/ +/)[0].toUpperCase(), someEntitySet["level"].split(/ +/)[1].toUpperCase()];  
+        case 1: // team 
+            return someEntitySet["team_name"].toUpperCase().split(/ +/).concat(someEntitySet["sport"].toUpperCase());
+        case 2: // player
+            return [someEntitySet["first_name"].toUpperCase(), someEntitySet["last_name"].toUpperCase()];
+        default:
+            console.error("search type not recognized");
             break;
     }
 }
 
-function displayResults() {
-    document.getElementById("nResults").innerHTML = searchResults.length;
-    document.getElementById("searchScope").innerHTML = currentButtons[currentButton];
-    document.getElementById("originalSearch").innerHTML = document.getElementById("searchBox").value;
-    document.getElementById("resultsBox").style.display = "block";
+function narrowTeam(someTeam, searchValue) { 
+        
+}
 
-    document.getElementById("searchResults").innerHTML = "";
-    for (var i = 0; i < searchResults.length; i++) {
-        htmlString = searchResultComponents[0] + searchResults[i][0] + searchResultComponents[1] + searchResults[i][1] + searchResultComponents[2];
-        document.getElementById("searchResults").insertAdjacentHTML("beforeend", htmlString);
-    }
+function narrowPlayer(somePlayer, searchValue) { 
+    
 }

@@ -5,12 +5,7 @@ var leagueData = []
 var leagueMetadata = [];
 //var leagueData = [["","Sun","7:00p", "1","5"],["","Sun","8:00p", "3","5"],["","Mon","7:00p", "0","5"],["","Tues","8:00p", "0","5"],["","Wed","2:30p", "0","5"]];
 
-var leagueLeagueComponents = ['<div class="col-6 col-md-4 col-lg-3 leaguePoolCol"><a class="imageLink" href="',
-    '"><div class="leaguePool">',
-    '<span class="leagueDescription">',
-    '</span><span class="leagueDescription">',
-    '</span></div></a></div>'
-];
+var leagueFacts = {};
 
 function loadData() {
 	
@@ -33,9 +28,11 @@ function loadData() {
 		if (xhr.readyState != 4) { // failed
 			console.error(xhr.statusText);
 		}
-        response = JSON.parse(xhr.response);
+		response = JSON.parse(xhr.response);
+        leagueFacts["sport"] = response["sport"];
+        leagueFacts["level"] = response["level"];
         console.log(response);
-        leagueMetadata = {"leagueId": response["leagueId"], "leagueName": response["level"] + " " + response["sport"], "leagueLocation": response["location"]};
+        console.log(leagueFacts["sport"]);
 		for (pool of response['pools']) {
             availableSpots = response['max_teams_in_pool'] - pool['num_teams'].length;
             leagueData.push(["./pool.html?poolId="+pool["pool_id"], pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
@@ -47,6 +44,13 @@ function loadData() {
 
 	xhr.send();
 }
+
+var leagueLeagueComponents = [
+'<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="data/',
+'.jpg"><a href="',
+'"><div class="sportsImageTextContainer"><p class="sportsImageText">',
+'</p></div></a></div>'
+]
 
 function loadPage() {
 
@@ -71,6 +75,7 @@ function loadPage() {
         nTeams += parseInt(leagueData[a][4]);
     }
 
+    document.getElementById("leagueName").innerHTML = leagueFacts["level"] + " " + leagueFacts["sport"];
     document.getElementById("poolsAvailable").innerHTML = nPoolsAvailable;
     document.getElementById("teamCapacity").innerHTML = nTeams;
     document.getElementById("teamsAvailable").innerHTML = nTeamsAvailable; 
@@ -81,14 +86,11 @@ function loadPage() {
     
         var fullMessage = (leagueData[i][3] == 0) ? '<div class="leagueFullBanner">FULL</div>': '';
 
-        document.getElementById("leaguePools").innerHTML += leagueLeagueComponents[0] + leagueData[i][0] + leagueLeagueComponents[1] + fullMessage + leagueLeagueComponents[2] + leagueData[i][1] + leagueLeagueComponents[3] + leagueData[i][2] + leagueLeagueComponents[4];
+        document.getElementById("sportsImageCollection").innerHTML += leagueLeagueComponents[0] + leagueFacts["sport"] + leagueLeagueComponents[1] + leagueData[i][0] + leagueLeagueComponents[2] + leagueData[i][1] + "<br>" + readableTimeFromSQLDate(leagueData[i][2]) + leagueLeagueComponents[3];
     }
-
-    var nPoolsAvailable = document.getElementById("poolsAvailable").innerHTML;
-    if (nPoolsAvailable == 0) document.getElementById("noMoreSpaceAlert").style.display = "block";
   
-    /* DONE: COMPUTE FOOTER MARGIN */
+    /* DONE: COMPUTE FOOTER MARGIN 
 
-    computeFooterMargin();
- 
+    computeFooterMargin(); */
+
 }

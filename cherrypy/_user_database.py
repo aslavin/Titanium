@@ -265,7 +265,7 @@ class _user_database:
         pass_hash.update(password.encode(encoding='ascii'))
         pass_hash = pass_hash.digest().hex()
         self.db.query('''select user_id, pass_hash, is_admin
-            from Users where email = \'{}\''''.format(email))
+            from Users where email = \'{}\' '''.format(email))
         r = self.db.store_result()
         result = util.get_dict_from_query(r.fetch_row(maxrows=0, how=1))
 
@@ -275,3 +275,4 @@ class _user_database:
             return {"status" :"success", "user_id": result['user_id'], "is_admin": result['is_admin']}
         else:
             return {"status":"failure", "reason": "unknown"}
+

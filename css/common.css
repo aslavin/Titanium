@@ -322,3 +322,51 @@ button:focus {
     color: #DAA520;
     background-color: white;
 }
+
+.sportsImageContainer {
+    text-align: center;
+    position: relative;
+    margin-bottom: 25px;
+    z-index: 3;
+}
+
+.sportsImageTextContainer {
+    position: absolute;
+    width: 90%;
+    margin-left: 5%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+#sportsImageCollection { 
+    width: 80%;
+    margin-top: 25px;
+    margin-left: 10%;
+}
+
+.sportsImageText {
+    text-align: center;
+    color: #006db0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.sportsImage {
+    width: 100%;
+    z-index: 3;
+    opacity: 0.2;
+}
+
+.sportsImageLink {
+    z-index: 5;
+}
+
+
+img { 
+    border-radius: 50%;
+}

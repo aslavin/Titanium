@@ -87,7 +87,6 @@ function loadData() {
     variables as described above, EXACTLY. */
 
     var userId = window.localStorage.getItem("user_id");
-    console.log(userId);
     var admin = false;
 
     if (userId == null){
@@ -150,7 +149,7 @@ function loadData() {
             gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "./league.html?leagueId="+response["gameNotifications"][i]["league_id"], response["gameNotifications"][i]["league"], "./team.html?teamId="+response["gameNotifications"][i]["team1_id"], response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "./team.html?teamId="+response["gameNotifications"][i]["team1_id"],  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "./team.html?teamId="+response["gameNotifications"][i]["team2_id"], response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 
-        document.getElementById("profilePicture").src = "./data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
+        document.getElementById("profilePicture").src = "/Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
         document.getElementById("firstName").innerHTML = response["first_name"];
 
 		loadPage();
@@ -241,6 +240,44 @@ function changeElementClass(element, from, to) {
 }
 
 
+function fileToUploadChosen(filesArray) {
+    new FileUpload(filesArray[0]);
+}
+
+function FileUpload(file) {
+  const reader = new FileReader();
+  const xhr = new XMLHttpRequest();
+  this.xhr = xhr;
+  const self = this;
+  document.getElementById("progressBarDiv").style.display = "flex";
+
+  this.xhr.upload.addEventListener("progress", function(e) {
+        if (e.lengthComputable) {
+          const percentage = Math.round((e.loaded * 100) / e.total);
+          document.getElementById("progressBar").style.width = percentage + "%"; 
+        }
+  }, false);
+
+  xhr.upload.addEventListener("load", function(e){}, false);
+  xhr.open("PUT", "http://127.0.0.1:51069/pictures/user/" + window.localStorage.getItem("user_id"));
+  xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+
+  xhr.onload = function(e){
+      if (xhr.readyState != 4){
+            console.error(xhr.statusText);
+      }
+      location.reload(); // refresh the page to show an accurate profile pic
+  }
+
+
+  reader.onload = function(evt) {
+    xhr.send(evt.target.result);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+
+
 
 /* MOSTLY DONE: HELPER FUNCTIONS FOR ACCEPTING, DENYING, DISMISSING NOTIFICATIONS */
 
@@ -301,26 +338,3 @@ function dismissPendingInvitation(id) {
         pendingNotifications.style.display = "none";
     } else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none"; 
 }
-
-
-/*function changeBtnGroup(id) { 
-    var notificationButtons = document.getElementById("notificationBtns").children;
-    for (var i = 0; i < notificationButtons.length; i++) {   
-        if (notificationButtons[i].id == id) { 
-            notificationButtons[i].classList.remove("notificationUnpressed");
-            notificationButtons[i].classList.add("notificationPressed");
-        } else { 
-             notificationButtons[i].classList.remove("notificationPressed");
-            notificationButtons[i].classList.add("notificationUnpressed");    
-        }   
-    }   
-
-    var notificationMessages = document.getElementsByClassName("notificationMessages");
-    for (var j = 0; j < notificationMessages.length; j++) {
-        notificationMessages[j].style.display = "none"; 
-    }
-
-    var buttonSubstr = id.substring(0, 7); 
-    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
-}*/
-
