@@ -149,7 +149,7 @@ function loadData() {
             gameNotifications.push([readableDateFromSQLDate(response["gameNotifications"][i]["date"]),  "./league.html?leagueId="+response["gameNotifications"][i]["league_id"], response["gameNotifications"][i]["league"], "./team.html?teamId="+response["gameNotifications"][i]["team1_id"], response["gameNotifications"][i]["team1Name"], response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"],  response["gameNotifications"][i]["team1Ties"], readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), readableTimeFromSQLDate(response["gameNotifications"][i]["time"]), "./team.html?teamId="+response["gameNotifications"][i]["team1_id"],  response["gameNotifications"][i]["team1Name"],  response["gameNotifications"][i]["team1Wins"], response["gameNotifications"][i]["team1Losses"], response["gameNotifications"][i]["team1Ties"], "./team.html?teamId="+response["gameNotifications"][i]["team2_id"], response["gameNotifications"][i]["team2Name"], response["gameNotifications"][i]["team2Wins"], response["gameNotifications"][i]["team2Losses"], response["gameNotifications"][i]["team2Ties"], response["gameNotifications"][i]["location"]]);
         }
 
-        document.getElementById("profilePicture").src = "/Users/tommyclare/Documents/Class/SoftwareEngineering/Titanium/data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
+        document.getElementById("profilePicture").src = "./data/" + ((response["profilePicExists"]) ?  "userPictures/" + userId : "blankProfilePic") +  ".jpg" ;
         document.getElementById("firstName").innerHTML = response["first_name"];
 
 		loadPage();
