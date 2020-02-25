@@ -100,7 +100,7 @@ class _team_database:
             if len(users_on_team) == 0:
                 return_dict.update({'roster': []})
             else:
-                return_dict.update({"roster": [users_on_team["user_id"]]})
+                return_dict.update({"roster": [users_on_team]})
         else: # returned multiple items
             return_dict.update({"roster": users_on_team})
         return_dict["malePlayers"] = sum([1 for player in return_dict["roster"] if player["gender"] == "Male"])
