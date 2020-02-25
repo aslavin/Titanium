@@ -2,6 +2,7 @@
 // POOL LINK - POOL DAY - POOL TIME - POOL # TEAM SPOTS AVAILABLE - POOL TEAM CAPACITY. 
 // Example is below
 var leagueData = []
+var leagueMetadata = [];
 //var leagueData = [["","Sun","7:00p", "1","5"],["","Sun","8:00p", "3","5"],["","Mon","7:00p", "0","5"],["","Tues","8:00p", "0","5"],["","Wed","2:30p", "0","5"]];
 
 var leagueLeagueComponents = ['<div class="col-6 col-md-4 col-lg-3 leaguePoolCol"><a class="imageLink" href="',
@@ -32,7 +33,9 @@ function loadData() {
 		if (xhr.readyState != 4) { // failed
 			console.error(xhr.statusText);
 		}
-		response = JSON.parse(xhr.response);
+        response = JSON.parse(xhr.response);
+        console.log(response);
+        leagueMetadata = {"leagueId": response["leagueId"], "leagueName": response["level"] + " " + response["sport"], "leagueLocation": response["location"]};
 		for (pool of response['pools']) {
             availableSpots = response['max_teams_in_pool'] - pool['num_teams'].length;
             leagueData.push(["./pool.html?poolId="+pool["pool_id"], pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
@@ -46,6 +49,13 @@ function loadData() {
 }
 
 function loadPage() {
+
+    /* DONE: SET LEAGUE TITLE */
+
+    document.getElementById("leagueName").innerHTML = leagueMetadata["leagueName"];
+    document.getElementById("gameLocation").innerHTML = leagueMetadata["leagueLocation"];
+
+
    /* DONE: SET LEAGUE STATISTICS */
     
     document.getElementById("totalPools").innerHTML = leagueData.length;

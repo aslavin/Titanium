@@ -67,21 +67,28 @@ class _league_database:
     
     # get a specific league by id
     def get_league(self, league_id):        
-        self.db.query('''select Leagues.*, Pools.pool_id, Pools.day, cast(Pools.pool_time as char) as time, Teams_In_Pools.num_teams
-            from Leagues, Pools, (select Teams.pool_id, count(*) as num_teams from Teams group by Teams.pool_id) as Teams_In_Pools
-            where Leagues.league_id = {}
-            and Pools.league_id = {}
-            and Pools.pool_id = Teams_In_Pools.pool_id'''.format(league_id, league_id))
-        
-        return_list = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
-        if type(return_list) is dict:
-            return_list = [return_list]
-        pool_list = [{'pool_id': pool['pool_id'], 'day': pool['day'], 'time': pool['time'], 'num_teams': pool['num_teams']} for pool in return_list]
-        return_dict = return_list[0]
-        for key in ['pool_id', 'day', 'time', 'num_teams']:
-            del return_dict[key]
+
+        # get leagues metadata
+        self.db.query('''select Leagues.*
+            from Leagues
+            where Leagues.league_id = {}'''.format(league_id))
+
+        return_dict = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
         return_dict['start_time'] = return_dict['start_time'].strftime("%m/%d/%Y")
         return_dict['end_time'] = return_dict['end_time'].strftime("%m/%d/%Y")
+
+        # get data for pools in league
+        self.db.query('''select Pools.pool_id, Pools.day, cast(Pools.pool_time as char) as time, Teams_In_Pools.num_teams
+            from Pools, (select Teams.pool_id, count(*) as num_teams from Teams group by Teams.pool_id) as Teams_In_Pools
+            where Pools.league_id = {}
+            and Pools.pool_id = Teams_In_Pools.pool_id'''.format(league_id, league_id))
+        
+        pool_list = util.get_dict_from_query(self.db.store_result().fetch_row(maxrows=0, how=1))
+        if type(pool_list) is dict and pool_list:
+            pool_list = [pool_list]
+        elif type(pool_list) is dict and not pool_list:
+            pool_list = []
+
         return_dict['pools'] = pool_list
 
         return return_dict
