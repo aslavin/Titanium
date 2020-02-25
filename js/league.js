@@ -2,7 +2,6 @@
 // POOL LINK - POOL DAY - POOL TIME - POOL # TEAM SPOTS AVAILABLE - POOL TEAM CAPACITY. 
 // Example is below
 var leagueData = []
-var leagueMetadata = [];
 //var leagueData = [["","Sun","7:00p", "1","5"],["","Sun","8:00p", "3","5"],["","Mon","7:00p", "0","5"],["","Tues","8:00p", "0","5"],["","Wed","2:30p", "0","5"]];
 
 var leagueFacts = {};
@@ -31,6 +30,7 @@ function loadData() {
 		response = JSON.parse(xhr.response);
         leagueFacts["sport"] = response["sport"];
         leagueFacts["level"] = response["level"];
+        leagueFacts["location"] = response["location"]
         console.log(response);
         console.log(leagueFacts["sport"]);
 		for (pool of response['pools']) {
@@ -56,8 +56,8 @@ function loadPage() {
 
     /* DONE: SET LEAGUE TITLE */
 
-    document.getElementById("leagueName").innerHTML = leagueMetadata["leagueName"];
-    document.getElementById("gameLocation").innerHTML = leagueMetadata["leagueLocation"];
+    document.getElementById("leagueName").innerHTML = leagueFacts["level"] + leagueFacts["sport"];
+    //document.getElementById("leagueLocation").innerHTML = leagueData["location"];
 
 
    /* DONE: SET LEAGUE STATISTICS */
