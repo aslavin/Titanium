@@ -5,14 +5,10 @@
 
 ///var leagueAndPoolInfo = {'leagueLevel': 'CoRec Intramural', 'leagueSport': 'Broomball', 'leagueLocation': 'Compton Family Ice Arena', 'poolDay': 'Wednesday', 'poolTime': '6:00pm'} 
 
-
 function loadData() {
     /* EXECUTE TODO items here; connect to backend, manipulate poolData variable as above.
         
     ALSO TODO:  set innerHTML of #poolCapacity, set innerHTML of #playoffEligible */
-
-    var poolData = [];
-    var leagueAndPoolInfo = [];
 
     var urlParams = new URLSearchParams(window.location.search);
 
@@ -38,21 +34,23 @@ function loadData() {
             poolData.push(["./team.html?teamId="+team["team_id"], team['team_name'], team['wins'], team['losses'], team['ties']]);
         }
 
+        loadPage();
+
     }
     xhr.send();
 
-    document.getElementById("teamsRegistered").innerHTML = poolData.length;
+    /*document.getElementById("teamsRegistered").innerHTML = poolData.length;*/
 
     /* DONE: FILL OUT LEAGUE AND POOL METADATA */
 
-    document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
+    /*document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
     document.getElementById("leagueName").href = "./league.html?leagueId=" + leagueAndPoolInfo["leagueId"];
     document.getElementById("poolTime").innerHTML = leagueAndPoolInfo["poolTime"];
-    document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"];
+    document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"]; */
 
     /* DONE: FILL OUT THE TABLE OF POOL DATA */
 
-    if (poolData.length == 0) { 
+    /*if (poolData.length == 0) { 
         document.getElementById("noTeamsInPool").style.display = "block";
         document.getElementById("actualPoolTable").style.display = "none";
         document.getElementById("poolSignUp").style.display = "block";
@@ -65,26 +63,55 @@ function loadData() {
             var record = row.insertCell(2);
             rank.innerHTML = (i+1);
             team.innerHTML = '<a href="' + poolData[i][0] + '" class="userLink">' + poolData[i][1] + '</a>';
-            record.innerHTML = '<span id="nWins' + (i+1) + '">' + poolData[i][2] + '</span> - <span id="nLosses' + (i+1) + '">' + poolData[i][3] + '</span> - <span id="nTies' + (i+1) + '">' + poolData[i][4] + '</span></td></tr>';
-        }
+            record.innerHTML = '<span id="nWins' + (i+1) + '">' + poolData[i][2] + '</span> - <span id="nLosses' + (i+1) + '">' + poolData[i][3] + '</span> - <span id="nTies' + (i+1) + '">' + poolData[i][4] + '</span></td></tr>';*/
+        //}
 
         /* DONE: DETERMINE WHETHER A USER SHOULD BE ABLE TO REGISTER A NEW TEAM */
         
-        var teamsRegistered = document.getElementById("teamsRegistered").innerHTML;
+        /*var teamsRegistered = document.getElementById("teamsRegistered").innerHTML;
         var teamCapacity = document.getElementById("poolCapacity").innerHTML;
 
         if (teamCapacity == teamsRegistered) document.getElementById("noSpaceInPoolAlert").style.display = "block";
-        else  document.getElementById("poolSignUp").style.display = "block";     
-    }
+        else  document.getElementById("poolSignUp").style.display = "block"; */    
+    /*}*/
 
     /* DONE: COMPUTE FOOTER POSITION */
-    computeFooterMargin();
+    //computeFooterMargin();
 
 	/* DONE: LOAD FOOTER */
-	var loggedInAs = document.getElementById('loggedInAs');
-	loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
+	//var loggedInAs = document.getElementById('loggedInAs');
+	//loggedInAs.innerHTML = "Logged In As:<br>" + window.localStorage.getItem("email");
 
 }
+
+
+var poolData = [];
+var leagueAndPoolInfo = [];
+
+var poolTeamComponents = [
+'<div class="col-md-4 col-6 sportsImageContainer"><img class="sportsImage" src="data/',
+'.jpg"><a href="',
+'"><div class="sportsImageTextContainer"><p class="sportsImageText">',
+'</p></div></a></div>'
+]
+
+
+function loadPage() { 
+    document.getElementById("leagueName").innerHTML = leagueAndPoolInfo["leagueLevel"] + " " + leagueAndPoolInfo["leagueSport"];
+    document.getElementById("leagueName").href = "./league.html?leagueId=" + leagueAndPoolInfo["leagueId"];
+    document.getElementById("poolTime").innerHTML = leagueAndPoolInfo["poolTime"];
+    document.getElementById("poolDay").innerHTML = leagueAndPoolInfo["poolDay"];
+
+    var htmlString = "";
+    
+    for (var i = 0; i < poolData.length; i++) {
+        htmlString += poolTeamComponents[0] + leagueAndPoolInfo["leagueSport"] + poolTeamComponents[1] + poolData[i][0] + poolTeamComponents[2] + poolData[i][1] + "<br>(" + poolData[i][2] + " - " + poolData[i][3] + " - " + poolData[i][4] + ")" + poolTeamComponents[3]; 
+    } 
+
+    document.getElementById("sportsImageCollection").insertAdjacentHTML("beforeend",htmlString);
+
+}
+
 
 function clearAllAlerts() {
     var alerts = document.getElementsByClassName("alert");
@@ -128,7 +155,6 @@ function activateSingleAlert(alertId) {
         else alerts[i].style.display = "none";
     }   
 }
-
 
 // Check each user invited, one by one, to see if they are suitable for invitation to the team.
 function processTeam() { 
