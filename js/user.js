@@ -249,7 +249,7 @@ function FileUpload(file) {
   const xhr = new XMLHttpRequest();
   this.xhr = xhr;
   const self = this;
-  document.getElementById("progressBarDiv").style.display = "";
+  document.getElementById("progressBarDiv").style.display = "flex";
 
   this.xhr.upload.addEventListener("progress", function(e) {
         if (e.lengthComputable) {
@@ -258,9 +258,7 @@ function FileUpload(file) {
         }
   }, false);
 
-  xhr.upload.addEventListener("load", function(e){
-    document.getElementById("progressBarDiv").style.display = "none";
-  }, false);
+  xhr.upload.addEventListener("load", function(e){}, false);
   xhr.open("PUT", "http://127.0.0.1:51069/pictures/user/" + window.localStorage.getItem("user_id"));
   xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
 
@@ -340,26 +338,3 @@ function dismissPendingInvitation(id) {
         pendingNotifications.style.display = "none";
     } else document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.display = "none"; 
 }
-
-
-/*function changeBtnGroup(id) { 
-    var notificationButtons = document.getElementById("notificationBtns").children;
-    for (var i = 0; i < notificationButtons.length; i++) {   
-        if (notificationButtons[i].id == id) { 
-            notificationButtons[i].classList.remove("notificationUnpressed");
-            notificationButtons[i].classList.add("notificationPressed");
-        } else { 
-             notificationButtons[i].classList.remove("notificationPressed");
-            notificationButtons[i].classList.add("notificationUnpressed");    
-        }   
-    }   
-
-    var notificationMessages = document.getElementsByClassName("notificationMessages");
-    for (var j = 0; j < notificationMessages.length; j++) {
-        notificationMessages[j].style.display = "none"; 
-    }
-
-    var buttonSubstr = id.substring(0, 7); 
-    document.getElementById(buttonSubstr + "NotificationMessages").style.display = "block";
-}*/
-

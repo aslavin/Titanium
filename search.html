@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/fontawesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/search.css">
         <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/search.css">
        <link href="https://fonts.googleapis.com/css?family=Inria+Serif|Arsenal|Cairo|Alegreya+Sans:400,500&display=swap" rel="stylesheet"> 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -74,7 +74,7 @@
                                     <button type="button" id="teamSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Teams</button>
                                     <button type="button" id="playerSearchOption" class="btn btn-info notificationUnpressed" onclick="changeBtnGroupSearch(this.id)">Players</button>
                     </div>
-                    <input id="searchBox" class="form-control" type="text" placeholder="Search For Leagues">
+                    <input id="searchBox" class="form-control" type="text" placeholder="Search For Leagues" onkeyup="narrowSearch(this.value)">
                 </div> 
                 <div id="resultsBox">
                     <div id="searchResultsText"><span id="nResults"></span> result(s) found in <span id="searchScope"></span> for "<span id="originalSearch"></span>" :</div>
