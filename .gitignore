@@ -2,3 +2,6 @@
 cherrypy/myenv
 cherrypy/__pycache__/
 cherrypy/.env
+
+# swap files from vim
+*.swp
