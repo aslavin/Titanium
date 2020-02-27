@@ -28,11 +28,7 @@ function loadData() {
 			console.error(xhr.statusText);
 		}
 		response = JSON.parse(xhr.response);
-        leagueFacts["sport"] = response["sport"];
-        leagueFacts["level"] = response["level"];
-        leagueFacts["location"] = response["location"]
-        console.log(response);
-        console.log(leagueFacts["sport"]);
+        leagueFacts["sport"] = {"sport": response["sport"], "level": response["level"], "location": response["location"]};
 		for (pool of response['pools']) {
             availableSpots = response['max_teams_in_pool'] - pool['num_teams'].length;
             leagueData.push(["./pool.html?poolId="+pool["pool_id"], pool["day"], pool["time"], availableSpots.toString(), response['max_teams_in_pool']]);
